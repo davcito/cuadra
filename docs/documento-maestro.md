@@ -723,7 +723,7 @@ Contiene: misión del proyecto en 3 líneas, stack congelado, glosario de domini
 # 13. Checklist de arranque (próximos 7 días)
 
 - [x] Comprar **appcuadra.com** (decidido). Verificar y comprar **cuadra.app** si está libre; comprar variante **quadra** barata como redirect. *(Hecho 2026-06-11 — dominios reservados por David.)*
-- [ ] Reservar **@appcuadra** en TikTok e Instagram (5 minutos hoy evitan un dolor de cabeza en 6 meses).
+- [x] Reservar **@appcuadra** en TikTok e Instagram. *(Hecho 2026-06-11.)*
 - [x] Búsqueda fonética en **Indecopi**, clases 9 y 42. *(Hecha 2026-06-11. Hallazgo: **QUADRA vigente en cl. 42 hasta 2033-06-16** — exp. `S00148186` — fonéticamente idéntica y su especificación cubre el encabezado completo de la clase 42, incluido "diseño y desarrollo de equipos informáticos y de software" → **cl. 42 se asume bloqueada** para CUADRA denominativa. Ruta registral natural del producto: **cl. 9 (app, despejada — solo KUADRE exp. `P00392254`, no idéntica) + cl. 41 (entretenimiento/juegos) + cl. 35 (B2B publicitario)**; falta búsqueda en 41 y 35. Resto del listado = ruido fonético. Estrategia final con abogado antes del lanzamiento público: especificación fina, marca mixta, APPCUADRA y/o cancelación por no uso del S00148186.)*
 - [ ] Crear cuenta **Google Play Console** ($25). Apple puede esperar al lanzamiento público (§10, riesgo 9).
 - [ ] Crear proyecto en **Supabase** (free tier) y correr la migración de §7.5.
