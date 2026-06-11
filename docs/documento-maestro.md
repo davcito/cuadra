@@ -722,7 +722,7 @@ Contiene: misión del proyecto en 3 líneas, stack congelado, glosario de domini
 
 # 13. Checklist de arranque (próximos 7 días)
 
-- [ ] Comprar **appcuadra.com** (decidido). Verificar y comprar **cuadra.app** si está libre; comprar variante **quadra** barata como redirect.
+- [x] Comprar **appcuadra.com** (decidido). Verificar y comprar **cuadra.app** si está libre; comprar variante **quadra** barata como redirect. *(Hecho 2026-06-11 — dominios reservados por David.)*
 - [ ] Reservar **@appcuadra** en TikTok e Instagram (5 minutos hoy evitan un dolor de cabeza en 6 meses).
 - [ ] Búsqueda fonética en **Indecopi**, clases 9 y 42 (la búsqueda en línea es gratis; el registro puede esperar a la validación, la búsqueda no).
 - [ ] Crear cuenta **Google Play Console** ($25). Apple puede esperar al lanzamiento público (§10, riesgo 9).
