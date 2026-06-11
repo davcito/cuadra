@@ -637,7 +637,7 @@ Instrumentar desde el día 1 con PostHog: funnel registro → 1ª vuelta → 2ª
 | 4 | Fraude en check-ins (afecta credibilidad B2B) | Media | Medio | §7.6 en capas; verificación reforzada en todo lo facturable |
 | 5 | **Tiempo del fundador** (UPN + DavcStore compiten por horas) | Alta | Crítico | Roadmap a tiempo parcial; Claude Code como multiplicador; alcance MVP congelado (§4.5) |
 | 6 | Incidente de seguridad de un usuario en una vuelta | Baja | Crítico | Modo seguro curado + disclaimer legal + misiones solo en espacio público + ventanas horarias; revisar T&C con abogado antes del lanzamiento público |
-| 7 | Marca: homónimos (botas CUADRA MX) y ortografía Quadra/Cuadra | Baja | Medio | Indecopi clases 9/42; comprar variante quadra como redirect; México no es mercado temprano |
+| 7 | Marca: **QUADRA vigente en Perú, clase 42, hasta 2033 (exp. S00148186, búsqueda 2026-06-11)** — fonéticamente idéntica; Indecopi examina confusión de oficio. Además homónimos (botas CUADRA MX) y ortografía Quadra/Cuadra | Media | Medio | Revisar servicios cubiertos por el exp. S00148186; al registrar (post-validación): abogado de marcas + especificación fina de servicios, marca mixta, alternativa APPCUADRA, o cancelación por no uso si procede. Clase 9 más despejada (solo KUADRE cercana) |
 | 8 | Dependencia de OSM (cobertura irregular en algunos distritos) | Media | Medio | Curación manual complementaria; el panel admin permite agregar POIs a mano; a futuro, los propios usuarios sugieren POIs |
 | 9 | Costo de Apple ($99/año) antes de validar | — | Bajo | MVP beta puede ser Android-first (Perú es ~85% Android); iOS al lanzamiento público |
 
@@ -724,7 +724,7 @@ Contiene: misión del proyecto en 3 líneas, stack congelado, glosario de domini
 
 - [x] Comprar **appcuadra.com** (decidido). Verificar y comprar **cuadra.app** si está libre; comprar variante **quadra** barata como redirect. *(Hecho 2026-06-11 — dominios reservados por David.)*
 - [ ] Reservar **@appcuadra** en TikTok e Instagram (5 minutos hoy evitan un dolor de cabeza en 6 meses).
-- [ ] Búsqueda fonética en **Indecopi**, clases 9 y 42 (la búsqueda en línea es gratis; el registro puede esperar a la validación, la búsqueda no).
+- [x] Búsqueda fonética en **Indecopi**, clases 9 y 42. *(Hecha 2026-06-11. Hallazgo principal: **QUADRA vigente en clase 42 hasta 2033-06-16** — exp. `S00148186`, titulares peruanos — fonéticamente idéntica; falta revisar qué servicios cubre para calibrar el riesgo. Secundario: KUADRE cl. 9, exp. `P00392254`. Resto del listado (QUADIENT, KUADY, QUAD, PIQUADRO, QUADRANTE…) = ruido fonético sin riesgo. Estrategia de registro se decide con abogado post-validación, como ya estaba previsto.)*
 - [ ] Crear cuenta **Google Play Console** ($25). Apple puede esperar al lanzamiento público (§10, riesgo 9).
 - [ ] Crear proyecto en **Supabase** (free tier) y correr la migración de §7.5.
 - [ ] Instalar **Expo** y correr el template en tu propio teléfono (validar el entorno antes de escribir una línea de Cuadra).
