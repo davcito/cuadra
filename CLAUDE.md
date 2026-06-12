@@ -50,15 +50,16 @@ Voz de marca: español peruano cercano y juguetón, cariño de barrio, jamás co
 ## Estructura
 
 ```
-app/        Expo SDK 56 (rutas en src/app/, lógica compartida en src/lib/ — ver ADR-0002)
+app/        Expo SDK 54 (rutas en src/app/, lógica compartida en src/lib/ — ver ADR-0002)
 supabase/   migrations/ + seed/
 worker/     pipeline/ (1-sync-pois, 2-generate-missions, 3-verify-photos) + prompts/ + admin/
 docs/       documento-maestro.md + decisiones/ (ADRs)
 scripts/    utilidades
 ```
 
-Nota SDK 56: `app/AGENTS.md` (del template) exige consultar las docs versionadas
-(https://docs.expo.dev/versions/v56.0.0/) antes de escribir código que use APIs de Expo.
+Nota SDK 54 (ver ADR-0003): el proyecto se fijó en SDK 54 por compatibilidad con el
+Expo Go público. Al usar APIs de Expo, consulta las docs versionadas
+(https://docs.expo.dev/versions/v54.0.0/) antes de escribir código.
 
 ## Comandos frecuentes
 

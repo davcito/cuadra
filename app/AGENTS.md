@@ -1,3 +1,5 @@
-# Expo HAS CHANGED
+# Expo SDK 54
 
-Read the exact versioned docs at https://docs.expo.dev/versions/v56.0.0/ before writing any code.
+Este proyecto está fijado en **Expo SDK 54** (ver `docs/decisiones/0003-sdk-54-compatibilidad-expo-go.md`).
+Antes de escribir código que use APIs de Expo, consulta las docs versionadas exactas:
+https://docs.expo.dev/versions/v54.0.0/

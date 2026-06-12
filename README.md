@@ -8,7 +8,7 @@
 
 | Carpeta | Qué es | Estado |
 |---|---|---|
-| `app/` | App Expo (RN + TS estricto, expo-router, SDK 56). Lógica compartida en `src/lib/` | esqueleto + geo testeada |
+| `app/` | App Expo (RN + TS estricto, expo-router, SDK 54). Lógica compartida en `src/lib/` | home de Cuadra + geo testeada |
 | `supabase/migrations/` | Esquema Postgres + PostGIS con RLS en todas las tablas | migración inicial lista |
 | `supabase/seed/` | Seed de dev: 37 celdas H3 reales de Barranco + datos de prueba | generado |
 | `worker/` | Pipeline del VPS (cron): sync POIs → generar vueltas → verificar fotos | contratos + stubs |
