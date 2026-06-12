@@ -1,10 +1,11 @@
 /**
  * Cliente Supabase de la app (anon key + RLS: el cliente solo puede lo
  * que las políticas permiten; la escritura de contenido vive en el worker).
- * Patrón oficial de Supabase para React Native: AsyncStorage para la
- * sesión y URL polyfill.
+ * Patrón oficial de Supabase para React Native: AsyncStorage persiste la
+ * sesión y AppState refresca el token mientras la app está en primer plano.
  */
 import "react-native-url-polyfill/auto";
+import { AppState } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createClient } from "@supabase/supabase-js";
 
@@ -25,4 +26,11 @@ export const supabase = createClient(url, anonKey, {
     persistSession: true,
     detectSessionInUrl: false,
   },
+});
+
+// Refresca la sesión automáticamente mientras la app está activa; la detiene
+// en segundo plano (patrón recomendado por Supabase para RN).
+AppState.addEventListener("change", (state) => {
+  if (state === "active") supabase.auth.startAutoRefresh();
+  else supabase.auth.stopAutoRefresh();
 });

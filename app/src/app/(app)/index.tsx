@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useSession } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
 /**
- * Pantalla de bienvenida (provisional — la identidad visual real es fase de
- * diseño, documento maestro §3.4). Su segunda función es validar en vivo la
- * cadena app → Supabase → datos reales: cuenta las celdas de Barranco.
+ * Home (provisional — la identidad visual real es fase de diseño, §3.4).
+ * Saluda al usuario autenticado y valida en vivo la cadena app → Supabase
+ * contando las celdas de Barranco.
  */
 type Estado =
   | { tipo: "cargando" }
@@ -15,6 +16,7 @@ type Estado =
   | { tipo: "error"; mensaje: string };
 
 export default function HomeScreen() {
+  const { session } = useSession();
   const [estado, setEstado] = useState<Estado>({ tipo: "cargando" });
 
   useEffect(() => {
@@ -23,11 +25,8 @@ export default function HomeScreen() {
         const { count, error } = await supabase
           .from("cells")
           .select("*", { count: "exact", head: true });
-        if (error) {
-          setEstado({ tipo: "error", mensaje: error.message });
-        } else {
-          setEstado({ tipo: "ok", celdas: count ?? 0 });
-        }
+        if (error) setEstado({ tipo: "error", mensaje: error.message });
+        else setEstado({ tipo: "ok", celdas: count ?? 0 });
       } catch (e) {
         setEstado({ tipo: "error", mensaje: e instanceof Error ? e.message : String(e) });
       }
@@ -48,9 +47,7 @@ export default function HomeScreen() {
             </View>
           )}
           {estado.tipo === "ok" && (
-            <Text style={styles.estadoOk}>
-              ✓ {estado.celdas} cuadras de Barranco listas
-            </Text>
+            <Text style={styles.estadoOk}>✓ {estado.celdas} cuadras de Barranco listas</Text>
           )}
           {estado.tipo === "error" && (
             <Text style={styles.estadoError}>No pude conectar:{"\n"}{estado.mensaje}</Text>
@@ -58,7 +55,14 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <Text style={styles.pie}>MVP en construcción · Lima</Text>
+      <View style={styles.pie}>
+        <Text style={styles.usuario} numberOfLines={1}>
+          {session?.user.email ?? "—"}
+        </Text>
+        <Pressable onPress={() => supabase.auth.signOut()} hitSlop={12}>
+          <Text style={styles.salir}>Cerrar sesión</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
@@ -84,5 +88,14 @@ const styles = StyleSheet.create({
   estadoTexto: { fontSize: 15, color: "#8A7E6E" },
   estadoOk: { fontSize: 17, fontWeight: "600", color: "#2E7D32", textAlign: "center" },
   estadoError: { fontSize: 13, color: "#C0392B", textAlign: "center" },
-  pie: { textAlign: "center", color: "#B8AC9A", fontSize: 13, paddingBottom: 16 },
+  pie: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 28,
+    paddingBottom: 16,
+    gap: 12,
+  },
+  usuario: { flex: 1, color: "#B8AC9A", fontSize: 13 },
+  salir: { color: "#E8622C", fontSize: 14, fontWeight: "600" },
 });
