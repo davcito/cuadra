@@ -1,0 +1,26 @@
+# dependencias
+node_modules/
+
+# Expo
+.expo/
+dist/
+web-build/
+*.orig.*
+
+# builds nativos (se generan con prebuild)
+app/ios/
+app/android/
+
+# secretos — NUNCA commitear llaves
+.env
+.env.*
+!.env.example
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/
+
+# sistema
+.DS_Store
+Thumbs.db
+*.log
