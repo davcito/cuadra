@@ -1,0 +1,12 @@
+{
+  // Contexto de tipos para los tests que corren en Node (tsx --test):
+  // aquí SÍ existen node:test y node:assert; en la app RN no.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"]
+  },
+  "include": ["src/**/*.test.ts"],
+  "exclude": ["node_modules"]
+}
