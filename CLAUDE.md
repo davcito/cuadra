@@ -13,7 +13,7 @@ Cuadra es una app móvil de exploración urbana gamificada (mercado inicial: Lim
 - **Workers:** Node.js en VPS propio (cron): pipeline de misiones, verificación, rankings
 - **Fotos:** Cloudflare R2 (URLs firmadas, subida directa desde la app)
 - **Mapas:** MapLibre GL + OpenFreeMap (nunca Google Maps SDK ni Mapbox)
-- **Geo:** h3-js (resolución 9), PostGIS para queries, haversine/bearing propios en `app/lib/geo`
+- **Geo:** h3-js (resolución 9), PostGIS para queries, haversine/bearing propios en `app/src/lib/geo.ts`
 - **IA:** API de Claude (Haiku 4.5) SOLO desde el worker, nunca desde la app. Salidas en JSON estricto validado con zod
 - **Pagos:** RevenueCat (IAP) + Culqi/Mercado Pago para Yape/Plin (riel web)
 - **Analytics:** PostHog · Errores: Sentry
@@ -50,12 +50,15 @@ Voz de marca: español peruano cercano y juguetón, cariño de barrio, jamás co
 ## Estructura
 
 ```
-app/        Expo (rutas en app/, lógica compartida en lib/)
+app/        Expo SDK 56 (rutas en src/app/, lógica compartida en src/lib/ — ver ADR-0002)
 supabase/   migrations/ + seed/
 worker/     pipeline/ (1-sync-pois, 2-generate-missions, 3-verify-photos) + prompts/ + admin/
 docs/       documento-maestro.md + decisiones/ (ADRs)
 scripts/    utilidades
 ```
+
+Nota SDK 56: `app/AGENTS.md` (del template) exige consultar las docs versionadas
+(https://docs.expo.dev/versions/v56.0.0/) antes de escribir código que use APIs de Expo.
 
 ## Comandos frecuentes
 
