@@ -8,3 +8,4 @@ Una decisión técnica que se desvía del documento maestro = un archivo corto a
 | [0002](0002-estructura-src-expo.md) | La app usa la estructura `src/` del template Expo | aceptada |
 | [0003](0003-sdk-54-compatibilidad-expo-go.md) | El proyecto se fija en Expo SDK 54 (compatibilidad con Expo Go) | aceptada |
 | [0004](0004-mapa-maplibre-webview.md) | El mapa es MapLibre GL JS en WebView (no MapLibre nativo) | aceptada |
+| [0005](0005-cross-platform-no-web-pwa.md) | Cuadra es cross-platform (Expo/RN), no una app web/PWA | aceptada |
