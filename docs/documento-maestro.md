@@ -156,6 +156,8 @@ Cercana, callejera sin vulgaridad, juguetona, con cariño de barrio. Habla como 
 
 Dirección: gráfica urbana latinoamericana — paleta inspirada en fachadas limeñas y cartelería popular (chicha moderada, sin caer en cliché), ilustración flat de lugares, tipografía display con carácter + sans legible para UI. El álbum debe sentirse álbum: texturas de papel, figuritas con marco troquelado. Referencias a explorar: cartelería de mercado, azulejos, mototaxis, Sarita Colonia pop. **Anti-referencias:** estética corporativa fintech, gradientes genéricos de startup.
 
+**Actualización 2026-07-27 — brief EJECUTADO:** identidad **V1.2** completa (logo 3 direcciones, paleta con modo oscuro, Alfa Slab One + Archivo, componentes, guía de uso) + **mascota oficial: Calato**, viringo 3D tonto-amistoso con kit de explorador. Guía viva en Claude Design, archivo en `docs/identidad/CUADRA-Identidad-v1.2.dc.html`, assets en `docs/identidad/calato/`, tokens en `app/src/lib/theme.ts`. Decisiones y reglas de la mascota: **ADR-0006** (la mascota es render 3D sobre UI flat — patrón Duolingo).
+
 ---
 
 # 4. Especificación del producto

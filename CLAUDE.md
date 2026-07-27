@@ -33,6 +33,7 @@ Cuadra es una app móvil de exploración urbana gamificada (mercado inicial: Lim
 | categorías | Huariques, Caletas, Huacas, Caseros | comida / secretos / patrimonio / social |
 | rangos | Nuevo en la cuadra → Vecino/a → Callejero/a → Casero/a → Cronista → Leyenda del barrio | progresión |
 | distancia | **cuadras** (no km) en toda la UI | firma de marca |
+| mascota | **Calato** | viringo 3D tonto-amistoso; guía `docs/identidad/` + ADR-0006; rasgos innegociables: orejas murciélago + mechón 1 llama naranja + lengua de costado |
 
 Voz de marca: español peruano cercano y juguetón, cariño de barrio, jamás corporativo. Ejemplos canónicos en §3.3 del documento maestro.
 
@@ -53,7 +54,7 @@ Voz de marca: español peruano cercano y juguetón, cariño de barrio, jamás co
 app/        Expo SDK 54 (rutas en src/app/, lógica compartida en src/lib/ — ver ADR-0002)
 supabase/   migrations/ + seed/
 worker/     pipeline/ (1-sync-pois, 2-generate-missions, 3-verify-photos) + prompts/ + admin/
-docs/       documento-maestro.md + decisiones/ (ADRs)
+docs/       documento-maestro.md + decisiones/ (ADRs) + identidad/ (guía V1.2 + assets Calato)
 scripts/    utilidades
 ```
 

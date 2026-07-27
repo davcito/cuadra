@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Shrikhand&family=Titan+One&family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#FBF7F0;color:#1F1B16;font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;}
+  a{color:#E8622C;text-decoration:none;} a:hover{color:#1F1B16;text-decoration:underline;}
+</style>
+</helmet>
+
+<div style="max-width:1160px;margin:0 auto;padding:64px 40px 120px;display:flex;flex-direction:column;gap:96px">
+
+  <!-- HERO -->
+  <header data-screen-label="Portada" style="display:flex;flex-direction:column;gap:20px;border-bottom:4px solid #1F1B16;padding-bottom:48px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="background:#1F1B16;color:#FBF7F0;font-size:12px;font-weight:800;letter-spacing:.14em;padding:6px 12px;border-radius:999px">IDENTIDAD VISUAL · V1.2</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#8A7E6E">LIMA, PERÚ · 2026</span>
+    </div>
+    <h1 style="font-family:var(--display,'Alfa Slab One'),serif;font-weight:400;font-size:104px;line-height:.95;margin:0;letter-spacing:-.01em">CUADRA</h1>
+    <p style="font-size:24px;font-weight:700;margin:0;color:var(--acento,#E8622C)">Tu ciudad, cuadra por cuadra.</p>
+    <p style="font-size:16px;line-height:1.6;max-width:640px;margin:0;color:#5C5347">Exploración urbana gamificada: cada día hay Vueltas ancladas a lugares reales de Lima. Caminas, llegas, y chapas una figurita para tu Álbum. Esta guía define cómo se ve y cómo habla la marca.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+      <span style="border:2px solid #1F1B16;border-radius:999px;padding:7px 16px;font-size:14px;font-weight:700">Cercana</span>
+      <span style="border:2px solid #1F1B16;border-radius:999px;padding:7px 16px;font-size:14px;font-weight:700">Callejera, sin vulgaridad</span>
+      <span style="border:2px solid #1F1B16;border-radius:999px;padding:7px 16px;font-size:14px;font-weight:700">Juguetona</span>
+      <span style="border:2px solid #1F1B16;border-radius:999px;padding:7px 16px;font-size:14px;font-weight:700">Cariño de barrio</span>
+      <span style="border:2px solid #1F1B16;border-radius:999px;padding:7px 16px;font-size:14px;font-weight:700;background:var(--acento,#E8622C)">Insistente, con cariño</span>
+    </div>
+  </header>
+
+  <!-- 01 LOGO -->
+  <section data-screen-label="01 Logo" style="display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:16px">
+      <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:20px;color:var(--acento,#E8622C)">01</span>
+      <h2 style="font-family:var(--display,'Alfa Slab One'),serif;font-weight:400;font-size:36px;margin:0">Logo e isotipo</h2>
+    </div>
+    <p style="margin:0;max-width:640px;font-size:15px;line-height:1.6;color:#5C5347">Tres direcciones. Cada símbolo debe funcionar como ícono de app a 1024&nbsp;px y como pin sobre el mapa. Recomendación: <strong>Dirección A</strong> — cuenta la historia (darle la vuelta a la manzana) y aguanta tamaños chicos.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+
+      <!-- Dirección A -->
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="background:#FFFFFF;padding:36px;display:flex;flex-direction:column;align-items:center;gap:20px;border-bottom:2px solid #1F1B16">
+          <svg width="96" height="96" viewBox="0 0 48 48">
+            <rect x="7" y="7" width="34" height="34" rx="10" fill="none" stroke="#1F1B16" stroke-width="6" pathLength="100" stroke-dasharray="82 18" stroke-dashoffset="-34" stroke-linecap="round"></rect>
+            <circle cx="40" cy="8" r="6" fill="var(--acento,#E8622C)"></circle>
+          </svg>
+          <div style="font-family:var(--display,'Alfa Slab One'),serif;font-size:30px;letter-spacing:.01em">CUADRA</div>
+        </div>
+        <div style="padding:20px;display:flex;flex-direction:column;gap:12px;flex:1">
+          <div style="display:flex;align-items:center;gap:8px"><span style="background:var(--acento,#E8622C);color:#1F1B16;font-size:11px;font-weight:800;letter-spacing:.1em;padding:4px 10px;border-radius:999px">RECOMENDADA</span><strong style="font-size:15px">A · La Vuelta</strong></div>
+          <p style="margin:0;font-size:13px;line-height:1.55;color:#5C5347">Una manzana (la cuadra) con el trazo abierto: la vuelta que falta caminar. El punto naranja eres tú.</p>
+          <div style="display:flex;gap:14px;align-items:center;margin-top:auto">
+            <div style="width:56px;height:56px;border-radius:14px;background:var(--acento,#E8622C);display:flex;align-items:center;justify-content:center"><svg width="34" height="34" viewBox="0 0 48 48"><rect x="7" y="7" width="34" height="34" rx="10" fill="none" stroke="#1F1B16" stroke-width="6" pathLength="100" stroke-dasharray="82 18" stroke-dashoffset="-34" stroke-linecap="round"></rect><circle cx="40" cy="8" r="6" fill="#FBF7F0"></circle></svg></div>
+            <div style="width:40px;height:40px;background:#1F1B16;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border:3px solid var(--acento,#E8622C);border-radius:5px;transform:rotate(45deg)"></div></div>
+            <span style="font-size:11px;font-weight:700;color:#8A7E6E;letter-spacing:.08em">ÍCONO · PIN</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dirección B -->
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="background:#FFFFFF;padding:36px;display:flex;flex-direction:column;align-items:center;gap:20px;border-bottom:2px solid #1F1B16">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:96px;height:96px">
+            <div style="background:#1F1B16;border-radius:12px"></div>
+            <div style="background:#1F1B16;border-radius:12px"></div>
+            <div style="background:var(--acento,#E8622C);border-radius:12px"></div>
+            <div style="background:#1F1B16;border-radius:12px"></div>
+          </div>
+          <div style="font-family:var(--display,'Alfa Slab One'),serif;font-size:30px">CUADRA</div>
+        </div>
+        <div style="padding:20px;display:flex;flex-direction:column;gap:12px;flex:1">
+          <strong style="font-size:15px">B · Cuatro Cuadras</strong>
+          <p style="margin:0;font-size:13px;line-height:1.55;color:#5C5347">El plano de la ciudad reducido al mínimo. La cuadra naranja es la que ya chapaste. Imbatible en favicon y app icon.</p>
+          <div style="display:flex;gap:14px;align-items:center;margin-top:auto">
+            <div style="width:56px;height:56px;border-radius:14px;background:#1F1B16;display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:12px;box-sizing:border-box"><div style="background:#FBF7F0;border-radius:4px"></div><div style="background:#FBF7F0;border-radius:4px"></div><div style="background:var(--acento,#E8622C);border-radius:4px"></div><div style="background:#FBF7F0;border-radius:4px"></div></div>
+            <div style="width:40px;height:40px;background:var(--acento,#E8622C);border:3px solid #1F1B16;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center"><div style="width:14px;height:14px;background:#1F1B16;border-radius:3px;transform:rotate(45deg)"></div></div>
+            <span style="font-size:11px;font-weight:700;color:#8A7E6E;letter-spacing:.08em">ÍCONO · PIN</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dirección C -->
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;display:flex;flex-direction:column">
+        <div style="background:#FFFFFF;padding:36px;display:flex;flex-direction:column;align-items:center;gap:20px;border-bottom:2px solid #1F1B16">
+          <div style="width:92px;height:92px;border:4px dashed #1F1B16;border-radius:50%;display:flex;align-items:center;justify-content:center;box-sizing:border-box">
+            <div style="width:70px;height:70px;background:var(--acento,#E8622C);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--display,'Alfa Slab One'),serif;font-size:42px;color:#FBF7F0">C</div>
+          </div>
+          <div style="font-family:var(--display,'Alfa Slab One'),serif;font-size:30px">CUADRA</div>
+        </div>
+        <div style="padding:20px;display:flex;flex-direction:column;gap:12px;flex:1">
+          <strong style="font-size:15px">C · El Sello</strong>
+          <p style="margin:0;font-size:13px;line-height:1.55;color:#5C5347">Un sello troquelado, como las figuritas del Álbum. Cada lugar chapado lleva este cuño. Ideal para stickers físicos y merch.</p>
+          <div style="display:flex;gap:14px;align-items:center;margin-top:auto">
+            <div style="width:56px;height:56px;border-radius:14px;background:#FBF7F0;border:2px solid #1F1B16;box-sizing:border-box;display:flex;align-items:center;justify-content:center"><div style="width:34px;height:34px;border:2px dashed #1F1B16;border-radius:50%;display:flex;align-items:center;justify-content:center"><div style="width:24px;height:24px;background:var(--acento,#E8622C);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#FBF7F0;font-family:var(--display,'Alfa Slab One'),serif;font-size:15px">C</div></div></div>
+            <div style="width:40px;height:40px;background:#1F1B16;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center"><div style="width:18px;height:18px;background:var(--acento,#E8622C);border-radius:50%;transform:rotate(45deg);display:flex;align-items:center;justify-content:center;color:#FBF7F0;font-size:10px;font-weight:900;font-family:var(--display,'Alfa Slab One'),serif">C</div></div>
+            <span style="font-size:11px;font-weight:700;color:#8A7E6E;letter-spacing:.08em">ÍCONO · PIN</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 COLOR -->
+  <section data-screen-label="02 Color" style="display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:16px">
+      <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:20px;color:var(--acento,#E8622C)">02</span>
+      <h2 style="font-family:var(--display,'Alfa Slab One'),serif;font-weight:400;font-size:36px;margin:0">Paleta</h2>
+    </div>
+    <p style="margin:0;max-width:640px;font-size:15px;line-height:1.6;color:#5C5347">Fachadas limeñas y cartelería popular, con criterio: base de papel y tinta, un solo naranja protagonista, y cuatro colores de categoría que se usan como acento, nunca como fondo de pantalla completa.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:110px;background:#FBF7F0;border-bottom:2px solid #1F1B16"></div><div style="padding:14px 16px;background:#FFFFFF"><strong style="font-size:14px">Papel</strong><div style="font-size:12px;color:#8A7E6E;font-family:monospace">#FBF7F0 · fondo</div></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:110px;background:#1F1B16"></div><div style="padding:14px 16px;background:#FFFFFF"><strong style="font-size:14px">Tinta</strong><div style="font-size:12px;color:#8A7E6E;font-family:monospace">#1F1B16 · texto, trazos</div></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:110px;background:var(--acento,#E8622C)"></div><div style="padding:14px 16px;background:#FFFFFF"><strong style="font-size:14px">Naranja Chicha</strong><div style="font-size:12px;color:#8A7E6E;font-family:monospace">#E8622C · acción principal</div></div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px">
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:72px;background:#C93B2C"></div><div style="padding:10px 12px;background:#FFFFFF"><strong style="font-size:13px">Huariques</strong><div style="font-size:11px;color:#8A7E6E;font-family:monospace">#C93B2C</div></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:72px;background:#157F6D"></div><div style="padding:10px 12px;background:#FFFFFF"><strong style="font-size:13px">Caletas</strong><div style="font-size:11px;color:#8A7E6E;font-family:monospace">#157F6D</div></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:72px;background:#C4841D"></div><div style="padding:10px 12px;background:#FFFFFF"><strong style="font-size:13px">Huacas</strong><div style="font-size:11px;color:#8A7E6E;font-family:monospace">#C4841D</div></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:72px;background:#CE3E78"></div><div style="padding:10px 12px;background:#FFFFFF"><strong style="font-size:13px">Caseros</strong><div style="font-size:11px;color:#8A7E6E;font-family:monospace">#CE3E78</div></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:72px;background:#2F8F4E"></div><div style="padding:10px 12px;background:#FFFFFF"><strong style="font-size:13px">Éxito</strong><div style="font-size:11px;color:#8A7E6E;font-family:monospace">#2F8F4E</div></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden"><div style="height:72px;background:#A4211B"></div><div style="padding:10px 12px;background:#FFFFFF"><strong style="font-size:13px">Error</strong><div style="font-size:11px;color:#8A7E6E;font-family:monospace">#A4211B</div></div></div>
+    </div>
+
+    <!-- modo oscuro -->
+    <div style="background:#1F1B16;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:baseline;gap:12px"><strong style="color:#F6EFE4;font-size:16px">Modo oscuro</strong><span style="color:#8A7E6E;font-size:13px">De día, tinta sobre papel. De noche, papel sobre tinta.</span></div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px">
+        <div><div style="height:56px;border-radius:10px;background:#1F1B16;border:2px solid #3B332A"></div><div style="color:#F6EFE4;font-size:12px;margin-top:6px;font-weight:700">Fondo</div><div style="color:#8A7E6E;font-size:11px;font-family:monospace">#1F1B16</div></div>
+        <div><div style="height:56px;border-radius:10px;background:#2C241C"></div><div style="color:#F6EFE4;font-size:12px;margin-top:6px;font-weight:700">Superficie</div><div style="color:#8A7E6E;font-size:11px;font-family:monospace">#2C241C</div></div>
+        <div><div style="height:56px;border-radius:10px;background:#F6EFE4"></div><div style="color:#F6EFE4;font-size:12px;margin-top:6px;font-weight:700">Texto</div><div style="color:#8A7E6E;font-size:11px;font-family:monospace">#F6EFE4</div></div>
+        <div><div style="height:56px;border-radius:10px;background:#F0703D"></div><div style="color:#F6EFE4;font-size:12px;margin-top:6px;font-weight:700">Naranja noche</div><div style="color:#8A7E6E;font-size:11px;font-family:monospace">#F0703D</div></div>
+        <div><div style="height:56px;border-radius:10px;background:#2FA98F"></div><div style="color:#F6EFE4;font-size:12px;margin-top:6px;font-weight:700">Caletas noche</div><div style="color:#8A7E6E;font-size:11px;font-family:monospace">#2FA98F</div></div>
+        <div><div style="height:56px;border-radius:10px;background:#E0A94B"></div><div style="color:#F6EFE4;font-size:12px;margin-top:6px;font-weight:700">Huacas noche</div><div style="color:#8A7E6E;font-size:11px;font-family:monospace">#E0A94B</div></div>
+      </div>
+      <p style="margin:0;color:#B7AB99;font-size:13px;line-height:1.5">Los colores de categoría suben un paso de luminosidad en oscuro. El naranja pasa a #F0703D para mantener AA sobre #1F1B16.</p>
+    </div>
+  </section>
+
+  <!-- 03 TIPOGRAFÍA -->
+  <section data-screen-label="03 Tipografía" style="display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:16px">
+      <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:20px;color:var(--acento,#E8622C)">03</span>
+      <h2 style="font-family:var(--display,'Alfa Slab One'),serif;font-weight:400;font-size:36px;margin:0">Tipografía</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div style="border:2px solid #1F1B16;border-radius:16px;padding:28px;background:#FFFFFF;display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#8A7E6E">DISPLAY · GOOGLE FONTS</span>
+        <div style="font-family:var(--display,'Alfa Slab One'),serif;font-size:44px;line-height:1.05">Alfa Slab One</div>
+        <div style="font-family:var(--display,'Alfa Slab One'),serif;font-size:22px;color:var(--acento,#E8622C)">¡Chapada!</div>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:#5C5347">Slab pesada con sabor a cartel de mercado. Solo para titulares, números grandes y celebraciones. Nunca en párrafos ni en tamaños menores a 20&nbsp;px.</p>
+      </div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;padding:28px;background:#FFFFFF;display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#8A7E6E">UI · GOOGLE FONTS</span>
+        <div style="font-family:'Archivo',sans-serif;font-weight:800;font-size:44px;line-height:1.05">Archivo</div>
+        <div style="font-size:16px">Hay 3 vueltas nuevas a menos de 10 cuadras.</div>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:#5C5347">Grotesca latinoamericana (Omnibus-Type), altísima legibilidad en móvil. Pesos 400–900. Todo el cuerpo de la app vive acá.</p>
+      </div>
+    </div>
+    <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:#FFFFFF">
+      <div style="display:grid;grid-template-columns:150px 1fr 220px;gap:16px;padding:14px 24px;border-bottom:2px solid #1F1B16;font-size:11px;font-weight:800;letter-spacing:.12em;color:#8A7E6E"><span>ESTILO</span><span>MUESTRA</span><span>USO EN MÓVIL</span></div>
+      <div style="display:grid;grid-template-columns:150px 1fr 220px;gap:16px;padding:16px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Display · 40/44</span><span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:40px;line-height:1.1">Bienvenido a la cuadra</span><span style="font-size:13px;color:#5C5347">Onboarding, celebraciones</span></div>
+      <div style="display:grid;grid-template-columns:150px 1fr 220px;gap:16px;padding:16px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">H1 · 28/32</span><span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:28px">Las vueltas de hoy</span><span style="font-size:13px;color:#5C5347">Título de pantalla</span></div>
+      <div style="display:grid;grid-template-columns:150px 1fr 220px;gap:16px;padding:16px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">H2 · 22/26</span><span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:22px">El Álbum</span><span style="font-size:13px;color:#5C5347">Secciones, tarjetas destacadas</span></div>
+      <div style="display:grid;grid-template-columns:150px 1fr 220px;gap:16px;padding:16px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Título · 18/24 · 700</span><span style="font-size:18px;font-weight:700">La caleta del jirón Quilca</span><span style="font-size:13px;color:#5C5347">Título de tarjeta (Archivo)</span></div>
+      <div style="display:grid;grid-template-columns:150px 1fr 220px;gap:16px;padding:16px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Cuerpo · 16/24 · 400</span><span style="font-size:16px">Tu racha cumple 6 días. No la dejes morir en la puerta.</span><span style="font-size:13px;color:#5C5347">Texto general, Recados</span></div>
+      <div style="display:grid;grid-template-columns:150px 1fr 220px;gap:16px;padding:16px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Secundario · 14/20 · 500</span><span style="font-size:14px;font-weight:500">Hoy recorriste 23 cuadras</span><span style="font-size:13px;color:#5C5347">Metadatos, distancias</span></div>
+      <div style="display:grid;grid-template-columns:150px 1fr 220px;gap:16px;padding:16px 24px;align-items:center"><span style="font-size:13px;font-weight:700">Pie · 12/16 · 700</span><span style="font-size:12px;font-weight:700;letter-spacing:.08em">N.º 034 · HUARIQUES</span><span style="font-size:13px;color:#5C5347">Etiquetas, numeración de figuritas</span></div>
+    </div>
+  </section>
+
+  <!-- 04 ILUSTRACIÓN E ICONOGRAFÍA -->
+  <section data-screen-label="04 Ilustración e iconos" style="display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:16px">
+      <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:20px;color:var(--acento,#E8622C)">04</span>
+      <h2 style="font-family:var(--display,'Alfa Slab One'),serif;font-weight:400;font-size:36px;margin:0">Ilustración e iconografía</h2>
+    </div>
+    <p style="margin:0;max-width:680px;font-size:15px;line-height:1.6;color:#5C5347">Flat geométrico con sombra dura desplazada (nada de degradados ni brillos). Cada lugar se construye con 3–4 formas sobre el color de su categoría. Los íconos de UI son de trazo grueso (stroke 2.5&nbsp;px a 24&nbsp;px), esquinas redondeadas, en tinta.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden"><div style="height:150px;background:#C4841D;display:flex;align-items:flex-end;justify-content:center;padding-bottom:0"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:44px;height:22px;background:#8A5A12;border-radius:4px 4px 0 0"></div><div style="width:76px;height:24px;background:#A06915;border-radius:4px 4px 0 0"></div><div style="width:112px;height:26px;background:#8A5A12"></div></div></div><div style="padding:12px 14px;background:#FFFFFF;font-size:12px;font-weight:700">Huaca <span style="color:#8A7E6E;font-weight:500">· 3 rectángulos</span></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden"><div style="height:150px;background:#C93B2C;display:flex;align-items:flex-end;justify-content:center"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:100px;height:18px;background:repeating-linear-gradient(90deg,#FBF7F0 0 12px,#8F2117 12px 24px);border-radius:9px 9px 0 0"></div><div style="width:88px;height:52px;background:#8F2117;display:flex;align-items:flex-end;justify-content:center;gap:8px"><div style="width:22px;height:34px;background:#FBF7F0;border-radius:4px 4px 0 0"></div><div style="width:26px;height:26px;background:#F0A73F;border-radius:4px"></div></div></div></div><div style="padding:12px 14px;background:#FFFFFF;font-size:12px;font-weight:700">Huarique <span style="color:#8A7E6E;font-weight:500">· toldo a rayas</span></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden"><div style="height:150px;background:#157F6D;display:flex;align-items:flex-end;justify-content:center;gap:14px;padding-bottom:0"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:56px;height:56px;background:#0C5A4C;border-radius:50%"></div><div style="width:10px;height:26px;background:#0C5A4C"></div></div><div style="display:flex;flex-direction:column;align-items:center"><div style="width:38px;height:38px;background:#0C5A4C;border-radius:50%"></div><div style="width:8px;height:18px;background:#0C5A4C"></div></div></div><div style="padding:12px 14px;background:#FFFFFF;font-size:12px;font-weight:700">Parque <span style="color:#8A7E6E;font-weight:500">· círculo + tallo</span></div></div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:repeating-linear-gradient(45deg,#F3ECDF 0 10px,#EDE4D3 10px 20px)"><div style="height:150px;display:flex;align-items:center;justify-content:center"><span style="font-family:monospace;font-size:12px;color:#8A7E6E;background:#FBF7F0;padding:6px 10px;border-radius:6px;border:1px dashed #8A7E6E">ilustración: mercado</span></div><div style="padding:12px 14px;background:#FFFFFF;font-size:12px;font-weight:700;border-top:2px solid #1F1B16">Mercado <span style="color:#8A7E6E;font-weight:500">· por encargar</span></div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+      <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;padding:24px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="none" stroke="#1F1B16" stroke-width="5" stroke-dasharray="86 28" stroke-linecap="round" transform="rotate(-58 24 24)"></circle><path d="M27 1 L41 8 L28 16 Z" fill="var(--acento,#E8622C)"></path><rect x="18" y="18" width="12" height="12" rx="3" fill="#1F1B16"></rect></svg>
+        <span style="font-size:13px;font-weight:700">Vuelta</span>
+      </div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;padding:24px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg width="48" height="48" viewBox="0 0 48 48"><path d="M24 3C27 13 36 16 36 28a12 12 0 0 1-24 0C12 18 20 14 24 3Z" fill="var(--acento,#E8622C)"></path><circle cx="24" cy="31" r="6" fill="#FBF7F0"></circle></svg>
+        <span style="font-size:13px;font-weight:700">Racha</span>
+      </div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;padding:24px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg width="48" height="48" viewBox="0 0 48 48"><rect x="7" y="9" width="34" height="32" rx="4" fill="none" stroke="#1F1B16" stroke-width="4"></rect><rect x="15" y="17" width="18" height="16" fill="none" stroke="var(--acento,#E8622C)" stroke-width="3" stroke-dasharray="4 3"></rect></svg>
+        <span style="font-size:13px;font-weight:700">El Álbum</span>
+      </div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;padding:24px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg width="48" height="48" viewBox="0 0 48 48"><path d="M18 28 L15 45 L24 39 L33 45 L30 28 Z" fill="var(--acento,#E8622C)"></path><circle cx="24" cy="19" r="14" fill="#1F1B16"></circle><path d="M24 11 26.2 15.6 31.4 16.2 27.6 19.7 28.6 24.8 24 22.2 19.4 24.8 20.4 19.7 16.6 16.2 21.8 15.6 Z" fill="#FBF7F0"></path></svg>
+        <span style="font-size:13px;font-weight:700">Alcaldía</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 COMPONENTES -->
+  <section data-screen-label="05 Componentes" style="display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:16px">
+      <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:20px;color:var(--acento,#E8622C)">05</span>
+      <h2 style="font-family:var(--display,'Alfa Slab One'),serif;font-weight:400;font-size:36px;margin:0">Componentes</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 400px;gap:32px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:24px">
+
+        <!-- botón + chip -->
+        <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;padding:24px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#8A7E6E">BOTÓN PRIMARIO · CHIP DE RACHA</span>
+          <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+            <button style="background:var(--acento,#E8622C);color:#1F1B16;border:2px solid #1F1B16;border-radius:14px;padding:14px 28px;font-family:'Archivo',sans-serif;font-size:17px;font-weight:800;box-shadow:4px 4px 0 #1F1B16;cursor:pointer" style-hover="transform:translate(2px,2px);box-shadow:2px 2px 0 #1F1B16" style-active="transform:translate(4px,4px);box-shadow:0 0 0 #1F1B16">Date una vuelta</button>
+            <button style="background:transparent;color:#1F1B16;border:2px solid #1F1B16;border-radius:14px;padding:14px 28px;font-family:'Archivo',sans-serif;font-size:17px;font-weight:800;cursor:pointer" style-hover="background:#F3ECDF">Hoy no, gracias</button>
+            <div style="display:flex;align-items:center;gap:8px;background:#1F1B16;color:#FBF7F0;border-radius:999px;padding:8px 16px 8px 10px"><svg width="20" height="20" viewBox="0 0 48 48"><path d="M24 3C27 13 36 16 36 28a12 12 0 0 1-24 0C12 18 20 14 24 3Z" fill="var(--acento,#E8622C)"></path></svg><span style="font-size:14px;font-weight:800">6 días</span></div>
+          </div>
+          <p style="margin:0;font-size:13px;color:#5C5347;line-height:1.5">Sombra dura 4&nbsp;px en tinta (en RN: <span style="font-family:monospace">View</span> desplazada, sin blur). Texto siempre tinta sobre naranja, nunca blanco. Radio 14, altura mínima 52&nbsp;px.</p>
+        </div>
+
+        <!-- tarjeta vuelta -->
+        <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;padding:24px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#8A7E6E">TARJETA DE VUELTA</span>
+          <div style="background:#FBF7F0;border:2px solid #1F1B16;border-radius:16px;padding:18px;box-shadow:4px 4px 0 #1F1B16;max-width:400px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span style="background:#C93B2C;color:#FBF7F0;font-size:11px;font-weight:800;letter-spacing:.1em;padding:4px 10px;border-radius:999px">HUARIQUES</span>
+              <span style="display:flex;gap:4px;align-items:center"><span style="width:8px;height:8px;border-radius:50%;background:#1F1B16"></span><span style="width:8px;height:8px;border-radius:50%;background:#1F1B16"></span><span style="width:8px;height:8px;border-radius:50%;border:2px solid #1F1B16;box-sizing:border-box"></span><span style="font-size:11px;font-weight:700;margin-left:4px;color:#5C5347">Piernas</span></span>
+            </div>
+            <div style="font-size:18px;font-weight:800;line-height:1.25">El anticucho de doña Peta</div>
+            <div style="font-size:14px;font-weight:500;color:#5C5347">A 7 cuadras · Barranco · cierra 11 p.m.</div>
+            <button style="background:var(--acento,#E8622C);color:#1F1B16;border:2px solid #1F1B16;border-radius:12px;padding:11px;font-family:'Archivo',sans-serif;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px" style-hover="filter:brightness(1.05)">Date una vuelta</button>
+          </div>
+          <p style="margin:0;font-size:13px;color:#5C5347;line-height:1.5">Dificultad en jerga propia: <strong>Tranqui · Piernas · Leyenda</strong> (1–3 puntos). Distancias siempre en cuadras.</p>
+        </div>
+
+        <!-- figuritas -->
+        <div style="border:2px solid #1F1B16;border-radius:16px;background:repeating-linear-gradient(0deg,#FFFFFF 0 2px,#FDFAF4 2px 5px);padding:24px;display:flex;flex-direction:column;gap:18px">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#8A7E6E">FIGURITAS · MARCO TROQUELADO</span>
+          <div style="display:flex;gap:28px;flex-wrap:wrap">
+            <div style="width:192px;height:252px;background:#FFFFFF;clip-path:{{ troquel }};padding:14px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;filter:drop-shadow(3px 4px 0 rgba(31,27,22,.25))">
+              <div style="flex:1;background:#C93B2C;border-radius:6px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:64px;height:12px;background:repeating-linear-gradient(90deg,#FBF7F0 0 8px,#8F2117 8px 16px);border-radius:6px 6px 0 0"></div><div style="width:56px;height:34px;background:#8F2117;display:flex;align-items:flex-end;justify-content:center;gap:5px"><div style="width:14px;height:22px;background:#FBF7F0;border-radius:3px 3px 0 0"></div><div style="width:16px;height:16px;background:#F0A73F;border-radius:3px"></div></div></div></div>
+              <div style="font-size:13px;font-weight:800;line-height:1.2">Anticuchería Doña Peta</div>
+              <div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:#8A7E6E">N.º 034 · HUARIQUES · ¡CHAPADA!</div>
+            </div>
+            <div style="width:192px;height:252px;background:linear-gradient(135deg,#E9C15E,#C4841D 55%,#E9C15E);clip-path:{{ troquel }};padding:14px;box-sizing:border-box;display:flex;flex-direction:column;gap:8px;filter:drop-shadow(3px 4px 0 rgba(31,27,22,.25));position:relative">
+              <div style="flex:1;background:#8A5A12;border-radius:6px;display:flex;align-items:flex-end;justify-content:center"><div style="display:flex;flex-direction:column;align-items:center"><div style="width:30px;height:14px;background:#E9C15E;border-radius:3px 3px 0 0"></div><div style="width:50px;height:16px;background:#C4841D;border-radius:3px 3px 0 0"></div><div style="width:72px;height:18px;background:#E9C15E"></div></div></div>
+              <div style="font-size:13px;font-weight:800;line-height:1.2;color:#3B2A08">Huaca Pucllana</div>
+              <div style="font-size:10px;font-weight:800;letter-spacing:.08em;color:#5C4210">N.º 002 · HUACAS · ★ RARA</div>
+            </div>
+          </div>
+          <p style="margin:0;font-size:13px;color:#5C5347;line-height:1.5">Troquel dentado tipo cromo (en RN: PNG con transparencia o <span style="font-family:monospace">react-native-svg</span>). La rara lleva marco dorado plano — sin holográficos ni brillos animados. El Álbum es la única pantalla con textura de papel.</p>
+        </div>
+      </div>
+
+      <!-- phone -->
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <span style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#8A7E6E">UI SOBRE MAPA · HOME</span>
+        <div style="width:380px;height:780px;background:#F1E9DC;border:3px solid #1F1B16;border-radius:44px;overflow:hidden;position:relative;box-shadow:8px 8px 0 rgba(31,27,22,.15)">
+          <!-- mapa de manzanas -->
+          <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);grid-auto-rows:86px;gap:12px;padding:12px;box-sizing:border-box">
+            <sc-for list="{{ manzanas }}" as="m" hint-placeholder-count="40">
+              <div style="background:{{ m.c }};border-radius:10px"></div>
+            </sc-for>
+          </div>
+          <!-- pins -->
+          <div style="position:absolute;left:96px;top:230px;width:38px;height:38px;background:#C93B2C;border:3px solid #1F1B16;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center"><span style="transform:rotate(45deg);color:#FBF7F0;font-size:15px;font-weight:900;font-family:var(--display,'Alfa Slab One'),serif">H</span></div>
+          <div style="position:absolute;left:250px;top:330px;width:38px;height:38px;background:#157F6D;border:3px solid #1F1B16;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center"><span style="transform:rotate(45deg);color:#FBF7F0;font-size:15px;font-weight:900;font-family:var(--display,'Alfa Slab One'),serif">C</span></div>
+          <div style="position:absolute;left:170px;top:450px;width:44px;height:44px;background:var(--acento,#E8622C);border:3px solid #1F1B16;box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;filter:drop-shadow(2px 2px 0 rgba(31,27,22,.3))"><div style="width:16px;height:16px;border:3px solid #FBF7F0;border-radius:5px;transform:rotate(45deg)"></div></div>
+          <!-- header flotante -->
+          <div style="position:absolute;top:22px;left:16px;right:16px;background:#FBF7F0;border:2px solid #1F1B16;border-radius:18px;padding:14px 16px;box-shadow:3px 3px 0 #1F1B16;display:flex;justify-content:space-between;align-items:center;gap:10px">
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:17px">Bienvenido a la cuadra</span>
+              <span style="font-size:12px;font-weight:500;color:#5C5347">3 vueltas nuevas a menos de 10 cuadras</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;background:#1F1B16;color:#FBF7F0;border-radius:999px;padding:6px 12px 6px 8px;flex-shrink:0"><svg width="15" height="15" viewBox="0 0 48 48"><path d="M24 3C27 13 36 16 36 28a12 12 0 0 1-24 0C12 18 20 14 24 3Z" fill="var(--acento,#E8622C)"></path></svg><span style="font-size:12px;font-weight:800">6</span></div>
+          </div>
+          <!-- tarjeta inferior -->
+          <div style="position:absolute;left:16px;right:16px;bottom:96px;background:#FBF7F0;border:2px solid #1F1B16;border-radius:18px;padding:16px;box-shadow:3px 3px 0 #1F1B16;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="background:var(--acento,#E8622C);color:#1F1B16;font-size:10px;font-weight:800;letter-spacing:.1em;padding:3px 9px;border-radius:999px">VUELTA DE HOY</span><span style="font-size:11px;font-weight:700;color:#5C5347">Tranqui</span></div>
+            <span style="font-size:16px;font-weight:800">El anticucho de doña Peta</span>
+            <span style="font-size:13px;font-weight:500;color:#5C5347">A 7 cuadras · Huariques</span>
+            <button style="background:var(--acento,#E8622C);color:#1F1B16;border:2px solid #1F1B16;border-radius:12px;padding:11px;font-family:'Archivo',sans-serif;font-size:14px;font-weight:800;cursor:pointer">Date una vuelta</button>
+          </div>
+          <!-- tab bar -->
+          <div style="position:absolute;left:16px;right:16px;bottom:18px;background:#1F1B16;border-radius:18px;padding:10px 8px;display:flex;justify-content:space-around;align-items:center">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--acento,#E8622C)"><div style="width:18px;height:18px;border:3px solid currentColor;border-radius:6px;box-sizing:border-box"></div><span style="font-size:10px;font-weight:800">Mapa</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#8A7E6E"><div style="width:18px;height:18px;border:3px solid currentColor;border-radius:50%;border-right-color:transparent;box-sizing:border-box"></div><span style="font-size:10px;font-weight:700">Vueltas</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#8A7E6E"><div style="width:18px;height:18px;border:3px dashed currentColor;box-sizing:border-box;border-radius:3px"></div><span style="font-size:10px;font-weight:700">Álbum</span></div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:3px;color:#8A7E6E"><div style="width:18px;height:18px;background:currentColor;border-radius:50% 50% 0 50%"></div><span style="font-size:10px;font-weight:700">Perfil</span></div>
+          </div>
+        </div>
+        <p style="margin:0;font-size:13px;color:#5C5347;line-height:1.5;max-width:380px">El mapa usa la paleta papel (manzanas #EDE4D3/#E7DCC9, parques #BFD3A8) para que los pins de categoría y el naranja sean lo único que grita. Tarjetas flotantes: borde tinta 2&nbsp;px + sombra dura 3&nbsp;px.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 GUÍA DE USO -->
+  <section data-screen-label="06 Guía de uso" style="display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:16px">
+      <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:20px;color:var(--acento,#E8622C)">06</span>
+      <h2 style="font-family:var(--display,'Alfa Slab One'),serif;font-weight:400;font-size:36px;margin:0">Guía de uso</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:#FFFFFF">
+        <div style="background:#2F8F4E;color:#FBF7F0;padding:12px 20px;font-family:var(--display,'Alfa Slab One'),serif;font-size:18px">Sí</div>
+        <ul style="margin:0;padding:20px 20px 20px 38px;display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.5">
+          <li>Naranja solo para <strong>una</strong> acción principal por pantalla y para el momento "¡Chapada!".</li>
+          <li>Texto tinta sobre naranja (≈4.9:1, pasa AA). Tinta sobre papel para todo lo demás (≈14:1).</li>
+          <li>Colores de categoría en chips, pins y marcos de figurita — dosis chicas.</li>
+          <li>Distancias en cuadras, siempre: "a 7 cuadras", "recorriste 23 cuadras".</li>
+          <li>Sombras duras desplazadas, planas, en tinta.</li>
+          <li>Voz de amigo que conoce datos: "No la dejes morir en la puerta."</li>
+          <li>"La Llave" para la suscripción, con su dorado #C4841D.</li>
+        </ul>
+      </div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:#FFFFFF">
+        <div style="background:#A4211B;color:#FBF7F0;padding:12px 20px;font-family:var(--display,'Alfa Slab One'),serif;font-size:18px">No</div>
+        <ul style="margin:0;padding:20px 20px 20px 38px;display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.5">
+          <li>Texto blanco pequeño sobre naranja (≈3.2:1, falla AA).</li>
+          <li>Degradados de startup, morados tech, glassmorphism, blur.</li>
+          <li>Más de un color de categoría como protagonista en la misma vista.</li>
+          <li>Alfa Slab One en párrafos o bajo 20&nbsp;px.</li>
+          <li>Textura de papel fuera del Álbum.</li>
+          <li>"Premium", "misiones", "XP", "km" — el vocabulario es fijo: La Llave, Vueltas, Calle, cuadras.</li>
+          <li>Emojis en la UI: el carácter lo ponen la tipografía y el color.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 MASCOTA · CALATO -->
+  <section data-screen-label="07 Mascota · Calato" style="display:flex;flex-direction:column;gap:28px">
+    <div style="display:flex;align-items:baseline;gap:16px">
+      <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:20px;color:var(--acento,#E8622C)">07</span>
+      <h2 style="font-family:var(--display,'Alfa Slab One'),serif;font-weight:400;font-size:36px;margin:0">Calato, el de la cuadra</h2>
+    </div>
+    <p style="margin:0;max-width:680px;font-size:15px;line-height:1.6;color:#5C5347"><strong>Perro sin pelo del Perú (viringo).</strong> Patrimonio nacional, guardián de huacas de verdad y callejero con más Calle que nadie. Se llama Calato porque… no tiene pelo. No es un logo con patas: es <strong>quien te saca a caminar</strong>. La vuelta diaria no es una notificación — es SU paseo, y te lo va a cobrar. <strong>Diseño final V1.2:</strong> personaje con render 3D estilo película sobre la UI flat (la mascota tiene volumen, la interfaz no — el patrón Duolingo), proporciones de juguete, y su kit de explorador: mochila con brújula y pañuelo de patrón andino con llamitas.</p>
+
+    <div style="display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:stretch">
+      <!-- retrato -->
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:repeating-linear-gradient(45deg,#F3ECDF 0 10px,#EDE4D3 10px 20px);display:flex;flex-direction:column">
+        <div style="flex:1;min-height:280px;display:flex;align-items:center;justify-content:center"><span style="font-family:monospace;font-size:12px;color:#8A7E6E;background:#FBF7F0;padding:6px 10px;border-radius:6px;border:1px dashed #8A7E6E">asset: identidad/calato/base.png</span></div>
+        <div style="padding:12px 14px;background:#FFFFFF;font-size:12px;font-weight:700;border-top:2px solid #1F1B16">Retrato oficial (saludando) <span style="color:#2F8F4E;font-weight:700">· generado ✓</span></div>
+      </div>
+      <!-- construcción + expresiones -->
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;padding:20px;display:flex;flex-direction:column;gap:10px">
+          <span style="font-size:11px;font-weight:800;letter-spacing:.14em;color:#8A7E6E">CONSTRUCCIÓN</span>
+          <p style="margin:0;font-size:13px;line-height:1.55;color:#5C5347">Render 3D estilo película: luz suave de estudio, piel lisa SIN pelo, proporciones de juguete (cabeza ≈ mitad de su altura). Nunca se mezclan los mundos: ni Calato aplanado al estilo de los íconos, ni íconos con volumen. Rasgos innegociables: <strong>orejas de murciélago (una parada, una doblada) + mechón de UNA sola llama chica en el naranja de marca + lengua rosada SIEMPRE asomada de costado</strong>. Ojos ámbar a media asta (tranqui) por defecto.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <span style="display:flex;align-items:center;gap:6px;border:2px solid #1F1B16;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700"><span style="width:14px;height:14px;border-radius:50%;background:#6E5142;display:inline-block"></span>Piel #6E5142</span>
+            <span style="display:flex;align-items:center;gap:6px;border:2px solid #1F1B16;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700"><span style="width:14px;height:14px;border-radius:50%;background:#C9A88C;display:inline-block"></span>Panza #C9A88C</span>
+            <span style="display:flex;align-items:center;gap:6px;border:2px solid #1F1B16;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700"><span style="width:14px;height:14px;border-radius:50%;background:var(--acento,#E8622C);display:inline-block"></span>Mechón = acento</span>
+            <span style="display:flex;align-items:center;gap:6px;border:2px solid #1F1B16;border-radius:999px;padding:5px 12px;font-size:12px;font-weight:700"><span style="width:14px;height:14px;border-radius:50%;background:#1F1B16;display:inline-block"></span>Trazo tinta</span>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;flex:1">
+          <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(45deg,#F3ECDF 0 10px,#EDE4D3 10px 20px);display:flex;flex-direction:column"><div style="flex:1;min-height:96px;display:flex;align-items:center;justify-content:center"><span style="font-family:monospace;font-size:11px;color:#8A7E6E">busto</span></div><div style="padding:8px 10px;background:#FFFFFF;font-size:11px;font-weight:700;border-top:2px solid #1F1B16">Tranqui <span style="color:#8A7E6E;font-weight:500">= base ✓</span></div></div>
+          <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(45deg,#F3ECDF 0 10px,#EDE4D3 10px 20px);display:flex;flex-direction:column"><div style="flex:1;min-height:96px;display:flex;align-items:center;justify-content:center"><span style="font-family:monospace;font-size:11px;color:#8A7E6E">busto</span></div><div style="padding:8px 10px;background:#FFFFFF;font-size:11px;font-weight:700;border-top:2px solid #1F1B16">Juzgando <span style="color:#2F8F4E;font-weight:700">✓</span></div></div>
+          <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(45deg,#F3ECDF 0 10px,#EDE4D3 10px 20px);display:flex;flex-direction:column"><div style="flex:1;min-height:96px;display:flex;align-items:center;justify-content:center"><span style="font-family:monospace;font-size:11px;color:#8A7E6E">busto</span></div><div style="padding:8px 10px;background:#FFFFFF;font-size:11px;font-weight:700;border-top:2px solid #1F1B16">¡Chapada! <span style="color:#2F8F4E;font-weight:700">✓</span></div></div>
+          <div style="border:2px solid #1F1B16;border-radius:14px;overflow:hidden;background:repeating-linear-gradient(45deg,#F3ECDF 0 10px,#EDE4D3 10px 20px);display:flex;flex-direction:column"><div style="flex:1;min-height:96px;display:flex;align-items:center;justify-content:center"><span style="font-family:monospace;font-size:11px;color:#8A7E6E">busto</span></div><div style="padding:8px 10px;background:#FFFFFF;font-size:11px;font-weight:700;border-top:2px solid #1F1B16">Culpa <span style="color:#2F8F4E;font-weight:700">✓</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- assets oficiales -->
+    <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:#FFFFFF">
+      <div style="display:grid;grid-template-columns:170px 150px 1fr;gap:16px;padding:14px 24px;border-bottom:2px solid #1F1B16;font-size:11px;font-weight:800;letter-spacing:.12em;color:#8A7E6E"><span>ASSET OFICIAL</span><span>ARCHIVO</span><span>USO</span></div>
+      <div style="display:grid;grid-template-columns:170px 150px 1fr;gap:16px;padding:12px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Base (canon)</span><span style="font-size:12px;font-family:monospace;color:#8A7E6E">base.png</span><span style="font-size:13px;color:#5C5347">Referencia maestra — se adjunta en TODA generación nueva. Su expresión ES "Tranqui".</span></div>
+      <div style="display:grid;grid-template-columns:170px 150px 1fr;gap:16px;padding:12px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Retrato limpio</span><span style="font-size:12px;font-family:monospace;color:#8A7E6E">retrato.png</span><span style="font-size:13px;color:#5C5347">Ícono de app, stickers, avatar — frontal, silueta limpia.</span></div>
+      <div style="display:grid;grid-template-columns:170px 150px 1fr;gap:16px;padding:12px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Juzgando</span><span style="font-size:12px;font-family:monospace;color:#8A7E6E">juzgando.png</span><span style="font-size:13px;color:#5C5347">Push de racha en riesgo, recordatorios.</span></div>
+      <div style="display:grid;grid-template-columns:170px 150px 1fr;gap:16px;padding:12px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">¡Chapada!</span><span style="font-size:12px;font-family:monospace;color:#8A7E6E">chapada.png</span><span style="font-size:13px;color:#5C5347">Celebración al completar una Vuelta — confeti SOLO en colores de marca.</span></div>
+      <div style="display:grid;grid-template-columns:170px 150px 1fr;gap:16px;padding:12px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Culpa</span><span style="font-size:12px;font-family:monospace;color:#8A7E6E">culpa.png</span><span style="font-size:13px;color:#5C5347">Racha perdida — orejas de avión (triángulos caídos), lagrimita única.</span></div>
+      <div style="display:grid;grid-template-columns:170px 150px 1fr;gap:16px;padding:12px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Trote con correa</span><span style="font-size:12px;font-family:monospace;color:#8A7E6E">trote.png</span><span style="font-size:13px;color:#5C5347">Radar guiando al lugar — a cuatro patas (canon al correr), correa en la boca y lengua afuera igual.</span></div>
+      <div style="display:grid;grid-template-columns:170px 150px 1fr;gap:16px;padding:12px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">En la puerta</span><span style="font-size:12px;font-family:monospace;color:#8A7E6E">puerta.png</span><span style="font-size:13px;color:#5C5347">Push de insistencia — espera serena (NO triste), puerta verde Caletas #157F6D.</span></div>
+      <div style="padding:12px 24px;font-size:12px;color:#8A7E6E">Los originales en máxima resolución viven en el repo: <span style="font-family:monospace">docs/identidad/calato/</span>. Generados con Nano Banana Pro (Gemini); técnica de consistencia: doble referencia con roles (base = identidad, segunda imagen = pose/emoción).</div>
+    </div>
+
+    <!-- la escalada -->
+    <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:#FFFFFF">
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:16px;padding:14px 24px;border-bottom:2px solid #1F1B16;font-size:11px;font-weight:800;letter-spacing:.12em;color:#8A7E6E"><span>MOMENTO</span><span>CALATO DICE</span></div>
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:16px;padding:14px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Push matutino</span><span style="font-size:15px">"Hay 3 vueltas a menos de 10 cuadras. Calato ya está en la puerta."</span></div>
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:16px;padding:14px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Racha en riesgo</span><span style="font-size:15px">"Tu racha cumple 6 días. Calato está mirando la correa. Fijamente."</span></div>
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:16px;padding:14px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Insistencia (última del día)</span><span style="font-size:15px">"Calato lleva 4 horas sentado en la puerta. No es presión. (Es presión.)"</span></div>
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:16px;padding:14px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">Racha perdida</span><span style="font-size:15px">"Calato se comió tu racha. Dice que fue un accidente. Los dos sabemos que no."</span></div>
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:16px;padding:14px 24px;align-items:center;border-bottom:1px solid #EDE5D8"><span style="font-size:13px;font-weight:700">¡Chapada!</span><span style="font-size:15px">"¡Chapada! Calato ya le ladró la noticia a todo el barrio."</span></div>
+      <div style="display:grid;grid-template-columns:190px 1fr;gap:16px;padding:14px 24px;align-items:center"><span style="font-size:13px;font-weight:700">Alcaldía perdida</span><span style="font-size:15px">"Te quitaron la alcaldía. Calato no te defendió porque le dieron un anticucho. Recuperala."</span></div>
+    </div>
+
+    <!-- regla duolingo -->
+    <div style="background:#1F1B16;border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:10px">
+      <strong style="color:#F6EFE4;font-size:16px">La regla de las dos caras</strong>
+      <p style="margin:0;color:#B7AB99;font-size:14px;line-height:1.6;max-width:760px"><strong style="color:#F6EFE4">En la app</strong>, Calato insiste con cariño: culpa liviana, 1–2 frases, siempre gracioso, jamás pesado. <strong style="color:#F6EFE4">El Calato desquiciado</strong> (secuestra figuritas, aparece en tu ventana a las 3 a.m., manda cartas de abogado por la racha) vive SOLO en el TikTok e Instagram <span style="color:var(--acento,#E8622C)">@appcuadra</span>. El meme se cultiva afuera; la app nunca cae mal. Máximo 2 notificaciones con Calato por día — la insistencia es el chiste, no la experiencia.</p>
+    </div>
+
+    <!-- sí / no mascota -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:#FFFFFF">
+        <div style="background:#2F8F4E;color:#FBF7F0;padding:12px 20px;font-family:var(--display,'Alfa Slab One'),serif;font-size:18px">Calato sí</div>
+        <ul style="margin:0;padding:20px 20px 20px 38px;display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.5">
+          <li>Onboarding: es él quien te recibe ("Bienvenido a la cuadra").</li>
+          <li>Estados vacíos del Álbum y de Vueltas — con una frase, no un párrafo.</li>
+          <li>Pushes y celebración de ¡Chapada!.</li>
+          <li>Junto al chip de racha: la llama es el fuego, Calato es la culpa.</li>
+          <li>En el radar, trotando adelante tuyo hacia el lugar.</li>
+          <li>Stickers de WhatsApp y merch — nació para eso.</li>
+          <li>Dos patas para posar y gesticular; al correr, trotar o esperar el paseo <strong>se le escapa el perro</strong> y baja a cuatro. Ambas son canon.</li>
+          <li>Escenarios y confeti SIEMPRE en paleta de marca (puerta verde Caletas, confeti de categorías).</li>
+        </ul>
+      </div>
+      <div style="border:2px solid #1F1B16;border-radius:16px;overflow:hidden;background:#FFFFFF">
+        <div style="background:#A4211B;color:#FBF7F0;padding:12px 20px;font-family:var(--display,'Alfa Slab One'),serif;font-size:18px">Calato no</div>
+        <ul style="margin:0;padding:20px 20px 20px 38px;display:flex;flex-direction:column;gap:12px;font-size:14px;line-height:1.5">
+          <li>Flotando sobre el mapa ni repetido en cada pantalla — dosis, como el naranja.</li>
+          <li>En el logo: el isotipo sigue siendo la manzana. Calato es la voz, no la marca.</li>
+          <li>Hablando en párrafos largos o poniéndose vulgar — 1–2 frases, cariño de barrio.</li>
+          <li>Con degradados, brillos o pelo (obvio).</li>
+          <li>Bloqueando acciones: Calato insiste, nunca castiga ni interrumpe.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="border-top:4px solid #1F1B16;padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <span style="font-family:var(--display,'Alfa Slab One'),serif;font-size:20px">Nuevo en la cuadra → Vecino/a → Callejero/a → Casero/a → Cronista → Leyenda del barrio</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.12em;color:#8A7E6E">CUADRA · IDENTIDAD V1.2</span>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;acento&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#E8622C&quot;,&quot;options&quot;:[&quot;#E8622C&quot;,&quot;#D6452F&quot;,&quot;#DE8F16&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;},&quot;fuenteDisplay&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Alfa Slab One&quot;,&quot;options&quot;:[&quot;Alfa Slab One&quot;,&quot;Shrikhand&quot;,&quot;Titan One&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marca&quot;}}">
+class Component extends DCLogic {
+  componentDidMount(){ this.applyVars(); }
+  componentDidUpdate(){ this.applyVars(); }
+  applyVars(){
+    const r = document.documentElement.style;
+    r.setProperty('--acento', this.props.acento ?? '#E8622C');
+    r.setProperty('--display', "'" + (this.props.fuenteDisplay ?? 'Alfa Slab One') + "'");
+  }
+  renderVals(){
+    // troquel: borde dentado tipo cromo (192x252, diente 12px, prof 6px)
+    if(!this._troquel){
+      const w=192,h=252,t=12,d=6,p=[];
+      for(let x=0;x<w;x+=t){p.push([x,d],[x+t/2,0],[x+t,d]);}
+      for(let y=d;y<h-d;y+=t){p.push([w-d,y],[w,Math.min(y+t/2,h-d)],[w-d,Math.min(y+t,h-d)]);}
+      for(let x=w;x>0;x-=t){p.push([x,h-d],[x-t/2,h],[x-t,h-d]);}
+      for(let y=h-d;y>d;y-=t){p.push([d,y],[0,Math.max(y-t/2,d)],[d,Math.max(y-t,d)]);}
+      this._troquel='polygon('+p.map(q=>q[0]+'px '+q[1]+'px').join(',')+')';
+    }
+    if(!this._manzanas){
+      const tones=['#EDE4D3','#E7DCC9','#EDE4D3','#E2D6BF'];
+      this._manzanas=Array.from({length:45},(_,i)=>({c: i===7||i===23 ? '#BFD3A8' : tones[(i*7+3)%4]}));
+    }
+    return { troquel:this._troquel, manzanas:this._manzanas };
+  }
+}
+</script>
+</body>
+</html>
