@@ -679,15 +679,52 @@
       <div class="col">
         <div class="tel">
           <div class="status"><span>9:41</span><span>▮▮▮</span></div>
-          <div class="pad" style="padding-top:14px"><h3 class="d" style="font-size:27px;margin:0">Las vueltas de hoy</h3></div>
-          <div style="display:flex;flex-direction:column;align-items:center;padding:52px 26px 0;gap:16px;text-align:center">
-            <div style="width:180px;height:180px;border-radius:50%;overflow:hidden;border:3px solid var(--tinta);box-shadow:5px 5px 0 var(--tinta)"><img src="./calato/culpa.jpg" style="width:100%;height:100%;object-fit:cover"></div>
-            <span class="d" style="font-size:25px;line-height:1.15">Ya chapaste<br>las tres de hoy</span>
-            <p style="font-size:14px;line-height:1.5;margin:0;color:var(--suave)">Calato dice que tres está bien, pero lo dice con esa cara. Mañana a las 6 a.m. hay tres nuevas.</p>
+          <div class="pad" style="padding-top:12px;display:flex;justify-content:space-between;align-items:baseline">
+            <h3 class="d" style="font-size:25px;margin:0">Las vueltas de hoy</h3>
+            <span class="chip" style="background:var(--ok);color:var(--papel)">3 DE 3</span>
           </div>
-          <div class="pad" style="position:absolute;left:0;right:0;bottom:88px;display:flex;flex-direction:column;gap:10px">
-            <div class="btn ghost">Ver mi Álbum</div>
+          <div style="display:flex;flex-direction:column;align-items:center;padding:14px 24px 0;gap:9px;text-align:center">
+            <div style="width:118px;height:118px;border-radius:50%;overflow:hidden;border:3px solid var(--tinta);box-shadow:4px 4px 0 var(--tinta)"><img src="./calato/culpa.jpg" style="width:100%;height:100%;object-fit:cover"></div>
+            <span class="d" style="font-size:23px;line-height:1.15">Ya chapaste<br>las tres de hoy</span>
+            <p style="font-size:13px;line-height:1.45;margin:0;color:var(--suave)">Calato dice que está bien. Lo dice con esa cara.</p>
+          </div>
+          <div class="pad" style="padding-top:14px">
+            <div class="card" style="padding:13px;display:flex;flex-direction:column;gap:10px;background:#FFF">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <span class="lbl">LO QUE CHAPASTE HOY</span>
+                <span class="lbl" style="color:var(--acento)">+90 CALLE</span>
+              </div>
+              <div style="display:flex;gap:8px;justify-content:center">
+                <div style="width:80px;height:100px;background:#FFF;clip-path:{{ troquelMini }};padding:6px;box-sizing:border-box;display:flex;flex-direction:column;gap:3px;filter:drop-shadow(2px 3px 0 rgba(31,27,22,.22))">
+                  <div style="flex:1;background:var(--hua);border-radius:4px"></div>
+                  <div style="font-size:7px;font-weight:800;letter-spacing:.05em;color:var(--meta)">N.º 034</div>
+                </div>
+                <div style="width:80px;height:100px;background:#FFF;clip-path:{{ troquelMini }};padding:6px;box-sizing:border-box;display:flex;flex-direction:column;gap:3px;filter:drop-shadow(2px 3px 0 rgba(31,27,22,.22))">
+                  <div style="flex:1;background:var(--cal);border-radius:4px"></div>
+                  <div style="font-size:7px;font-weight:800;letter-spacing:.05em;color:var(--meta)">N.º 012</div>
+                </div>
+                <div style="width:80px;height:100px;background:linear-gradient(135deg,#E9C15E,#C4841D 55%,#E9C15E);clip-path:{{ troquelMini }};padding:6px;box-sizing:border-box;display:flex;flex-direction:column;gap:3px;filter:drop-shadow(2px 3px 0 rgba(31,27,22,.22))">
+                  <div style="flex:1;background:#8A5A12;border-radius:4px"></div>
+                  <div style="font-size:7px;font-weight:800;letter-spacing:.05em;color:#5C4210">★ RARA</div>
+                </div>
+              </div>
+              <div style="height:1px;background:var(--linea)"></div>
+              <div style="display:flex;justify-content:space-around;text-align:center">
+                <div style="display:flex;flex-direction:column"><span class="d" style="font-size:19px">23</span><span class="lbl">CUADRAS</span></div>
+                <div style="width:1px;background:var(--linea)"></div>
+                <div style="display:flex;flex-direction:column"><span class="d" style="font-size:19px">48</span><span class="lbl">MINUTOS</span></div>
+                <div style="width:1px;background:var(--linea)"></div>
+                <div style="display:flex;flex-direction:column"><span class="d" style="font-size:19px;color:var(--acento)">7</span><span class="lbl">RACHA</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pad" style="position:absolute;left:0;right:0;bottom:88px;display:flex;flex-direction:column;gap:9px">
+            <div style="display:flex;align-items:center;justify-content:center;gap:7px">
+              <div style="width:6px;height:6px;border-radius:50%;background:var(--acento)"></div>
+              <span style="font-size:12px;font-weight:700;color:var(--suave)">Tres nuevas en 8 h 20 min</span>
+            </div>
             <div class="btn oro">Pedir 3 más con La Llave</div>
+            <div style="text-align:center;font-size:13px;font-weight:700;color:var(--suave)">Ver mi Álbum</div>
           </div>
           <div class="tabs">
             <div class="tab"><div style="width:17px;height:17px;border:3px solid currentColor;border-radius:5px;box-sizing:border-box"></div>Mapa</div>
@@ -820,6 +857,7 @@ class Component extends DCLogic {
       this._v={
         troquel:this.troquelPath(214,282,12,6),
         troquelChico:this.troquelPath(96,118,8,4),
+        troquelMini:this.troquelPath(80,100,8,4),
         manzanas, confeti, figuritas
       };
     }
