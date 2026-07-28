@@ -7,16 +7,20 @@
  * `/crear-cuenta` y no se puede auditar una ruta directa — que es justo lo que
  * hace falta para revisar una pantalla sin sesión en el navegador.
  *
- *   node scripts/servir-web.mjs [puerto]     # por defecto 8090
+ *   node scripts/servir-web.mjs [puerto] [directorio]
+ *     - por defecto: puerto 8090 sirviendo `app/dist`
+ *     - para el inspector de GLB: `node scripts/servir-web.mjs 8091 scripts/inspector`
  */
 
 import { createReadStream, existsSync, statSync } from "node:fs";
 import { createServer } from "node:http";
-import { dirname, extname, join, normalize } from "node:path";
+import { dirname, extname, isAbsolute, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..", "app", "dist");
+const BASE = join(dirname(fileURLToPath(import.meta.url)), "..");
 const PUERTO = Number(process.argv[2]) || 8090;
+const DIR = process.argv[3] || "app/dist";
+const RAIZ = isAbsolute(DIR) ? DIR : resolve(BASE, DIR);
 
 const TIPOS = {
   ".html": "text/html; charset=utf-8",
@@ -33,7 +37,10 @@ const TIPOS = {
 };
 
 if (!existsSync(RAIZ)) {
-  console.error(`No existe ${RAIZ}. Corré primero:  cd app && npx expo export --platform web`);
+  console.error(
+    `No existe ${RAIZ}.` +
+      (DIR === "app/dist" ? "  Corré primero:  cd app && npx expo export --platform web" : "")
+  );
   process.exit(1);
 }
 

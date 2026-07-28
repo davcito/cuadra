@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inspector GLB — Cuadra</title>
+<!--
+  Inspector de modelos 3D riggeados.
+
+  Por qué existe: un GLB no se puede juzgar con una captura del visor del
+  generador. Hay que verlo desde varios ángulos, con luz neutra, con el
+  esqueleto puesto y con la animación corriendo — y hay que poder MEDIRLO
+  (triángulos, huesos, clips) en vez de opinar. Esto lo hace todo desde el
+  navegador, sin tocar la app.
+
+  Uso:  index.html?url=<url del .glb>[&fondo=papel|oscuro][&auto=1]
+
+  Desde consola (así lo maneja Claude):
+    __vista('frente'|'lado'|'atras'|'tresCuartos'|'cabeza'|'arriba')
+    __anim(indice, segundos)   // posiciona la animación en un instante
+    __stats                    // { triangulos, huesos, clips, materiales, ... }
+    __listo                    // true cuando el modelo terminó de cargar
+-->
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #2B2B2B; }
+  canvas { display: block; }
+  #hud {
+    position: fixed; top: 10px; left: 10px; z-index: 10;
+    font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #F2EDE4; background: rgba(0,0,0,.62); backdrop-filter: blur(6px);
+    padding: 10px 12px; border-radius: 8px; white-space: pre; pointer-events: none;
+  }
+  #err { color: #FF8A7A; }
+</style>
+</head>
+<body>
+<div id="hud">cargando…</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+
+const q = new URLSearchParams(location.search);
+const URL_GLB = q.get("url");
+const FONDOS = { papel: 0xFBF7F0, oscuro: 0x2B2B2B, tinta: 0x1F1B16, verde: 0x157F6D };
+const FONDO = FONDOS[q.get("fondo")] ?? FONDOS.oscuro;
+
+const hud = document.getElementById("hud");
+window.__listo = false;
+window.__stats = null;
+
+const escena = new THREE.Scene();
+escena.background = new THREE.Color(FONDO);
+
+const camara = new THREE.PerspectiveCamera(35, innerWidth / innerHeight, 0.01, 100);
+const render = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+render.setPixelRatio(Math.min(devicePixelRatio, 2));
+render.setSize(innerWidth, innerHeight);
+render.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(render.domElement);
+
+// Luz neutra de estudio: NO queremos dramatismo, queremos ver el color real
+// y si la malla tiene facetas feas.
+escena.add(new THREE.HemisphereLight(0xffffff, 0x8a7e6e, 2.2));
+const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(2, 3, 4); escena.add(key);
+const fill = new THREE.DirectionalLight(0xffffff, 0.7); fill.position.set(-3, 1, 2); escena.add(fill);
+const rim = new THREE.DirectionalLight(0xffffff, 0.9); rim.position.set(0, 2, -4); escena.add(rim);
+
+let mezclador = null, clips = [], centro = new THREE.Vector3(), radio = 1;
+
+function encuadrar(vista = "frente") {
+  const d = radio * 3.1;
+  const p = {
+    frente:      [0, 0, d],
+    lado:        [d, 0, 0],
+    atras:       [0, 0, -d],
+    tresCuartos: [d * 0.7, radio * 0.35, d * 0.7],
+    arriba:      [0, d * 0.9, d * 0.35],
+    cabeza:      [0, radio * 0.62, radio * 1.5],
+  }[vista] ?? [0, 0, d];
+  camara.position.set(centro.x + p[0], centro.y + p[1], centro.z + p[2]);
+  camara.lookAt(vista === "cabeza" ? new THREE.Vector3(centro.x, centro.y + radio * 0.6, centro.z) : centro);
+}
+window.__vista = (v) => { encuadrar(v); render.render(escena, camara); return v; };
+
+window.__anim = (i = 0, t = 0) => {
+  if (!mezclador || !clips[i]) return null;
+  mezclador.stopAllAction();
+  const accion = mezclador.clipAction(clips[i]);
+  accion.play();
+  mezclador.setTime(0);
+  mezclador.update(t);
+  render.render(escena, camara);
+  return { clip: clips[i].name, duracion: +clips[i].duration.toFixed(2), en: t };
+};
+
+if (!URL_GLB) {
+  hud.innerHTML = '<span id="err">Falta ?url=&lt;url del .glb&gt;</span>';
+} else {
+  new GLTFLoader().load(
+    URL_GLB,
+    (gltf) => {
+      const raiz = gltf.scene;
+      escena.add(raiz);
+
+      // Medidas reales, no impresiones.
+      let triangulos = 0, huesos = 0, materiales = new Set(), texturas = new Set(), conPiel = 0;
+      raiz.traverse((o) => {
+        if (o.isMesh) {
+          const g = o.geometry;
+          triangulos += (g.index ? g.index.count : g.attributes.position.count) / 3;
+          [].concat(o.material).forEach((m) => {
+            if (!m) return;
+            materiales.add(m.name || m.uuid);
+            ["map","normalMap","roughnessMap","metalnessMap","emissiveMap"].forEach((k) => {
+              if (m[k]) texturas.add(k);
+            });
+          });
+          if (o.isSkinnedMesh) conPiel++;
+        }
+        if (o.isBone) huesos++;
+      });
+
+      const caja = new THREE.Box3().setFromObject(raiz);
+      caja.getCenter(centro);
+      const tam = caja.getSize(new THREE.Vector3());
+      radio = Math.max(tam.x, tam.y, tam.z) / 2;
+
+      clips = gltf.animations || [];
+      if (clips.length) {
+        mezclador = new THREE.AnimationMixer(raiz);
+        mezclador.clipAction(clips[0]).play();
+      }
+
+      window.__stats = {
+        triangulos: Math.round(triangulos),
+        huesos,
+        mallasConPiel: conPiel,
+        materiales: materiales.size,
+        mapas: [...texturas],
+        clips: clips.map((c) => ({ nombre: c.name, duracion: +c.duration.toFixed(2), pistas: c.tracks.length })),
+        alto_m: +tam.y.toFixed(3),
+        ancho_m: +tam.x.toFixed(3),
+        fondo_m: +tam.z.toFixed(3),
+      };
+
+      hud.textContent =
+        `triángulos  ${window.__stats.triangulos.toLocaleString()}\n` +
+        `huesos      ${huesos}${conPiel ? "  (malla con piel ✓)" : "  ⚠ SIN piel"}\n` +
+        `clips       ${clips.length ? clips.map((c) => `${c.name} (${c.duration.toFixed(1)}s)`).join(", ") : "ninguno"}\n` +
+        `tamaño      ${tam.x.toFixed(2)} × ${tam.y.toFixed(2)} × ${tam.z.toFixed(2)} m\n` +
+        `mapas       ${[...texturas].join(", ") || "ninguno"}`;
+
+      encuadrar(q.get("vista") || "frente");
+      window.__listo = true;
+    },
+    undefined,
+    (e) => { hud.innerHTML = `<span id="err">no se pudo cargar el GLB\n${e?.message || e}</span>`; }
+  );
+}
+
+const reloj = new THREE.Clock();
+const auto = q.get("auto") === "1";
+(function bucle() {
+  requestAnimationFrame(bucle);
+  const dt = reloj.getDelta();
+  if (auto && mezclador) mezclador.update(dt);
+  render.render(escena, camara);
+})();
+
+addEventListener("resize", () => {
+  camara.aspect = innerWidth / innerHeight;
+  camara.updateProjectionMatrix();
+  render.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>
