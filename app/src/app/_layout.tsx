@@ -19,6 +19,9 @@ import { SessionProvider, useSession } from "@/lib/auth";
 
 SplashScreen.preventAutoHideAsync();
 
+// Ancla del stack sin sesión: la app abre en la Bienvenida, no en el login.
+export const unstable_settings = { initialRouteName: "bienvenida" };
+
 function RootNavigator() {
   const { session, isLoading } = useSession();
 
@@ -48,7 +51,11 @@ function RootNavigator() {
       <Stack.Protected guard={!!session}>
         <Stack.Screen name="(app)" />
       </Stack.Protected>
+      {/* Sin sesión: la promesa antes del trámite (prototipo, flujo 01).
+          Bienvenida → Permisos → Entrar. */}
       <Stack.Protected guard={!session}>
+        <Stack.Screen name="bienvenida" />
+        <Stack.Screen name="permisos" />
         <Stack.Screen name="sign-in" />
       </Stack.Protected>
     </Stack>

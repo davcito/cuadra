@@ -14,9 +14,28 @@ Estados: ✅ idéntico · 🟡 existe pero difiere (con la lista de deltas) · �
 
 | # | Pantalla | Estado | Notas |
 |---|---|---|---|
-| 1 | Bienvenida (onboarding 1/3) | ❌ | No existe: la app abre directo en el login. E0.2 |
+| 1 | **Bienvenida (onboarding 1/3)** | ✅ | Construida en E0.2. Es la ruta de entrada sin sesión (`unstable_settings.initialRouteName`) |
 | 2 | **Entrar / Crear cuenta** | ✅ | Corregida en E0.1 — ver detalle abajo |
-| 3 | Permisos (ubicación + cámara) | ❌ | No existe. E0.2 |
+| 3 | **Permisos (ubicación + cámara)** | ✅ | Construida en E0.2 |
+
+**Flujo completo verificado:** Bienvenida → *Date una vuelta* → Permisos → *Dale, permitir* (pide ubicación de verdad) → Entrar. El atajo *Ya tengo cuenta* salta directo al login.
+
+**Medición contra el prototipo** (leída del DOM, no a ojo):
+
+| Elemento | Prototipo | Medido |
+|---|---|---|
+| Título Bienvenida | Alfa Slab One 34 px | ✅ `AlfaSlabOne_400Regular 34px` |
+| Párrafo Bienvenida | 15 px | ✅ `Archivo_400Regular 15px` |
+| Botón principal | 800, 15 px | ✅ `Archivo_800ExtraBold 15px` |
+| Link secundario | 700, 13 px | ✅ `Archivo_700Bold 13px` |
+| Título Permisos | Alfa Slab One 28 px | ✅ `AlfaSlabOne_400Regular 28px` |
+| Título de tarjeta | 800, 15 px | ✅ `Archivo_800ExtraBold 15px` |
+| Meta de tarjeta | 12 px | ✅ `Archivo_400Regular 12px` |
+| Caja de privacidad | borde `2px dashed #C9BCA3` | ✅ `dashed 2px rgb(201,188,163)` |
+
+**Decisión de producto en Permisos:** la pantalla explica los dos permisos, pero **solo solicita ubicación**. La cámara se pide en su momento (al chapar, iteración E2): pedir dos permisos de golpe dispara más rechazos y el de cámara sin contexto no se entiende. El prototipo no dice lo contrario — muestra la explicación, no el momento de la solicitud.
+
+**Pendiente menor:** hoy la Bienvenida aparece cada vez que no hay sesión (también al cerrar sesión). Falta la marca "ya la vi" en AsyncStorage para que sea solo de primera vez.
 
 ### Detalle de la pantalla 2 (corregida el 2026-07-28)
 
@@ -82,6 +101,12 @@ Estados: ✅ idéntico · 🟡 existe pero difiere (con la lista de deltas) · �
 
 ## Resumen honesto
 
-**1 de 18 verificada idéntica** · 6 existen pero difieren o están sin auditar · 11 no existen todavía.
+**3 de 18 verificadas idénticas** (todo el flujo 01 · Entrar) · 6 existen pero difieren o están sin auditar · 9 no existen todavía.
 
-Antes de E0.1 el conteo real era **0 de 18**, aunque el estado del proyecto se reportaba como "6 pantallas funcionales". Ese error de criterio —confundir *"trae datos"* con *"cumple el diseño"*— es el que originó la iteración E0 y esta tabla.
+| Momento | Idénticas | Difieren / sin auditar | No existen |
+|---|---|---|---|
+| Antes de E0 (reportado como "6 funcionales") | **0** | 6 | 12 |
+| Después de E0.1 | 1 | 6 | 11 |
+| **Después de E0.2 (hoy)** | **3** | 6 | 9 |
+
+El error de criterio que originó esta tabla fue confundir *"trae datos"* con *"cumple el diseño"*. Se corrige midiendo, no prometiendo.
