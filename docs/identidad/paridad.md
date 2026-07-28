@@ -17,11 +17,13 @@ Estados: ✅ idéntico · 🟡 existe pero difiere (con la lista de deltas) · �
 | 1 | **Bienvenida (onboarding 1/3)** | ✅ | Construida en E0.2. Es la ruta de entrada sin sesión (`unstable_settings.initialRouteName`) |
 | 2 | **Entrar / Crear cuenta** | ✅ | Corregida en E0.1 — ver detalle abajo |
 | 3 | **Permisos (ubicación + cámara)** | ✅ | Construida en E0.2 |
-| 19 | **Crear cuenta** | ❌ | Diseñada el 2026-07-28, sin construir. Hoy el registro **reusa el formulario de Entrar**: mismo `signUp` sin nombre, sin confirmación de contraseña, sin términos |
-| 20 | **Revisá tu correo** (post-registro) | ❌ | Diseñada el 2026-07-28. Hoy es un `Alert.alert("Casi listo", …)`, no una pantalla |
-| 21 | **Crear cuenta · errores en línea** | ❌ | Diseñada el 2026-07-28. Hoy los errores salen como popup del sistema **con el texto crudo de Supabase, en inglés** |
+| 19 | **Crear cuenta** | 🟡 | **Construida** el 2026-07-28 (`crear-cuenta.tsx`). Campo NOMBRE → `options.data.username` → el trigger `handle_new_user` ya lo leía: **sin migración**. Medida en navegador a 430 × 932; falta la captura del iPhone |
+| 20 | **Revisá tu correo** (post-registro) | 🟡 | **Construida** (`revisa-correo.tsx`) — reemplaza el `Alert.alert("Casi listo", …)`. Calato en la puerta + sello con el correo + reenviar. Falta la captura del iPhone |
+| 21 | **Crear cuenta · errores en línea** | 🟡 | **Construida** como ESTADOS de la 19, no como pantalla aparte: `<Campo error>` pinta el borde de rojo y reemplaza la nota. Los errores de Supabase se traducen a la voz de marca (venían crudos y en inglés) |
 
-**Flujo completo verificado:** Bienvenida → *Date una vuelta* → Permisos → *Dale, permitir* (pide ubicación de verdad) → Entrar. El atajo *Ya tengo cuenta* salta directo al login.
+**Flujo completo verificado:** Bienvenida → *Date una vuelta* → Permisos → *Dale, permitir* (pide ubicación de verdad) → Entrar → *Crear cuenta* → registro → *Revisá tu correo*. El atajo *Ya tengo cuenta* salta directo al login.
+
+**Verificación en navegador (nueva capacidad, 2026-07-28):** el registro es una ruta SIN sesión, así que se puede auditar en la build web. Con `npm run web:preview` a 430 × 932 quedó comprobado el ciclo entero: botón apagado con el formulario vacío → contraseña corta muestra **"Te faltan 3 caracteres."** en el campo (no un popup) → al completar y aceptar términos el botón enciende naranja con su sombra dura. Cero errores de consola. Lo que la web NO prueba sigue siendo lo mismo: las safe areas.
 
 **Medición contra el prototipo** (leída del DOM, no a ojo):
 
@@ -161,7 +163,7 @@ de `BottomTabItem` no vive en ningún archivo nuestro.
 
 ## Resumen honesto
 
-**3 de 21 verificadas idénticas** · 6 existen pero difieren o están sin auditar · 12 no existen todavía.
+**3 de 21 verificadas idénticas** · 9 existen pero difieren o esperan la captura del dispositivo · 9 no existen todavía.
 
 El denominador **subió de 18 a 21** el 2026-07-28: al auditar el botón "Crear cuenta" apareció que la pantalla nunca existió — ni en el código ni en el prototipo. Se diseñaron las 3 que faltaban (19, 20, 21). Un denominador que crece no es un retroceso: es dejar de contar sobre un mapa incompleto.
 
@@ -170,6 +172,7 @@ El denominador **subió de 18 a 21** el 2026-07-28: al auditar el botón "Crear 
 | Antes de E0 (reportado como "6 funcionales") | **0** | 6 | 12 | 18 |
 | Después de E0.1 | 1 | 6 | 11 | 18 |
 | Después de E0.2 | **3** | 6 | 9 | 18 |
-| **Hoy (registro diseñado + barra corregida)** | **3** | 6 | **12** | **21** |
+| Hoy · registro diseñado + barra corregida | **3** | 6 | 12 | 21 |
+| **Hoy · registro CONSTRUIDO (19, 20, 21)** | **3** | **9** | **9** | **21** |
 
 El error de criterio que originó esta tabla fue confundir *"trae datos"* con *"cumple el diseño"*. Se corrige midiendo, no prometiendo.

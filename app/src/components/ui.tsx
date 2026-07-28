@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import {
   Pressable,
   StyleSheet,
@@ -10,7 +10,7 @@ import {
   type TextStyle,
   type ViewStyle,
 } from "react-native";
-import Svg, { Circle, Rect } from "react-native-svg";
+import Svg, { Circle, Path, Rect } from "react-native-svg";
 
 import { colores, esc, escala, fuentes, medidas, radios, sombras } from "@/lib/theme";
 
@@ -240,21 +240,115 @@ export function Isotipo({ size = 42 }: { size?: number }) {
   );
 }
 
-/** Campo de formulario con su etiqueta encima (prototipo, pantalla 2). */
+/**
+ * Campo de formulario con su etiqueta encima (prototipo, pantallas 2 y 19).
+ *
+ * `nota` = la ayuda en gris bajo el campo ("Mínimo 6 caracteres"). `error` la
+ * reemplaza y pinta el borde de rojo: el prototipo (teléfono 21) muestra el
+ * error EN LÍNEA, no como popup del sistema con el texto crudo de Supabase.
+ * `conOjo` agrega el botón de mostrar/ocultar de la pantalla de registro.
+ */
 export function Campo({
   etiqueta,
+  nota,
+  error,
+  conOjo,
   style,
   ...props
-}: TextInputProps & { etiqueta: string; style?: StyleProp<ViewStyle> }) {
+}: TextInputProps & {
+  etiqueta: string;
+  nota?: string;
+  error?: string;
+  conOjo?: boolean;
+  style?: StyleProp<ViewStyle>;
+}) {
+  const [oculto, setOculto] = useState(true);
+
   return (
-    <View style={[{ gap: 7 }, style]}>
+    <View style={[{ gap: esc(7) }, style]}>
       <Etiqueta>{etiqueta}</Etiqueta>
-      <TextInput
-        style={styles.campo}
-        placeholderTextColor="#B8AC9A"
-        {...props}
-      />
+      <View style={[styles.campoCaja, error ? styles.campoCajaError : null]}>
+        <TextInput
+          style={styles.campoTexto}
+          placeholderTextColor="#B8AC9A"
+          {...props}
+          secureTextEntry={conOjo ? oculto : props.secureTextEntry}
+        />
+        {conOjo ? (
+          <Pressable
+            onPress={() => setOculto((v) => !v)}
+            hitSlop={10}
+            accessibilityRole="button"
+            accessibilityLabel={oculto ? "Mostrar contraseña" : "Ocultar contraseña"}
+          >
+            <Ojo abierto={!oculto} />
+          </Pressable>
+        ) : null}
+      </View>
+      {error ? (
+        <Text style={styles.campoError}>{error}</Text>
+      ) : nota ? (
+        <Text style={styles.campoNota}>{nota}</Text>
+      ) : null}
     </View>
+  );
+}
+
+function Ojo({ abierto }: { abierto: boolean }) {
+  const t = esc(17);
+  return (
+    <Svg width={t} height={t} viewBox="0 0 24 24">
+      <Path
+        d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"
+        fill="none"
+        stroke={colores.metadato}
+        strokeWidth={2.4}
+      />
+      <Circle cx={12} cy={12} r={2.8} fill="none" stroke={colores.metadato} strokeWidth={2.4} />
+      {abierto ? null : (
+        <Path d="M4 20 20 4" stroke={colores.metadato} strokeWidth={2.4} strokeLinecap="round" />
+      )}
+    </Svg>
+  );
+}
+
+/**
+ * Casilla de verificación con su texto al lado (prototipo, teléfono 19).
+ * Toda la fila es el área tocable: una casilla de 18 px sola no se acierta.
+ */
+export function Casilla({
+  marcada,
+  onToggle,
+  children,
+}: {
+  marcada: boolean;
+  onToggle: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <Pressable
+      style={styles.casillaFila}
+      onPress={onToggle}
+      hitSlop={6}
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: marcada }}
+    >
+      <View style={[styles.casilla, marcada ? styles.casillaMarcada : null]}>
+        {marcada ? (
+          <Svg width={esc(11)} height={esc(11)} viewBox="0 0 24 24">
+            <Path
+              d="M4 12.5 9.5 18 20 6.5"
+              fill="none"
+              stroke={colores.papel}
+              strokeWidth={4}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </Svg>
+        ) : null}
+      </View>
+      <Text style={styles.casillaTexto}>{children}</Text>
+    </Pressable>
   );
 }
 
@@ -341,7 +435,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: esc(2),
     borderColor: colores.tinta,
   },
-  campo: {
+  // La caja y el texto van separados porque el campo puede llevar el botón del
+  // ojo adentro: el borde lo dibuja la caja y el TextInput vive dentro.
+  campoCaja: {
     backgroundColor: "#FFFFFF",
     borderWidth: esc(2),
     borderColor: colores.tinta,
@@ -349,8 +445,46 @@ const styles = StyleSheet.create({
     // Spec del prototipo: `padding: 12px 14px; font-size: 14px`.
     paddingHorizontal: esc(14),
     paddingVertical: esc(12),
+    flexDirection: "row",
+    alignItems: "center",
+    gap: esc(10),
+  },
+  campoCajaError: { borderColor: colores.error },
+  campoTexto: {
+    flex: 1,
+    padding: 0, // Android le mete padding propio al TextInput
     fontSize: esc(14),
     fontFamily: fuentes.regular,
     color: colores.tinta,
+  },
+  campoNota: {
+    fontSize: esc(11),
+    lineHeight: esc(15),
+    fontFamily: fuentes.regular,
+    color: colores.metadato,
+  },
+  campoError: {
+    fontSize: esc(11),
+    lineHeight: esc(15),
+    fontFamily: fuentes.bold,
+    color: colores.error,
+  },
+  casillaFila: { flexDirection: "row", alignItems: "flex-start", gap: esc(9) },
+  casilla: {
+    width: esc(18),
+    height: esc(18),
+    borderWidth: esc(2),
+    borderColor: colores.tinta,
+    borderRadius: esc(5),
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  casillaMarcada: { backgroundColor: colores.tinta },
+  casillaTexto: {
+    flex: 1,
+    fontSize: esc(11),
+    lineHeight: esc(16),
+    fontFamily: fuentes.regular,
+    color: colores.metadato,
   },
 });

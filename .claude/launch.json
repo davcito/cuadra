@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "cuadra-preview",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["scripts/servir-web.mjs", "8090"],
+      "port": 8090
+    }
+  ]
+}

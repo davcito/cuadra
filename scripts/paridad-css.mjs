@@ -65,7 +65,8 @@ const PARES = [
     nombre: "campo",
     css: ".campo",
     archivo: "app/src/components/ui.tsx",
-    estilos: ["campo"],
+    // La caja y el texto están separados para poder meter el botón del ojo.
+    estilos: ["campoCaja", "campoTexto"],
     notas: {
       color: "el CSS pinta el PLACEHOLDER; en la app este es el color del texto escrito",
     },

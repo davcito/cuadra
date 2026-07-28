@@ -57,6 +57,8 @@ function RootNavigator() {
         <Stack.Screen name="bienvenida" />
         <Stack.Screen name="permisos" />
         <Stack.Screen name="sign-in" />
+        <Stack.Screen name="crear-cuenta" />
+        <Stack.Screen name="revisa-correo" />
       </Stack.Protected>
     </Stack>
   );

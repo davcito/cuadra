@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 import { useCalato } from "@/components/calato-cortina";
 import { CalatoVivo } from "@/components/calato-vivo";
@@ -24,6 +25,7 @@ import { supabase } from "@/lib/supabase";
  * y la tarjeta de Calato al pie. Todo sale del kit: acá no se dibuja UI a mano.
  */
 export default function SignInScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cargando, setCargando] = useState(false);
@@ -47,26 +49,9 @@ export default function SignInScreen() {
     }
   }
 
-  async function crear() {
-    if (!puedeEnviar) return;
-    setCargando(true);
-    try {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) throw error;
-      if (!data.session) {
-        Alert.alert(
-          "Casi listo",
-          "Te mandamos un correo para confirmar tu cuenta. Ábrelo y vuelve a entrar."
-        );
-      } else {
-        void cortina("Bienvenido a la cuadra");
-      }
-    } catch (e) {
-      Alert.alert("Ups", e instanceof Error ? e.message : "Algo salió mal, intenta de nuevo.");
-    } finally {
-      setCargando(false);
-    }
-  }
+  // "Crear cuenta" ya NO registra con este formulario: el registro tiene su
+  // pantalla (teléfono 19), que además pide el NOMBRE. Sin él los perfiles
+  // quedaban llamados `user_ce0339eb`.
 
   return (
     <View style={styles.raiz}>
@@ -120,7 +105,7 @@ export default function SignInScreen() {
                   Entrar
                 </Boton>
               )}
-              <Boton variante="linea" onPress={crear} deshabilitado={!puedeEnviar}>
+              <Boton variante="linea" onPress={() => router.push("/crear-cuenta")}>
                 Crear cuenta
               </Boton>
             </View>
