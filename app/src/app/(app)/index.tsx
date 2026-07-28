@@ -1,13 +1,22 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
+import { useRouter } from "expo-router";
 
-import { useCalato } from "@/components/calato-cortina";
 import { CalatoVivo } from "@/components/calato-vivo";
 import { MapaCuadra } from "@/components/mapa-cuadra";
+import { Boton, Chip, Dificultad, Etiqueta } from "@/components/ui";
 import { colores } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
+
+type VueltaHoy = {
+  id: number;
+  titulo: string;
+  categoria: string;
+  dificultad: number;
+  pois: { nombre: string } | null;
+};
 
 /**
  * Home: el mapa de tu ciudad a pantalla completa (ADR-0004) con un header
@@ -15,8 +24,9 @@ import { supabase } from "@/lib/supabase";
  * mapa — regla de dosis del ADR-0006) y la salida la tapa la cortina.
  */
 export default function HomeScreen() {
-  const { cortina } = useCalato();
+  const router = useRouter();
   const [saludo, setSaludo] = useState(true);
+  const [vuelta, setVuelta] = useState<VueltaHoy | null>(null);
 
   // El saludo es un momento, no un mueble: se va solo a los 5 s.
   useEffect(() => {
@@ -24,10 +34,19 @@ export default function HomeScreen() {
     return () => clearTimeout(t);
   }, []);
 
-  async function salir() {
-    await cortina("Hasta mañana"); // resuelve con la pantalla cubierta
-    supabase.auth.signOut();
-  }
+  const cargar = useCallback(async () => {
+    const { data } = await supabase
+      .from("missions")
+      .select("id, titulo, categoria, dificultad, pois(nombre)")
+      .eq("estado", "activa")
+      .limit(1)
+      .maybeSingle();
+    setVuelta((data as unknown as VueltaHoy) ?? null);
+  }, []);
+
+  useEffect(() => {
+    void cargar();
+  }, [cargar]);
 
   return (
     <View style={styles.cont}>
@@ -37,9 +56,10 @@ export default function HomeScreen() {
         <View style={styles.chip}>
           <Text style={styles.marca}>Cuadra</Text>
         </View>
-        <Pressable style={styles.chip} onPress={salir} hitSlop={8}>
-          <Text style={styles.salir}>Salir</Text>
-        </Pressable>
+        <View style={[styles.chip, styles.chipRacha]}>
+          <View style={styles.llama} />
+          <Text style={styles.rachaTexto}>0</Text>
+        </View>
       </SafeAreaView>
 
       {saludo ? (
@@ -57,6 +77,27 @@ export default function HomeScreen() {
               </Text>
             </View>
           </Pressable>
+        </Animated.View>
+      ) : vuelta ? (
+        <Animated.View entering={FadeInDown.springify().damping(16)} style={styles.saludo}>
+          <View style={styles.tarjetaVuelta}>
+            <View style={styles.vueltaTop}>
+              <Chip fondo={colores.naranja} color={colores.tinta}>
+                VUELTA DE HOY
+              </Chip>
+              <Dificultad nivel={vuelta.dificultad} />
+            </View>
+            <Text style={styles.vueltaTitulo}>{vuelta.titulo}</Text>
+            <Etiqueta>{vuelta.pois?.nombre ?? "Barranco"}</Etiqueta>
+            <Boton
+              style={{ marginTop: 6 }}
+              onPress={() =>
+                router.push({ pathname: "/vuelta/[id]", params: { id: String(vuelta.id) } })
+              }
+            >
+              Llévame
+            </Boton>
+          </View>
         </Animated.View>
       ) : null}
     </View>
@@ -88,13 +129,44 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   marca: { fontSize: 20, fontWeight: "800", color: colores.tinta, letterSpacing: -0.5 },
-  salir: { fontSize: 14, fontWeight: "600", color: colores.naranja },
+  chipRacha: {
+    backgroundColor: colores.tinta,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    paddingHorizontal: 13,
+  },
+  llama: {
+    width: 11,
+    height: 13,
+    backgroundColor: colores.naranja,
+    borderTopLeftRadius: 6,
+    borderTopRightRadius: 6,
+    borderBottomLeftRadius: 6,
+    borderBottomRightRadius: 6,
+  },
+  rachaTexto: { fontSize: 13, fontWeight: "800", color: colores.papel },
   saludo: {
     position: "absolute",
     left: 14,
     right: 14,
-    bottom: 28,
+    bottom: 92, // sobre la barra de pestañas
   },
+  tarjetaVuelta: {
+    backgroundColor: colores.papel,
+    borderWidth: 2,
+    borderColor: colores.tinta,
+    borderRadius: 18,
+    padding: 15,
+    gap: 6,
+    shadowColor: colores.tinta,
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    shadowOffset: { width: 3, height: 3 },
+    elevation: 5,
+  },
+  vueltaTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  vueltaTitulo: { fontSize: 16, fontWeight: "800", color: colores.tinta },
   saludoFila: {
     flexDirection: "row",
     alignItems: "center",
