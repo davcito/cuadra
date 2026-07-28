@@ -60,6 +60,9 @@ function RootNavigator() {
         <Stack.Screen name="crear-cuenta" />
         <Stack.Screen name="revisa-correo" />
       </Stack.Protected>
+      {/* Banco de pruebas 3D: fuera de los guards para poder abrirlo con o sin
+          sesión. Es pantalla de trabajo, no de producto — se va con el ADR-0008. */}
+      <Stack.Screen name="calato-3d" />
     </Stack>
   );
 }

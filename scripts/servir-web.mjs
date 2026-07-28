@@ -12,7 +12,7 @@
  *     - para el inspector de GLB: `node scripts/servir-web.mjs 8091 scripts/inspector`
  */
 
-import { createReadStream, existsSync, statSync } from "node:fs";
+import { createReadStream, existsSync, statSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { dirname, extname, isAbsolute, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -46,6 +46,27 @@ if (!existsSync(RAIZ)) {
 
 createServer((req, res) => {
   const ruta = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
+
+  // POST /captura  ← la página manda un dataURL y lo guardamos en disco.
+  // Existe porque el panel del navegador no siempre está desplegado y sin él
+  // no hay captura de pantalla; así el render se puede revisar igual.
+  if (req.method === "POST" && ruta === "/captura") {
+    const trozos = [];
+    req.on("data", (c) => trozos.push(c));
+    req.on("end", () => {
+      try {
+        const b64 = Buffer.concat(trozos).toString().replace(/^data:image\/\w+;base64,/, "");
+        const nombre = `captura-${process.hrtime.bigint()}.png`;
+        writeFileSync(join(RAIZ, nombre), Buffer.from(b64, "base64"));
+        res.writeHead(200, { "content-type": "text/plain" });
+        res.end(nombre);
+      } catch (e) {
+        res.writeHead(500);
+        res.end(String(e));
+      }
+    });
+    return;
+  }
   // normalize + prefijo: nadie sale de dist con "../"
   let archivo = normalize(join(RAIZ, ruta));
   if (!archivo.startsWith(RAIZ)) archivo = RAIZ;

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
 
 import { useCalato } from "@/components/calato-cortina";
 import { CalatoVivo } from "@/components/calato-vivo";
@@ -25,6 +26,7 @@ function rangoDe(xp: number) {
 }
 
 export default function PerfilScreen() {
+  const router = useRouter();
   const { session } = useSession();
   const { cortina } = useCalato();
   const [perfil, setPerfil] = useState<{ display_name: string | null; username: string; calle_xp: number } | null>(null);
@@ -127,6 +129,14 @@ export default function PerfilScreen() {
         <Boton variante="linea" onPress={salir}>
           Cerrar sesión
         </Boton>
+
+        {/* Solo en desarrollo: acceso al banco de pruebas 3D. Nunca se compila
+            en una build de producción. */}
+        {__DEV__ ? (
+          <Boton variante="linea" onPress={() => router.push("/calato-3d")}>
+            🧪 Banco de pruebas 3D
+          </Boton>
+        ) : null}
         <Text style={styles.pie}>
           Cuadra no publica dónde estás. Las visitas se verifican y se borran del mapa público.
         </Text>

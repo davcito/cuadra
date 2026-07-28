@@ -203,10 +203,87 @@ acá, no improvisando en el momento de codear.
 | Rango nuevo | Sello que cae y rebota, con la escala de 6 niveles | **C1** |
 | Racha en riesgo | Calato en `culpa` + latido lento del chip: urgencia sin pánico | **E3** |
 
-**Punto de reevaluación (Rive):** hoy Calato se anima moviendo su render (escala, salto, giro)
-— alcanza y es gratis. **Rive** entra cuando necesitemos que cambie de *pose* de verdad
-(lengua, orejas, parpadeo) o para las celebraciones de C1; está anotado en «Escalado técnico
-cuando duela» y no antes: es una dependencia nueva y hay que justificarla.
+### 🐕 Calato en 3D — hallazgos del spike (2026-07-28)
+
+David pidió animaciones «tipo Duo» y señaló lo correcto: **con imágenes no alcanza.** Duo no
+son imágenes, es un **rig con máquina de estados**. Sin esqueleto no hay gesto nuevo sin volver
+a dibujar. Se corrió un spike: pose A generada con IA → `image_to_3d` con rigging y animación.
+
+**Funcionó.** 31.126 triángulos, **24 huesos**, malla con piel, clip de saludo de 5,37 s, altura
+0,700 m exacta. Los tres innegociables sobrevivieron en 3D (orejas asimétricas, mechón de una
+llama, lengua de costado) y la mochila salió modelada en volumen real. Medido con
+`scripts/inspector/index.html`: **los 24 huesos se mueven**, la mano del saludo recorre 35,8 cm
+sobre un personaje de 70 cm. Nada quedó soldado.
+
+**Tres problemas encontrados, con su causa y su arreglo:**
+
+| Problema | Medido | Causa | Arreglo |
+|---|---|---|---|
+| **Se tumba al saludar** | tronco de −3,3° en reposo a **+40,8°** en el pico | Los 678 clips son **captura de movimiento humana**; Calato tiene patas cortas y la rotación de cadera se amplifica | Amortiguar las pistas de `Hips`/`Spine` al cargar el clip (unas 15 líneas en three.js), o elegir clips contenidos |
+| **Se estira debajo del brazo** (lo vio David antes que yo) | mediana de estiramiento 0,988 — pero **3 aristas > 2×**, la peor **2,84×**, a 0,26 m de altura y 0,12 m de lado: el flanco, bajo el hombro | El auto-rigger pinta pesos por cercanía; con **panza grande y brazos cortos**, el hueso del brazo se lleva un pedazo de torso | Regenerar desde una **pose en T** (más aire para el rigger) y, si hace falta, repintar pesos en Blender |
+| **La cara no se mueve** | de los 24 huesos, **ninguno es facial** | El auto-rigger solo produce esqueleto de cuerpo | Ver abajo |
+
+### 😊 La cara: sin esto no hay «natural y amigable»
+
+Calato hoy solo puede **girar la cabeza entera**. No puede parpadear, ni sonreír, ni mover una
+oreja. Y la cara es justamente donde vive la amabilidad de un personaje — es lo que hace que
+Duo funcione. **Decisión de David: hay que resolverlo.**
+
+**El atlas de expresiones se descartó por medición, no por opinión.** Era la vía más barata y
+se probó primero. El despliegue UV que produce el generador automático es **atlas por parches**:
+midiendo los vértices alrededor de un ojo del modelo, sus coordenadas de textura caen en
+
+| Radio alrededor del ojo | Vértices | **Islas distintas del atlas** |
+|---|---|---|
+| 6 mm | 12 | **2** |
+| 12 mm | 30 | **5** |
+| 22 mm | 95 | **15** |
+
+Un solo ojo vive repartido en **15 fragmentos** desperdigados por toda la imagen de 2048×2048,
+cada uno con su propia rotación. Pintar una expresión exigiría editar esos quince pedazos y que
+las costuras coincidan. No es difícil: es inviable. *(Se intentó igual: se localizaron las islas
+de la esclera y se pintaron párpados; el render mostró el iris intacto porque estaba en otra
+isla. Ese callejón está cerrado y documentado para no volver a entrar.)*
+
+| Vía | Qué es | Estado |
+|---|---|---|
+| ~~Atlas de expresiones~~ | Intercambiar la región de la cara en la textura | ❌ **descartado** — UV fragmentado en 15 islas por ojo |
+| **Plano de cara superpuesto** ⬅️ *lo viable hoy* | Un cuadro plano pegado al hueso de la cabeza, con su propia textura limpia de ojos y boca, que **tapa** los horneados. **No depende del UV del modelo**, y se hace entero en three.js sin Blender | Necesita que alguien dibuje las expresiones |
+| **Re-desplegar UV en Blender** | Rehacer el mapa para que la cara quede en una isla | Habilita el atlas, pero hay que rehacerlo cada vez que se regenere el modelo |
+| **Huesos extra** (orejas, cola, mandíbula) | 2-3 huesos por oreja: se caen de tristeza, se paran de alerta | Trabajo de Blender; enorme ganancia de expresividad |
+| Blendshapes | El estándar de animación facial 3D | Caro: modelado por expresión |
+
+### 🧱 La conclusión incómoda del spike
+
+Los problemas encontrados **no son independientes: todos salen de que el modelo es generado
+automáticamente**. Pesos de piel que estiran el flanco, cero huesos faciales, UV inutilizable,
+el rig perdido al regenerar, licencia CC BY que no puede ir a producción, y una cara que derivó
+del original.
+
+El modelo auto-generado **sirvió para lo que servía**: probar que un Calato 3D riggeado corre a
+**60 fps con una sola llamada de dibujo** en el equipo de referencia, conservando el canon. Eso
+está demostrado y es un resultado real.
+
+Pero **como activo de producto, este modelo no es el definitivo.** Para que Calato pueda
+expresar —que es lo que David pidió y tiene razón— el modelo tiene que estar **construido**, no
+generado: retopología, UV de artista, huesos de cara, orejas y cola. Es trabajo de un modelador
+3D, una vez, para un activo que después sirve a la app, a TikTok y a la papelería.
+
+**Interino sin costo de artista:** el **plano de cara superpuesto** funciona a pesar del UV malo
+y se programa entero en three.js. Sirve para tener parpadeo y expresiones básicas mientras se
+decide la inversión en el modelo definitivo.
+
+**Las orejas son el rasgo más expresivo de Calato** — una parada y una doblada ya cuentan algo
+sin que él haga nada. Con dos huesos cada una se caen de tristeza o se paran de alerta, y eso
+es *movimiento secundario*: lo que separa un personaje vivo de un muñeco que se traslada.
+
+**Combinación elegida: atlas de caras + huesos de orejas y cola.** Da expresividad de nivel Duo
+sin rig facial completo.
+
+**Punto de reevaluación (Rive):** el camino 3D conserva el canon de identidad y corre en Expo Go
+(`expo-gl` está incluido en SDK 54, verificado en docs). **Rive** vuelve a la mesa solo si el
+render en dispositivo no llega a 60 fps, o si el atlas de caras resulta insuficiente. Sale un
+**ADR-0008** cuando estén los fps medidos en el iPhone 15 Pro Max.
 
 **Criterio de aceptación del movimiento:** se verifica **grabando la pantalla del iPhone 15
 Pro Max**, no en el navegador. Si en el video se ve un salto, un parpadeo o un elemento que
