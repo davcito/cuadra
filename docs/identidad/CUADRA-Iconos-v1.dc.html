@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#FBF7F0;color:#1F1B16;font-family:'Archivo',sans-serif;-webkit-font-smoothing:antialiased;}
+  a{color:#E8622C;text-decoration:none;} a:hover{color:#1F1B16;text-decoration:underline;}
+</style>
+</helmet>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="vuelta-a" viewBox="0 0 48 48"><polygon points="30.5,20 33.5,3.5 38,15.5 42.5,2 45.5,18.5 38,21.5" fill="currentColor"></polygon></symbol>
+  <symbol id="vuelta-f" viewBox="0 0 48 48"><rect x="7" y="7" width="34" height="34" rx="10" fill="none" stroke="currentColor" stroke-width="6" pathLength="100" stroke-dasharray="82 18" stroke-dashoffset="-34" stroke-linecap="round"></rect><polygon points="30.5,20 33.5,3.5 38,15.5 42.5,2 45.5,18.5 38,21.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"></polygon></symbol>
+  <symbol id="vueltaC-a" viewBox="0 0 48 48"><circle cx="41.5" cy="24" r="4.5" fill="currentColor"></circle></symbol>
+  <symbol id="vueltaC-f" viewBox="0 0 48 48"><rect x="7" y="7" width="34" height="34" rx="14" fill="none" stroke="currentColor" stroke-width="7" pathLength="100" stroke-dasharray="72 28" stroke-dashoffset="58" stroke-linecap="round"></rect></symbol>
+  <symbol id="cuadrasLlama-a" viewBox="0 0 48 48"><polygon points="26,21.5 29,7.3 33.5,17.6 38,6 41,20.2 33.5,22.8" fill="currentColor"></polygon></symbol>
+  <symbol id="cuadrasLlama-f" viewBox="0 0 48 48"><rect x="7" y="7" width="15" height="15" rx="4.5" fill="currentColor"></rect><rect x="7" y="26" width="15" height="15" rx="4.5" fill="currentColor"></rect><rect x="26" y="26" width="15" height="15" rx="4.5" fill="currentColor"></rect><polygon points="26,21.5 29,7.3 33.5,17.6 38,6 41,20.2 33.5,22.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"></polygon></symbol>
+  <symbol id="cuadrasHuella-a" viewBox="0 0 48 48"><rect x="28.5" y="33.5" width="10" height="7.5" rx="3.5" fill="currentColor"></rect><circle cx="28.8" cy="30.3" r="2" fill="currentColor"></circle><circle cx="33.5" cy="28.6" r="2" fill="currentColor"></circle><circle cx="38.2" cy="30.3" r="2" fill="currentColor"></circle></symbol>
+  <symbol id="cuadrasHuella-f" viewBox="0 0 48 48"><rect x="7" y="7" width="15" height="15" rx="4.5" fill="currentColor"></rect><rect x="26" y="7" width="15" height="15" rx="4.5" fill="currentColor"></rect><rect x="7" y="26" width="15" height="15" rx="4.5" fill="currentColor"></rect></symbol>
+  <symbol id="sello-a" viewBox="0 0 48 48"><path fill-rule="evenodd" fill="currentColor" d="M37,24 A13,13 0 1,0 11,24 A13,13 0 1,0 37,24 Z M29.2,28.5 A5.2,4 0 1,0 18.8,28.5 A5.2,4 0 1,0 29.2,28.5 Z M19.8,21.5 A2.3,2.3 0 1,0 15.2,21.5 A2.3,2.3 0 1,0 19.8,21.5 Z M26.3,19.5 A2.3,2.3 0 1,0 21.7,19.5 A2.3,2.3 0 1,0 26.3,19.5 Z M32.8,21.5 A2.3,2.3 0 1,0 28.2,21.5 A2.3,2.3 0 1,0 32.8,21.5 Z"></path></symbol>
+  <symbol id="sello-f" viewBox="0 0 48 48"><circle cx="24" cy="24" r="19" fill="none" stroke="currentColor" stroke-width="3.5" stroke-dasharray="4.1 3.36"></circle></symbol>
+  <symbol id="mechon-a" viewBox="0 0 48 48"><polygon points="9,40 15,7 24,31 33,4 39,37 24,43" fill="currentColor"></polygon></symbol>
+  <symbol id="mechon-f" viewBox="0 0 48 48"><polygon points="9,40 15,7 24,31 33,4 39,37 24,43" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"></polygon></symbol>
+  <symbol id="huella-a" viewBox="0 0 48 48"><rect x="19" y="5.5" width="10" height="10" rx="3" fill="currentColor"></rect></symbol>
+  <symbol id="huella-f" viewBox="0 0 48 48"><rect x="14" y="25" width="20" height="16" rx="5.5" fill="currentColor"></rect><rect x="6.5" y="10.5" width="10" height="10" rx="3" fill="currentColor"></rect><rect x="31.5" y="10.5" width="10" height="10" rx="3" fill="currentColor"></rect></symbol>
+  <symbol id="mechonB-a" viewBox="0 0 48 48"><path d="M9,40 C10.5,29 12.5,16 15,7 C17.5,15.5 20.5,23.5 24,31 C26.5,22 29.5,11.5 33,4 C35.5,15 37.5,27 39,37 C34.5,40.5 29.5,42.5 24,43 C18.5,42.5 13,41.5 9,40 Z" fill="currentColor"></path></symbol>
+  <symbol id="mechonB-f" viewBox="0 0 48 48"><path d="M9,40 C10.5,29 12.5,16 15,7 C17.5,15.5 20.5,23.5 24,31 C26.5,22 29.5,11.5 33,4 C35.5,15 37.5,27 39,37 C34.5,40.5 29.5,42.5 24,43 C18.5,42.5 13,41.5 9,40 Z" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"></path></symbol>
+  <symbol id="mechonC-a" viewBox="0 0 48 48"><path d="M13,41 C7.5,33 8.5,19 14.5,7.5 C17,6.5 19.5,10 20.5,16 C21,19 21.3,21.5 21.5,24 C23.5,15.5 27,8.5 31.5,4.5 C34,4.5 37,10 38,18 C39,26 38,34 34.5,39.5 C28.5,43.5 18.5,44 13,41 Z" fill="currentColor"></path></symbol>
+  <symbol id="mechonC-f" viewBox="0 0 48 48"><path d="M13,41 C7.5,33 8.5,19 14.5,7.5 C17,6.5 19.5,10 20.5,16 C21,19 21.3,21.5 21.5,24 C23.5,15.5 27,8.5 31.5,4.5 C34,4.5 37,10 38,18 C39,26 38,34 34.5,39.5 C28.5,43.5 18.5,44 13,41 Z" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"></path></symbol>
+</defs></svg>
+
+<div style="max-width:1160px;margin:0 auto;padding:64px 40px 120px;display:flex;flex-direction:column;gap:72px">
+
+  <header data-screen-label="Portada" style="display:flex;flex-direction:column;gap:16px;border-bottom:4px solid #1F1B16;padding-bottom:40px">
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="background:#1F1B16;color:#FBF7F0;font-size:12px;font-weight:800;letter-spacing:.14em;padding:6px 12px;border-radius:999px">EXPLORACIÓN · ÍCONO DE APP</span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.14em;color:#8A7E6E">COMPLEMENTA LA GUÍA V1.2 · NO LA REEMPLAZA</span>
+    </div>
+    <h1 style="font-family:'Alfa Slab One',serif;font-weight:400;font-size:64px;line-height:.98;margin:0">El ícono de CUADRA</h1>
+    <p style="font-size:16px;line-height:1.6;max-width:680px;margin:0;color:#5C5347">Siete candidatos pensados para el homescreen, no para papelería. Cada uno se muestra en tile grande (escala de 1024&nbsp;px), en chip de <strong>48&nbsp;px reales</strong>, y sobre los tres fondos de la marca. Lo que no lee a 48&nbsp;px queda descartado acá mismo, con motivo.</p>
+  </header>
+
+  <section data-screen-label="Candidatos" style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:center;gap:16px;border-bottom:4px solid #1F1B16;padding-bottom:14px">
+      <span style="font-family:'Alfa Slab One',serif;font-size:15px;background:#E8622C;color:#1F1B16;border:2px solid #1F1B16;border-radius:9px;padding:4px 10px;box-shadow:2px 2px 0 #1F1B16;transform:rotate(-4deg)">01</span>
+      <h2 style="font-family:'Alfa Slab One',serif;font-weight:400;font-size:31px;margin:0">Candidatos</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px">
+      <sc-for list="{{ candidatos }}" as="c" hint-placeholder-count="7">
+        <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;overflow:hidden;display:flex;flex-direction:column;opacity:{{ c.op }}">
+          <div style="padding:13px 18px;border-bottom:2px solid #1F1B16;display:flex;align-items:center;gap:10px">
+            <span style="font-family:'Alfa Slab One',serif;font-size:14px;background:#1F1B16;color:#FBF7F0;border-radius:8px;padding:3px 9px;flex-shrink:0">{{ c.id }}</span>
+            <strong style="font-size:15px;font-weight:800">{{ c.nombre }}</strong>
+            <span style="margin-left:auto;background:{{ c.eBg }};color:#FBF7F0;font-size:9px;font-weight:900;letter-spacing:.1em;padding:4px 9px;border-radius:999px;flex-shrink:0;white-space:nowrap">{{ c.estado }}</span>
+          </div>
+          <div style="padding:18px;display:flex;gap:18px;align-items:flex-start;flex:1">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0">
+              <div style="width:150px;height:150px;border-radius:34px;background:{{ c.hBg }};border:2px solid {{ c.hBd }};display:flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 rgba(31,27,22,.15)">
+                <svg width="102" height="102" viewBox="0 0 48 48"><use href="#{{ c.sym }}-a" style="color:{{ c.hAc }}"></use><use href="#{{ c.sym }}-f" style="color:{{ c.hFg }}"></use></svg>
+              </div>
+              <span style="font-size:10px;font-weight:800;letter-spacing:.08em;color:#8A7E6E">1024 PX · ESCALA</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;flex:1">
+              <p style="margin:0;font-size:13px;line-height:1.55;color:#5C5347">{{ c.desc }}</p>
+              <div style="display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div style="width:48px;height:48px;border-radius:11px;background:{{ c.hBg }};border:1.5px solid {{ c.hBd }};display:flex;align-items:center;justify-content:center;box-sizing:border-box"><svg width="34" height="34" viewBox="0 0 48 48"><use href="#{{ c.sym }}-a" style="color:{{ c.hAc }}"></use><use href="#{{ c.sym }}-f" style="color:{{ c.hFg }}"></use></svg></div>
+                  <span style="font-size:10px;font-weight:800;color:#1F1B16">48 px real</span>
+                </div>
+                <sc-for list="{{ bgs }}" as="b" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                    <div style="width:56px;height:56px;border-radius:13px;background:{{ b.bg }};border:1.5px solid {{ b.bd }};display:flex;align-items:center;justify-content:center;box-sizing:border-box"><svg width="38" height="38" viewBox="0 0 48 48"><use href="#{{ c.sym }}-a" style="color:{{ b.ac }}"></use><use href="#{{ c.sym }}-f" style="color:{{ b.fg }}"></use></svg></div>
+                    <span style="font-size:10px;font-weight:700;color:#8A7E6E">{{ b.n }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <p style="margin:0;font-size:12px;line-height:1.5;color:#5C5347;border-top:1px solid #EDE5D8;padding-top:10px"><strong style="color:#1F1B16">A 48 px:</strong> {{ c.nota48 }}</p>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Tablero comparativo" style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:center;gap:16px;border-bottom:4px solid #1F1B16;padding-bottom:14px">
+      <span style="font-family:'Alfa Slab One',serif;font-size:15px;background:#E8622C;color:#1F1B16;border:2px solid #1F1B16;border-radius:9px;padding:4px 10px;box-shadow:2px 2px 0 #1F1B16;transform:rotate(-4deg)">02</span>
+      <h2 style="font-family:'Alfa Slab One',serif;font-weight:400;font-size:31px;margin:0">Finalistas a {{ tpn }} px, lado a lado</h2>
+    </div>
+    <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;padding:26px;display:flex;gap:36px;flex-wrap:wrap">
+      <sc-for list="{{ finalistas }}" as="f" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+          <div style="display:flex;gap:10px">
+            <sc-for list="{{ bgs }}" as="b" hint-placeholder-count="3">
+              <div style="width:{{ tp }};height:{{ tp }};border-radius:23%;background:{{ b.bg }};border:1.5px solid {{ b.bd }};display:flex;align-items:center;justify-content:center;box-sizing:border-box"><svg width="{{ tpSvg }}" height="{{ tpSvg }}" viewBox="0 0 48 48"><use href="#{{ f.sym }}-a" style="color:{{ b.ac }}"></use><use href="#{{ f.sym }}-f" style="color:{{ b.fg }}"></use></svg></div>
+            </sc-for>
+          </div>
+          <span style="font-size:12px;font-weight:800"><span style="font-family:'Alfa Slab One',serif;font-size:11px;background:#1F1B16;color:#FBF7F0;border-radius:6px;padding:2px 7px;margin-right:6px">{{ f.id }}</span>{{ f.nombre }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Recomendación" style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:center;gap:16px;border-bottom:4px solid #1F1B16;padding-bottom:14px">
+      <span style="font-family:'Alfa Slab One',serif;font-size:15px;background:#E8622C;color:#1F1B16;border:2px solid #1F1B16;border-radius:9px;padding:4px 10px;box-shadow:2px 2px 0 #1F1B16;transform:rotate(-4deg)">03</span>
+      <h2 style="font-family:'Alfa Slab One',serif;font-weight:400;font-size:31px;margin:0">Recomendación: El Mechón</h2>
+    </div>
+    <div style="border:2px solid #1F1B16;border-radius:16px;background:#1F1B16;padding:32px;display:flex;gap:32px;align-items:center;flex-wrap:wrap">
+      <div style="width:132px;height:132px;border-radius:30px;background:#1F1B16;border:2px solid #4A4036;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:4px 4px 0 rgba(0,0,0,.35)">
+        <svg width="92" height="92" viewBox="0 0 48 48"><use href="#mechon-a" style="color:#F0703D"></use><use href="#mechon-f" style="color:#FBF7F0"></use></svg>
+      </div>
+      <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.55;color:#F6EFE4;flex:1;min-width:320px">
+        <li><strong>Lee de 1024 a 24&nbsp;px</strong> sin perder nada: una sola silueta, sin detalle interior que se empaste.</li>
+        <li><strong>Tres significados en un símbolo:</strong> el mechón de Calato, el fuego de la racha y el grito de "¡Chapada!". Cada vez que el usuario ve el ícono, ve la mecánica del juego.</li>
+        <li><strong>Silueta asimétrica de dos picos:</strong> propia, no la llama simétrica de otras apps. En la parrilla del teléfono, naranja sobre tinta, no se parece a nada al lado.</li>
+        <li><strong>La Vuelta (<span style="font-family:'Alfa Slab One',serif">1a</span>) no se pierde:</strong> sigue como pin del mapa y sello de papelería. El sistema aguanta ambos: Mechón = app, Vuelta = ciudad.</li>
+      </ul>
+    </div>
+    <p style="margin:0;font-size:13px;line-height:1.6;color:#5C5347;max-width:680px">Runner-up: <strong>1a · La Vuelta con llamita</strong>, si el equipo prefiere que el ícono cuente "ciudad" antes que "racha". Descartadas 1b, 2b y 3 por no leer a 48&nbsp;px (motivos en cada tarjeta).</p>
+  </section>
+
+  <section data-screen-label="Refinamiento del Mechón" style="display:flex;flex-direction:column;gap:24px">
+    <div style="display:flex;align-items:center;gap:16px;border-bottom:4px solid #1F1B16;padding-bottom:14px">
+      <span style="font-family:'Alfa Slab One',serif;font-size:15px;background:#E8622C;color:#1F1B16;border:2px solid #1F1B16;border-radius:9px;padding:4px 10px;box-shadow:2px 2px 0 #1F1B16;transform:rotate(-4deg)">04</span>
+      <h2 style="font-family:'Alfa Slab One',serif;font-weight:400;font-size:31px;margin:0">Refinar el Mechón, de a pocos</h2>
+    </div>
+    <p style="margin:0;font-size:14px;line-height:1.6;color:#5C5347;max-width:720px">Crítica al candidato 4 tal como está: el polígono <strong>anguloso gana a 48&nbsp;px pero a 1024&nbsp;px queda serruchado</strong>, chocando con un sistema que es todo esquinas redondeadas — y con el mechón real de Calato, que es una llama suave. Tres tratamientos de curva, ya renderizados y comparados. <strong>Hallazgo del render:</strong> el valle profundo de V1 y V2 las hace leer como "M" de corona antes que como llama; V3 es la única que lee mechón sin explicación.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;overflow:hidden;display:flex;flex-direction:column">
+        <div style="padding:12px 16px;border-bottom:2px solid #1F1B16;display:flex;align-items:center;gap:9px"><span style="font-family:'Alfa Slab One',serif;font-size:13px;background:#1F1B16;color:#FBF7F0;border-radius:7px;padding:2px 8px">V1</span><strong style="font-size:14px">Anguloso (actual)</strong></div>
+        <div style="padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px">
+          <div style="width:132px;height:132px;border-radius:30px;background:#1F1B16;border:2px solid #4A4036;display:flex;align-items:center;justify-content:center"><svg width="92" height="92" viewBox="0 0 48 48"><use href="#mechon-a" style="color:#F0703D"></use><use href="#mechon-f" style="color:#FBF7F0"></use></svg></div>
+          <div style="display:flex;gap:10px;align-items:flex-end">
+            <div style="width:48px;height:48px;border-radius:11px;background:#1F1B16;display:flex;align-items:center;justify-content:center"><svg width="34" height="34" viewBox="0 0 48 48"><use href="#mechon-a" style="color:#F0703D"></use><use href="#mechon-f" style="color:#FBF7F0"></use></svg></div>
+            <div style="width:24px;height:24px;border-radius:6px;background:#1F1B16;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 48 48"><use href="#mechon-a" style="color:#F0703D"></use></svg></div>
+          </div>
+          <p style="margin:0;font-size:12px;line-height:1.5;color:#5C5347">Máxima legibilidad chica, pero renderizado lee como "M" de corona, no como llama — y de cerca es un serrucho ajeno al sistema redondeado.</p>
+        </div>
+      </div>
+
+      <div style="border:2px solid #E8622C;border-radius:16px;background:#FFFFFF;overflow:hidden;display:flex;flex-direction:column;box-shadow:4px 4px 0 #1F1B16">
+        <div style="padding:12px 16px;border-bottom:2px solid #1F1B16;display:flex;align-items:center;gap:9px"><span style="font-family:'Alfa Slab One',serif;font-size:13px;background:#1F1B16;color:#FBF7F0;border-radius:7px;padding:2px 8px">V2</span><strong style="font-size:14px">Picos vivos, flancos curvos</strong></div>
+        <div style="padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px">
+          <div style="width:132px;height:132px;border-radius:30px;background:#1F1B16;border:2px solid #4A4036;display:flex;align-items:center;justify-content:center"><svg width="92" height="92" viewBox="0 0 48 48"><use href="#mechonB-a" style="color:#F0703D"></use><use href="#mechonB-f" style="color:#FBF7F0"></use></svg></div>
+          <div style="display:flex;gap:10px;align-items:flex-end">
+            <div style="width:48px;height:48px;border-radius:11px;background:#1F1B16;display:flex;align-items:center;justify-content:center"><svg width="34" height="34" viewBox="0 0 48 48"><use href="#mechonB-a" style="color:#F0703D"></use><use href="#mechonB-f" style="color:#FBF7F0"></use></svg></div>
+            <div style="width:24px;height:24px;border-radius:6px;background:#1F1B16;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 48 48"><use href="#mechonB-a" style="color:#F0703D"></use></svg></div>
+          </div>
+          <p style="margin:0;font-size:12px;line-height:1.5;color:#5C5347">Los flancos respiran en curva, pero el render mostró que arrastra el mismo problema de V1: el valle profundo la hace leer "M". Suaviza sin resolver.</p>
+        </div>
+      </div>
+
+      <div style="border:2px solid #1F1B16;border-radius:16px;background:#FFFFFF;overflow:hidden;display:flex;flex-direction:column">
+        <div style="padding:12px 16px;border-bottom:2px solid #1F1B16;display:flex;align-items:center;gap:9px"><span style="font-family:'Alfa Slab One',serif;font-size:13px;background:#E8622C;color:#1F1B16;border-radius:7px;padding:2px 8px">V3</span><strong style="font-size:14px">Curvo, fiel al render</strong><span style="margin-left:auto;background:#2F8F4E;color:#FBF7F0;font-size:9px;font-weight:900;letter-spacing:.1em;padding:3px 8px;border-radius:999px">MI VOTO</span></div>
+        <div style="padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px">
+          <div style="width:132px;height:132px;border-radius:30px;background:#1F1B16;border:2px solid #4A4036;display:flex;align-items:center;justify-content:center"><svg width="92" height="92" viewBox="0 0 48 48"><use href="#mechonC-a" style="color:#F0703D"></use><use href="#mechonC-f" style="color:#FBF7F0"></use></svg></div>
+          <div style="display:flex;gap:10px;align-items:flex-end">
+            <div style="width:48px;height:48px;border-radius:11px;background:#1F1B16;display:flex;align-items:center;justify-content:center"><svg width="34" height="34" viewBox="0 0 48 48"><use href="#mechonC-a" style="color:#F0703D"></use><use href="#mechonC-f" style="color:#FBF7F0"></use></svg></div>
+            <div style="width:24px;height:24px;border-radius:6px;background:#1F1B16;display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 48 48"><use href="#mechonC-a" style="color:#F0703D"></use></svg></div>
+          </div>
+          <p style="margin:0;font-size:12px;line-height:1.5;color:#5C5347">Las dos lenguas redondeadas del mechón real. Renderizada, es la ÚNICA que lee "llama/mechón" sin explicación, y a 24&nbsp;px mantiene los dos lóbulos. Refinable: puntas 10% más vivas para alejarla del tulipán (V4).</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="border:2px solid #1F1B16;border-radius:16px;background:#2C241C;padding:22px;display:flex;flex-direction:column;gap:14px">
+      <span style="font-size:10px;font-weight:800;letter-spacing:.14em;color:#B7AB99">LA PRUEBA DE PARRILLA · ENTRE VECINOS</span>
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
+        <div style="width:56px;height:56px;border-radius:13px;background:#3E7BD6;display:flex;align-items:center;justify-content:center"><div style="width:24px;height:24px;border-radius:50%;background:#FFFFFF"></div></div>
+        <div style="width:56px;height:56px;border-radius:13px;background:#F2F2F2;display:flex;align-items:center;justify-content:center"><div style="width:22px;height:18px;border-radius:5px;border:3px solid #6B6B6B"></div></div>
+        <div style="width:56px;height:56px;border-radius:13px;background:#24C05A;display:flex;align-items:center;justify-content:center"><div style="width:24px;height:20px;border-radius:10px 10px 10px 2px;background:#FFFFFF"></div></div>
+        <div style="width:56px;height:56px;border-radius:13px;background:#1F1B16;border:1.5px solid #4A4036;display:flex;align-items:center;justify-content:center;box-sizing:border-box"><svg width="38" height="38" viewBox="0 0 48 48"><use href="#mechonC-a" style="color:#F0703D"></use><use href="#mechonC-f" style="color:#FBF7F0"></use></svg></div>
+        <div style="width:56px;height:56px;border-radius:13px;background:#8E44AD;display:flex;align-items:center;justify-content:center"><div style="width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:20px solid #FFFFFF"></div></div>
+        <div style="width:56px;height:56px;border-radius:13px;background:#E8E4DA;display:flex;align-items:center;justify-content:center"><div style="width:22px;height:22px;border-radius:50%;border:3px solid #5C5347"></div></div>
+      </div>
+      <p style="margin:0;font-size:12px;line-height:1.5;color:#B7AB99">Entre los vecinos ruidosos del teléfono, el único tile tinta con una llama naranja es inconfundible. Esta es la prueba que manda: el ícono no vive en un tablero de diseño, vive acá.</p>
+    </div>
+
+    <p style="margin:0;font-size:13px;line-height:1.6;color:#5C5347;max-width:720px"><strong>Cómo seguimos de a pocos:</strong> elegí V1, V2 o V3 (o pedí una V4 mezclando). Con la curva decidida vienen, en orden: ajuste óptico fino de la elegida → lockup con el wordmark CUADRA → exports finales (1024, adaptativo Android con naranja por código) → sección 01 de la guía actualizada conservando las tres direcciones originales.</p>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;soloFinalistas&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Tablero&quot;},&quot;tamanoPrueba&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:48,&quot;min&quot;:24,&quot;max&quot;:96,&quot;step&quot;:4,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Tablero&quot;}}">
+class Component extends DCLogic {
+  renderVals(){
+    const bgs=[
+      {n:'Papel',bg:'#FBF7F0',fg:'#1F1B16',ac:'#E8622C',bd:'#1F1B16'},
+      {n:'Naranja',bg:'#E8622C',fg:'#1F1B16',ac:'#FBF7F0',bd:'#1F1B16'},
+      {n:'Tinta',bg:'#1F1B16',fg:'#FBF7F0',ac:'#F0703D',bd:'#4A4036'}
+    ];
+    const P=bgs[0],T=bgs[2];
+    const mk=(id,sym,nombre,desc,nota48,fin,h)=>({id,sym,nombre,desc,nota48,fin,
+      estado:fin?'FINALISTA':'DESCARTADA A 48 PX',eBg:fin?'#2F8F4E':'#A4211B',op:fin?1:.8,
+      hBg:h.bg,hFg:h.fg,hAc:h.ac,hBd:h.bd});
+    const todos=[
+      mk('1a','vuelta','La Vuelta · Llamita','La manzana con el trazo abierto de la guía, pero el punto naranja ahora es el mechón de Calato: la vuelta que falta caminar y la racha encendida en un solo gesto.','La llamita conserva sus dos picos y el trazo abierto se sigue leyendo. Finalista.',true,P),
+      mk('1b','vueltaC','La Vuelta · C abierta','El mismo trazo, abierto hasta volverse la C de CUADRA, con el punto naranja en la boca de la letra.','Se lee como una "C" genérica de app de banco: pierde la historia de la manzana y el punto flota sin contexto.',false,P),
+      mk('2a','cuadrasLlama','Cuatro Cuadras · Llamita','El plano mínimo de la guía; la cuadra chapada arde. Es Calato marcando territorio en el mapa.','La llamita aguanta y las tres cuadras dan estructura. Especialmente sólido en Tinta. Finalista.',true,P),
+      mk('2b','cuadrasHuella','Cuatro Cuadras · Huella','Una de las cuadras reemplazada por la huella de Calato.','La huella ocupa un cuarto del tile: a 48 px los deditos se funden en una mancha. No hay tamaño de pastilla que la salve.',false,P),
+      mk('3','sello','El Sello · Huella','El cuño troquelado de la guía con la huella de Calato calada al centro, como sello de tampón.','El borde dentado se convierte en ruido y la huella knockout necesita 64 px como mínimo. Queda para stickers y merch, no para el homescreen.',false,P),
+      mk('4','mechon','El Mechón — NUEVA','La llamita sola como marca: es el mechón de Calato y el fuego de la racha en un único símbolo propio. Ya vive en el chip de racha de la app.','Lee hasta a 24 px. Silueta asimétrica que llena el tile completo. Finalista y candidata a ganadora.',true,T),
+      mk('5','huella','La Huella — NUEVA','Una huella de perro construida con manzanas de ciudad; el dedo naranja es la cuadra chapada. El perro y la ciudad, sin mostrar la cara.','Lee como huella y las esquinas redondeadas mantienen el lenguaje "manzana". A 24 px pierde el chiste urbano pero no la silueta. Finalista.',true,P)
+    ];
+    const soloFin=this.props.soloFinalistas ?? false;
+    const tpn=this.props.tamanoPrueba ?? 48;
+    return {
+      candidatos: soloFin ? todos.filter(c=>c.fin) : todos,
+      finalistas: todos.filter(c=>c.fin),
+      bgs, tpn, tp: tpn+'px', tpSvg: Math.round(tpn*0.71)
+    };
+  }
+}
+</script>
+</body>
+</html>
