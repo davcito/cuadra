@@ -56,7 +56,10 @@ createServer((req, res) => {
     req.on("end", () => {
       try {
         const b64 = Buffer.concat(trozos).toString().replace(/^data:image\/\w+;base64,/, "");
-        const nombre = `captura-${process.hrtime.bigint()}.png`;
+        // ?nombre=saludo-007 permite armar secuencias de cuadros ordenadas.
+        const pedido = new URL(req.url, "http://localhost").searchParams.get("nombre");
+        const limpio = pedido ? pedido.replace(/[^\w.-]/g, "") : "";
+        const nombre = limpio ? `${limpio}.png` : `captura-${process.hrtime.bigint()}.png`;
         writeFileSync(join(RAIZ, nombre), Buffer.from(b64, "base64"));
         res.writeHead(200, { "content-type": "text/plain" });
         res.end(nombre);

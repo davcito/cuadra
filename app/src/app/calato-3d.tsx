@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { WebView, type WebViewMessageEvent } from "react-native-webview";
+import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 
 import { Etiqueta, Tarjeta } from "@/components/ui";
@@ -27,6 +28,10 @@ type Info = { triangulos: number; huesos: number; clips: string[] };
 
 const AMORTIGUACIONES = [0, 0.5, 0.8] as const;
 
+/** Clip pre-renderizado desde el MISMO modelo: 30 cuadros, 10 fps, 343 KB. */
+const CLIP_SALUDO = require("../../assets/calato/saludo.webp");
+type Modo = "vivo" | "clip";
+
 export default function Calato3dScreen() {
   const router = useRouter();
   const webRef = useRef<WebView>(null);
@@ -42,6 +47,7 @@ export default function Calato3dScreen() {
   const [amortiguacion, setAmortiguacion] = useState<number>(0);
   const [transparente, setTransparente] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [modo, setModo] = useState<Modo>("vivo");
 
   function onMessage(e: WebViewMessageEvent) {
     try {
@@ -71,20 +77,28 @@ export default function Calato3dScreen() {
 
   return (
     <View style={styles.raiz}>
-      <WebView
-        ref={webRef}
-        originWhitelist={["*"]}
-        source={{ html }}
-        style={styles.web}
-        onMessage={onMessage}
-        domStorageEnabled
-        javaScriptEnabled
-        startInLoadingState
-        // Sin esto iOS pausa el bucle de render al salir del foco y el fps miente.
-        mediaPlaybackRequiresUserAction={false}
-      />
+      {modo === "vivo" ? (
+        <WebView
+          ref={webRef}
+          originWhitelist={["*"]}
+          source={{ html }}
+          style={styles.web}
+          onMessage={onMessage}
+          domStorageEnabled
+          javaScriptEnabled
+          startInLoadingState
+          // Sin esto iOS pausa el bucle de render al salir del foco y el fps miente.
+          mediaPlaybackRequiresUserAction={false}
+        />
+      ) : (
+        // Mismo personaje, misma animación — pero renderizada fuera del teléfono.
+        // La app solo reproduce cuadros: cero costo de GPU, cero three.js.
+        <View style={styles.clip}>
+          <Image source={CLIP_SALUDO} style={styles.clipImg} contentFit="contain" />
+        </View>
+      )}
 
-      {!info && !error && (
+      {modo === "vivo" && !info && !error && (
         <View style={styles.cargando} pointerEvents="none">
           <ActivityIndicator color={colores.naranja} />
           <Text style={styles.cargandoTexto}>Cargando a Calato…</Text>
@@ -96,7 +110,25 @@ export default function Calato3dScreen() {
           <Text style={styles.volverTexto}>← Volver</Text>
         </Pressable>
 
-        {medicion && (
+        {modo === "clip" && (
+          <Tarjeta style={styles.panel}>
+            <View style={styles.panelCuerpo}>
+              <View style={styles.fpsFila}>
+                <Text style={[styles.fps, { color: colores.exito }]}>0</Text>
+                <View>
+                  <Etiqueta>COSTO DE RENDER</Etiqueta>
+                  <Text style={styles.dato}>no hay motor 3D corriendo</Text>
+                </View>
+              </View>
+              <Text style={styles.dato}>
+                30 cuadros · 10 fps · 343 KB · renderizado desde el MISMO modelo, pero fuera del
+                teléfono
+              </Text>
+            </View>
+          </Tarjeta>
+        )}
+
+        {modo === "vivo" && medicion && (
           <Tarjeta style={styles.panel}>
             <View style={styles.panelCuerpo}>
               <View style={styles.fpsFila}>
@@ -117,7 +149,7 @@ export default function Calato3dScreen() {
           </Tarjeta>
         )}
 
-        {error && (
+        {modo === "vivo" && error && (
           <Tarjeta style={styles.panel}>
             <View style={styles.panelCuerpo}>
               <Etiqueta color={colores.error}>NO CARGÓ</Etiqueta>
@@ -129,6 +161,25 @@ export default function Calato3dScreen() {
 
       <SafeAreaView edges={["bottom"]} style={styles.abajo} pointerEvents="box-none">
         <Tarjeta style={styles.panel}>
+          <View style={styles.panelCuerpo}>
+            <Etiqueta>CÓMO SE DIBUJA</Etiqueta>
+            <View style={styles.botonera}>
+              {(["vivo", "clip"] as Modo[]).map((m) => (
+                <Pressable
+                  key={m}
+                  onPress={() => setModo(m)}
+                  style={[styles.opcion, modo === m && styles.opcionActiva]}
+                >
+                  <Text style={[styles.opcionTexto, modo === m && styles.opcionTextoActivo]}>
+                    {m === "vivo" ? "3D en vivo" : "clip pre-renderizado"}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
+          </View>
+        </Tarjeta>
+
+        <Tarjeta style={[styles.panel, modo === "clip" && styles.panelApagado]}>
           <View style={styles.panelCuerpo}>
             <Etiqueta>AMORTIGUAR CADERA Y COLUMNA</Etiqueta>
             <Text style={styles.ayuda}>
@@ -182,7 +233,10 @@ const styles = StyleSheet.create({
   },
   cargandoTexto: { color: colores.metadato, fontSize: esc(15), fontFamily: fuentes.regular },
   arriba: { position: "absolute", top: 0, left: 0, right: 0, gap: esc(8), padding: esc(14) },
-  abajo: { position: "absolute", bottom: 0, left: 0, right: 0, padding: esc(14) },
+  abajo: { position: "absolute", bottom: 0, left: 0, right: 0, padding: esc(14), gap: esc(8) },
+  panelApagado: { opacity: 0.4 },
+  clip: { flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: colores.papel },
+  clipImg: { width: "88%", height: "62%" },
   volver: { alignSelf: "flex-start" },
   volverTexto: { fontSize: esc(14), fontFamily: fuentes.bold, color: colores.tinta },
   panel: { backgroundColor: colores.papel },
