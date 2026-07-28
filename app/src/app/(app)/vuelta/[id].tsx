@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 import {
@@ -25,6 +25,7 @@ import { supabase } from "@/lib/supabase";
 export default function DetalleVueltaScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [v, setV] = useState<Vuelta | null>(null);
   const [cargando, setCargando] = useState(true);
 
@@ -71,7 +72,9 @@ export default function DetalleVueltaScreen() {
   return (
     <View style={styles.safe}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <View style={styles.hero}>
+        {/* El color de la categoría se extiende bajo el notch: la
+            ilustración nunca queda tapada por la isla dinámica. */}
+        <View style={[styles.hero, { backgroundColor: color, paddingTop: insets.top }]}>
           <IlustracionLugar categoria={v.categoria} alto={210} />
           <SafeAreaView edges={["top"]} style={styles.volverCaja}>
             <Pressable style={styles.volver} onPress={() => router.back()} hitSlop={10}>

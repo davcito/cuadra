@@ -99,6 +99,23 @@ Estados: ✅ idéntico · 🟡 existe pero difiere (con la lista de deltas) · �
 
 ---
 
+## Seguridad de dispositivo (safe areas)
+
+El prototipo dibuja teléfonos idealizados: **no tiene notch, ni isla dinámica, ni indicador de home**. Copiar sus medidas al pie de la letra produce pantallas rotas en equipos reales. Regla: **ninguna medida vertical se hardcodea contra el borde de la pantalla** — sale de `useSafeAreaInsets()`.
+
+Hallado con una captura del iPhone de David (2026-07-28): **la isla dinámica le tapaba el mechón a Calato** en la Bienvenida — uno de los tres rasgos innegociables del personaje.
+
+| Pantalla / pieza | Defecto | Corrección |
+|---|---|---|
+| Bienvenida | El hero arrancaba en y=0: el notch tapaba la cabeza de Calato | `height: 300 + insets.top` con `paddingTop: insets.top`; fondo en papel para continuar sin costura el propio fondo del render |
+| Detalle de vuelta | El hero ilustrado también arrancaba en y=0 | `paddingTop: insets.top` con el color de la categoría extendido bajo el notch |
+| Barra de pestañas | `bottom` fijo en 26 (iOS) / 16 (Android) | `Math.max(insets.bottom, 12)` — el indicador de home y la navegación por gestos miden distinto en cada equipo |
+| Tarjeta del mapa | `bottom: 92` fijo → **quedaba detrás de la barra** en iPhone con indicador de home | Se calcula: `max(insets.bottom,12) + 62 (alto de barra) + 14` |
+
+**Limitación de verificación:** esto **no se puede comprobar en el navegador** — `useSafeAreaInsets()` devuelve 0 sin notch. Lo único que valida la web es que no haya regresión con inset 0. **La prueba real es el dispositivo**, y por eso cada tajada que toque posicionamiento vertical se cierra con una captura del iPhone.
+
+---
+
 ## Resumen honesto
 
 **3 de 18 verificadas idénticas** (todo el flujo 01 · Entrar) · 6 existen pero difieren o están sin auditar · 9 no existen todavía.

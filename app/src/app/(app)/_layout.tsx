@@ -1,5 +1,6 @@
 import { Tabs } from "expo-router";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { colores, fuentes } from "@/lib/theme";
 
@@ -56,11 +57,16 @@ function Rotulo({ children, activo }: { children: string; activo: boolean }) {
 }
 
 export default function AppLayout() {
+  // El indicador de home (iPhone) y la navegación por gestos (Android) miden
+  // distinto en cada equipo: la barra se separa del borde con el inset REAL,
+  // nunca con un número fijo. Piso de 12 px para equipos sin inset.
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarStyle: styles.barra,
+        tabBarStyle: [styles.barra, { bottom: Math.max(insets.bottom, 12) }],
         tabBarItemStyle: styles.item,
         tabBarShowLabel: true,
         tabBarBackground: () => null,
@@ -109,7 +115,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 14,
     right: 14,
-    bottom: Platform.OS === "ios" ? 26 : 16,
     height: 62,
     backgroundColor: colores.tinta,
     borderRadius: 18,

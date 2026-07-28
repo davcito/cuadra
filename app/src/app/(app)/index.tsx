@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 
@@ -25,8 +25,13 @@ type VueltaHoy = {
  */
 export default function HomeScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   const [saludo, setSaludo] = useState(true);
   const [vuelta, setVuelta] = useState<VueltaHoy | null>(null);
+
+  // La barra de pestañas flota a `max(insets.bottom, 12)` y mide 62 px de
+  // alto: la tarjeta se apoya JUSTO encima, en cualquier equipo.
+  const sobreLaBarra = Math.max(insets.bottom, 12) + 62 + 14;
 
   // El saludo es un momento, no un mueble: se va solo a los 5 s.
   useEffect(() => {
@@ -66,7 +71,7 @@ export default function HomeScreen() {
         <Animated.View
           entering={FadeInDown.springify().damping(14)}
           exiting={FadeOutDown.duration(260)}
-          style={styles.saludo}
+          style={[styles.saludo, { bottom: sobreLaBarra }]}
         >
           <Pressable style={styles.saludoFila} onPress={() => setSaludo(false)}>
             <CalatoVivo estado="tranqui" size={52} />
@@ -150,7 +155,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 14,
     right: 14,
-    bottom: 92, // sobre la barra de pestañas
+    // `bottom` se calcula en el componente: depende del inset del equipo.
   },
   tarjetaVuelta: {
     backgroundColor: colores.papel,

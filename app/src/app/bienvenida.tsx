@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 
 import { Boton } from "@/components/ui";
@@ -13,11 +13,18 @@ import { colores, fuentes } from "@/lib/theme";
  */
 export default function BienvenidaScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   return (
     <View style={styles.raiz}>
-      {/* Calato a sangre sobre naranja, 300 px, con borde tinta abajo */}
-      <View style={styles.hero}>
+      {/*
+        Hero de 300 px con Calato. El relleno superior es el inset REAL del
+        dispositivo: sin él, el notch / isla dinámica le tapa el mechón —
+        que es uno de los tres rasgos innegociables del personaje (ADR-0006).
+        El fondo va en papel (no naranja) porque el render ya trae su fondo
+        papel: así la zona del notch continúa la imagen sin costura.
+      */}
+      <View style={[styles.hero, { height: 300 + insets.top, paddingTop: insets.top }]}>
         <Image
           source={require("../../assets/calato/base.jpg")}
           style={styles.heroImg}
@@ -56,8 +63,7 @@ export default function BienvenidaScreen() {
 const styles = StyleSheet.create({
   raiz: { flex: 1, backgroundColor: colores.papel },
   hero: {
-    height: 300,
-    backgroundColor: colores.naranja,
+    backgroundColor: colores.papel, // continúa el fondo propio del render
     borderBottomWidth: 3,
     borderBottomColor: colores.tinta,
     overflow: "hidden",
