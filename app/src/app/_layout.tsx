@@ -4,6 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { CalatoProvider } from "@/components/calato-cortina";
 import { SessionProvider, useSession } from "@/lib/auth";
 
 SplashScreen.preventAutoHideAsync();
@@ -34,7 +35,9 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <StatusBar style="dark" />
       <SessionProvider>
-        <RootNavigator />
+        <CalatoProvider>
+          <RootNavigator />
+        </CalatoProvider>
       </SessionProvider>
     </SafeAreaProvider>
   );

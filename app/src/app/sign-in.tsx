@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { useCalato } from "@/components/calato-cortina";
+import { CalatoVivo } from "@/components/calato-vivo";
 import { supabase } from "@/lib/supabase";
 
 type Modo = "entrar" | "crear";
@@ -21,6 +23,7 @@ export default function SignInScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cargando, setCargando] = useState(false);
+  const { cortina } = useCalato();
 
   const puedeEnviar = email.includes("@") && password.length >= 6 && !cargando;
 
@@ -38,6 +41,9 @@ export default function SignInScreen() {
           );
         }
       } else {
+        // La cortina cubre la pantalla ANTES de autenticar: el cambio
+        // sign-in → home (guard del layout) ocurre tapado por Calato.
+        void cortina("Bienvenido a la cuadra");
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       }
@@ -119,6 +125,13 @@ export default function SignInScreen() {
               </Text>
             </Pressable>
           </View>
+
+          <View style={styles.avisoCalato}>
+            <CalatoVivo estado="tranqui" size={46} />
+            <Text style={styles.avisoTexto}>
+              Tu Álbum se guarda en tu cuenta. Sin correo, las figuritas se te pierden.
+            </Text>
+          </View>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -162,4 +175,16 @@ const styles = StyleSheet.create({
   },
   botonGoogleTexto: { color: "#1F1B16", fontSize: 15, fontWeight: "600" },
   toggle: { textAlign: "center", color: "#E8622C", fontSize: 15, marginTop: 8 },
+  avisoCalato: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 2,
+    borderColor: "#1F1B16",
+    borderRadius: 14,
+    paddingHorizontal: 14,
+    paddingVertical: 11,
+  },
+  avisoTexto: { flex: 1, fontSize: 12, lineHeight: 17, color: "#5C5347" },
 });
