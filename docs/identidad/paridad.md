@@ -1,4 +1,4 @@
-# Paridad con el prototipo — estado real de las 18 pantallas
+# Paridad con el prototipo — estado real de las 21 pantallas
 
 **Este documento dice la verdad sobre qué está construido, no la memoria de nadie.**
 
@@ -17,6 +17,9 @@ Estados: ✅ idéntico · 🟡 existe pero difiere (con la lista de deltas) · �
 | 1 | **Bienvenida (onboarding 1/3)** | ✅ | Construida en E0.2. Es la ruta de entrada sin sesión (`unstable_settings.initialRouteName`) |
 | 2 | **Entrar / Crear cuenta** | ✅ | Corregida en E0.1 — ver detalle abajo |
 | 3 | **Permisos (ubicación + cámara)** | ✅ | Construida en E0.2 |
+| 19 | **Crear cuenta** | ❌ | Diseñada el 2026-07-28, sin construir. Hoy el registro **reusa el formulario de Entrar**: mismo `signUp` sin nombre, sin confirmación de contraseña, sin términos |
+| 20 | **Revisá tu correo** (post-registro) | ❌ | Diseñada el 2026-07-28. Hoy es un `Alert.alert("Casi listo", …)`, no una pantalla |
+| 21 | **Crear cuenta · errores en línea** | ❌ | Diseñada el 2026-07-28. Hoy los errores salen como popup del sistema **con el texto crudo de Supabase, en inglés** |
 
 **Flujo completo verificado:** Bienvenida → *Date una vuelta* → Permisos → *Dale, permitir* (pide ubicación de verdad) → Entrar. El atajo *Ya tengo cuenta* salta directo al login.
 
@@ -61,8 +64,8 @@ Estados: ✅ idéntico · 🟡 existe pero difiere (con la lista de deltas) · �
 
 | # | Pantalla | Estado | Notas |
 |---|---|---|---|
-| 4 | Mapa (home) | 🟡 | Sin auditar en detalle. Sabido: usa estilos propios de tarjeta en vez del kit (5 casos); el chip de racha muestra `0` fijo; el mapa no dibuja pins de POIs ni la ruta punteada. E0.3 |
-| 5 | Las vueltas de hoy | 🟡 | Sin auditar en detalle. Sabido: "0 de N chapadas" es literal. E0.3 |
+| 4 | Mapa (home) | 🟡 | **Corregido el 2026-07-28** (2 capturas del iPhone): la tarjeta de la vuelta se dibujaba **arriba, bajo la barra de estado**, tapando los chips — regresión del propio fix de safe areas (ver abajo); y la barra de pestañas no cumplía la spec (alto y iconos). Pendiente: usa estilos propios de tarjeta en vez del kit (5 casos); el chip de racha muestra `0` fijo; el mapa no dibuja pins de POIs ni la ruta punteada. E0.3 |
+| 5 | Las vueltas de hoy | 🟡 | **Corregido el 2026-07-28:** el separador dibujaba una barra lisa roja en vez del **toldo a rayas** del prototipo. Pendiente: "0 de N chapadas" es literal; falta el recap del día. E0.3 |
 | 6 | Detalle de la vuelta | 🟡 | Sin auditar en detalle. Sabido: el botón "Llévame" no tiene acción. E0.3 |
 
 ## Flujo 03 · Chapar
@@ -110,7 +113,47 @@ Hallado con una captura del iPhone de David (2026-07-28): **la isla dinámica le
 | Bienvenida | El hero arrancaba en y=0: el notch tapaba la cabeza de Calato | `height: 300 + insets.top` con `paddingTop: insets.top`; fondo en papel para continuar sin costura el propio fondo del render |
 | Detalle de vuelta | El hero ilustrado también arrancaba en y=0 | `paddingTop: insets.top` con el color de la categoría extendido bajo el notch |
 | Barra de pestañas | `bottom` fijo en 26 (iOS) / 16 (Android) | `Math.max(insets.bottom, 12)` — el indicador de home y la navegación por gestos miden distinto en cada equipo |
-| Tarjeta del mapa | `bottom: 92` fijo → **quedaba detrás de la barra** en iPhone con indicador de home | Se calcula: `max(insets.bottom,12) + 62 (alto de barra) + 14` |
+| Tarjeta del mapa | `bottom: 92` fijo → **quedaba detrás de la barra** en iPhone con indicador de home | Se calcula sobre el alto real de la barra |
+
+### Segunda tanda (2026-07-28, tarde) — lo que la primera rompió y lo que no se había medido
+
+| Pieza | Defecto | Corrección |
+|---|---|---|
+| Tarjeta de la vuelta (mapa) | **Regresión del fix anterior:** `bottom: 92` vivía en el estilo compartido `saludo`, que usan DOS tarjetas. Al sacarlo del StyleSheet para calcularlo, se re-inyectó solo en la rama del saludo de Calato → la tarjeta de la vuelta quedó en `position:absolute` **sin `top` ni `bottom`** = pegada arriba, bajo la barra de estado, tapando los chips | La rama de la tarjeta recibe el mismo `bottom` calculado |
+| Barra de pestañas · alto | `height: 62` inventado; el prototipo **no fija alto** (`padding: 9px 6px`) y el padding estaba asimétrico (8/6) → se veía ahogada | Alto exacto **49** = 9+17+3+11+9, padding simétrico, todo desde `medidas` en `theme.ts` |
+| Barra · icono Perfil | El prototipo es `border-radius: 50% 50% 0 50%` (esquina recta **abajo-derecha**) y 16×16; el código tenía la esquina recta abajo-**izquierda** y 17×17: **estaba espejado** | 16×16 con `borderBottomRightRadius: 0` |
+| Barra · icono Álbum | `borderStyle:"dashed"` de RN no dibuja como el `dashed` de CSS: saca 2 trazos gordos por lado y se leía como corchetes | Redibujado en **`react-native-svg`** con `strokeDasharray` |
+| Barra · rótulos | El prototipo usa `gap: 3px`; el código `marginTop: 1`. Además escalaban con el texto del sistema y desbordaban una barra de alto exacto | `marginTop: 3` + `allowFontScaling={false}` |
+
+**Causa raíz de la regresión (vale para toda pieza flotante):** un mismo número (el alto de la barra) vivía copiado en dos archivos. Ahora es **un token** (`medidas` en `theme.ts`) y las piezas que se apoyan en la barra lo leen de ahí.
+
+### Tercera tanda (2026-07-28, noche) — 4 capturas, las 4 pestañas
+
+| Pieza | Defecto | Corrección |
+|---|---|---|
+| Barra de pestañas | **Segunda regresión mía:** con el alto exacto de la spec (49), los rótulos "Mapa/Vueltas/Álbum/Perfil" quedaban **FUERA del panel negro**, dibujados sobre el mapa. Causa: `BottomTabItem` de React Navigation trae `padding: 5` y `paddingVertical: 7` **en su propio StyleSheet**, que `tabBarItemStyle` no alcanza | La barra la dibujamos nosotros con `tabBar={…}`: `<BarraCuadra>` propia, sin alto fijo (el alto sale del contenido, como en el CSS) → es **imposible** que un rótulo se salga |
+| Vueltas · separador | El prototipo pone el **toldo a rayas** bajo el encabezado (línea 325); la pantalla dibujaba una **barra lisa roja** con estilo propio. Se leía como una barra de progreso llena al 100 % junto a "0 de 3 chapadas" | Usa `<Toldo>` del kit |
+| Kit · `<Toldo>` alto | 12 px. En CSS `.toldo` es **content-box**: `height:10` + 2 + 2 de borde = **14** de alto real. En RN el borde va dentro de la caja | `height: 14` |
+| Kit · `<Toldo>` rayas | 14 rayas con `flex: 1` → en un iPhone de 430 pt cada raya medía **31 pt**, más del doble de la spec, y cambiaba de ancho según el equipo | Rayas de **ancho fijo 14** dibujadas de más y recortadas por `overflow: hidden` |
+| Kit · `<Toldo>` color claro | Usaba `--papel` `#FBF7F0`; el prototipo usa `#FFFDF8` | Token nuevo `colores.papelVivo` |
+
+**Lección de las dos regresiones seguidas:** las dos nacieron de *calcular* un alto y confiar en que el framework respetara la cuenta. Cuando la spec fija el interior de un contenedor, la forma robusta no es acertar el número: es **quitarle el alto fijo** y dejar que salga del contenido — que es, además, lo que dice el CSS.
+
+### Cuarta tanda — lo que encontró el detector automático en su PRIMERA corrida
+
+Ya no a ojo: `npm run paridad` cruza el CSS del prototipo contra los `StyleSheet` del código.
+Estas cuatro estaban escritas desde siempre y nadie las había cruzado:
+
+| Pieza del kit | Prototipo | Estaba | Consecuencia |
+|---|---|---|---|
+| `<Tarjeta>` | `.card { background: var(--papel) }` | **sin fondo** | Una tarjeta del kit sobre el mapa sería transparente — **por eso la pantalla del mapa se dibujaba su propia tarjeta con fondo** en vez de usar el kit |
+| `<Boton>` | `padding: 13px` | `14 / 20` + `minHeight: 52` | Botón 4 px más alto que el diseño |
+| `<Chip>` | `align-items:center; gap:5px` | sin ninguno de los dos | Los chips con icono (la llamita de la racha) no alinean |
+| `<Campo>` | `padding: 12px 14px; font-size: 14px` | `15 / 16` y `16 px` | El campo salía **6 px más alto** y con la letra más grande — en la pantalla de login que estaba marcada ✅ |
+
+El detector cerró en **0 diferencias sobre 7 piezas**. Lo que aún no cubre (y por eso el
+segundo bug del día se escapó) es todo lo que solo aparece corriendo: el `padding: 5` interno
+de `BottomTabItem` no vive en ningún archivo nuestro.
 
 **Limitación de verificación:** esto **no se puede comprobar en el navegador** — `useSafeAreaInsets()` devuelve 0 sin notch. Lo único que valida la web es que no haya regresión con inset 0. **La prueba real es el dispositivo**, y por eso cada tajada que toque posicionamiento vertical se cierra con una captura del iPhone.
 
@@ -118,12 +161,15 @@ Hallado con una captura del iPhone de David (2026-07-28): **la isla dinámica le
 
 ## Resumen honesto
 
-**3 de 18 verificadas idénticas** (todo el flujo 01 · Entrar) · 6 existen pero difieren o están sin auditar · 9 no existen todavía.
+**3 de 21 verificadas idénticas** · 6 existen pero difieren o están sin auditar · 12 no existen todavía.
 
-| Momento | Idénticas | Difieren / sin auditar | No existen |
-|---|---|---|---|
-| Antes de E0 (reportado como "6 funcionales") | **0** | 6 | 12 |
-| Después de E0.1 | 1 | 6 | 11 |
-| **Después de E0.2 (hoy)** | **3** | 6 | 9 |
+El denominador **subió de 18 a 21** el 2026-07-28: al auditar el botón "Crear cuenta" apareció que la pantalla nunca existió — ni en el código ni en el prototipo. Se diseñaron las 3 que faltaban (19, 20, 21). Un denominador que crece no es un retroceso: es dejar de contar sobre un mapa incompleto.
+
+| Momento | Idénticas | Difieren / sin auditar | No existen | Total |
+|---|---|---|---|---|
+| Antes de E0 (reportado como "6 funcionales") | **0** | 6 | 12 | 18 |
+| Después de E0.1 | 1 | 6 | 11 | 18 |
+| Después de E0.2 | **3** | 6 | 9 | 18 |
+| **Hoy (registro diseñado + barra corregida)** | **3** | 6 | **12** | **21** |
 
 El error de criterio que originó esta tabla fue confundir *"trae datos"* con *"cumple el diseño"*. Se corrige midiendo, no prometiendo.

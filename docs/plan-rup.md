@@ -64,6 +64,76 @@ Medido en código y contra la base viva, no leído de la documentación.
 
 **Corolario de proceso, aprendido a los golpes:** *nada de lo ya construido se da por hecho.* Antes de marcar una pantalla como lista hay que **abrirla al lado de su mockup y listar las diferencias**. En la auditoría inicial de este plan yo di 6 pantallas por "funcionales" mirando solo si traían datos — sin compararlas con el prototipo. Estaban a medias. Si una tajada dice "ya está hecho", la respuesta correcta es **verificarlo**, no creerlo.
 
+### 🔎 Regla del 2026-07-28 (David): TODO idéntico, y la disparidad se arregla, no se anota
+
+**"No podemos perdernos en detalles."** *Todo* elemento debe ser idéntico al mockup —
+incluidos los que parecen menores: iconos de la barra, tamaños de 1 px, la esquina
+recta de un blob, el `gap` entre icono y rótulo. Un detalle que se deja pasar es deuda
+de marca que después nadie vuelve a mirar.
+
+**Obligación operativa, no opcional:** cuando aparezca una disparidad con el prototipo
+—la traiga una captura de David, la encuentre yo auditando, o me la cruce de paso
+haciendo otra cosa— hay que **(1) decirla explícitamente y (2) arreglarla en el momento**.
+No vale dejarla "para E0.3" salvo que David lo decida.
+
+**Cómo se mide, para que no sea opinión:** la spec sale del CSS del prototipo
+(`docs/identidad/CUADRA-Prototipo-v1.dc.html`), leído literal — no a ojo. Ejemplo del día
+que se escribió esta regla: la barra de pestañas decía `padding: 9px 6px` sin alto fijo,
+y el código tenía `height: 62` con padding asimétrico 8/6; y el icono de Perfil, que en el
+prototipo es `border-radius: 50% 50% 0 50%` (esquina recta **abajo-derecha**), en el código
+tenía la esquina recta abajo-izquierda: **estaba espejado**.
+
+**Cuando la plataforma no puede copiar al navegador, se cambia de técnica, no de spec.**
+`borderStyle: "dashed"` en React Native no dibuja como el `dashed` de CSS (saca dos trazos
+gordos por lado). Eso no autoriza a aceptar un icono distinto: se pasa a `react-native-svg`,
+que sí da el guion exacto. Regla general: si la primitiva no alcanza, se sube de herramienta.
+
+### 📐 El prototipo es un LIENZO, no una lista de píxeles (decisión del 2026-07-28)
+
+**Hallazgo que costó tres "correcciones" equivocadas mías.** El prototipo dibuja sus teléfonos
+en un lienzo de **336 × 718**; el iPhone 15 Pro Max mide **430 × 932**. Copiar sus números
+tal cual **encoge la app un 22 %** — y así se veía la barra "apretada".
+
+La prueba de que es sistémico está en los números que había **antes** de que yo los tocara:
+
+| Pieza | Spec | × 1.28 | El código decía |
+|---|---|---|---|
+| Alto de la barra | 49 | **63** | **62** |
+| Campo · padding vertical | 12 | **15** | **15** |
+
+Quien escribió esos valores los había ajustado a ojo al equipo real. Yo los reemplacé por la
+lectura literal del CSS y encogí la app. **Las disparidades eran reales como proporción**
+(padding asimétrico, icono espejado, toldo liso, rayas del doble de ancho); lo que apliqué mal
+fueron los valores absolutos. El código además mezclaba criterios: la barra escalada (62) pero
+el icono y el rótulo literales (17 y 9) — por eso se veía rara de dos maneras a la vez.
+
+**Regla:** todo número que salga del prototipo pasa por **`esc()`** de `theme.ts`, que lo
+multiplica por `ancho_del_equipo / 336` (tope ×1.4 para que en tablet no sea gigante). No pasan
+por ahí los que no vienen del diseño: `flex`, opacidades, duraciones de animación.
+
+**Y el detector lo respeta:** `scripts/paridad-css.mjs` evalúa `theme.ts` inyectando un
+`Dimensions` de **336**, así el factor da 1 y compara **spec contra spec**. Si comparara contra
+las medidas del equipo, marcaría como error justamente la escala que queremos.
+
+**Pendiente de barrido:** los tokens (`theme.ts`), el kit (`ui.tsx`) y la barra ya están
+escalados. Los números sueltos DENTRO de cada pantalla se convierten en E0.3, cuando cada
+pantalla se audita de todos modos.
+
+### 📱 Dispositivo de referencia: iPhone 15 Pro Max
+
+La verificación en equipo real se hace contra el **iPhone 15 Pro Max** de David
+(430 × 932 pt · isla dinámica · `insets.top ≈ 59`, `insets.bottom ≈ 34`). Todo lo que se
+construya tiene que verse correcto **ahí primero**, y adaptarse por token/inset al resto.
+
+Consecuencias que ya son ley:
+- **Medidas verticales:** siempre de `useSafeAreaInsets()`, nunca contra el borde.
+- **Piezas flotantes que se apoyan entre sí** (la tarjeta del mapa sobre la barra de
+  pestañas) **no repiten el número**: sale de `medidas` en `theme.ts`. Un `62` suelto en
+  dos archivos ya nos costó un bug.
+- **El texto de la UI de tamaño fijo no escala con el sistema** (`allowFontScaling={false}`
+  en rótulos de 9–12 px dentro de contenedores de alto exacto): con el texto grande de iOS
+  la barra se desbordaba.
+
 ### 📱 Segunda regla, del mismo golpe: el prototipo dibuja teléfonos idealizados
 
 El prototipo **no tiene notch, ni isla dinámica, ni indicador de home**. Copiar sus medidas verticales al pie de la letra **rompe en equipos reales**: una captura del iPhone de David mostró la isla dinámica tapándole el mechón a Calato — uno de los tres rasgos innegociables del personaje.
@@ -86,6 +156,58 @@ Cuatro defectos de este tipo, ya corregidos (commit `2054d42`): hero de Bienveni
 | `vuelta/[id].tsx` | sí | 5 | 2 |
 
 `sign-in.tsx` se dibuja sus propios botones con `Pressable` + estilos locales **sin sombra dura** — por eso la pantalla se ve plana en el teléfono. La regla operativa que sale de acá: **ninguna pantalla dibuja un botón, tarjeta o chip a mano. Todo sale de `components/ui.tsx`.** Si el kit no tiene algo, se agrega al kit, no a la pantalla.
+
+---
+
+## 🎬 REGLA DE MOVIMIENTO (decisión de David, 2026-07-28)
+
+**Todo tiene que tener buenas animaciones.** No es pulido de última fase: en un juego el
+movimiento *es* producto. Una figurita que aparece de golpe y una que se revela con peso se
+sienten dos apps distintas, y la segunda es la que hace volver mañana. El prototipo dibuja
+estados quietos; **el movimiento entre esos estados también es especificación** y se decide
+acá, no improvisando en el momento de codear.
+
+**Principios (de la guía de identidad, sección 05 — sombra dura, sin blur):**
+- **Con peso, no flotando.** Muelle (`spring`), no `linear`. La marca es de papel y tinta con
+  sombra dura: las cosas caen y rebotan un poco, no se desvanecen.
+- **Corta.** 150–320 ms para UI; solo las celebraciones pasan de 600 ms.
+- **Una por momento.** Igual que "una acción principal por pantalla": una animación protagonista
+  por pantalla, el resto se calla.
+- **Siempre en el hilo de UI** (Reanimated, `useSharedValue`/`withSpring`), nunca `setState`
+  por frame. 60 fps en el equipo de referencia o no entra.
+- **Respetar "reducir movimiento"** del sistema (`AccessibilityInfo.isReduceMotionEnabled`):
+  con esa opción activa, las transiciones se vuelven cortes y las celebraciones, estáticas.
+
+### Lo que YA se mueve (verificado en código)
+
+| Pieza | Qué hace | Dónde |
+|---|---|---|
+| **Calato vivo** — 6 estados | `tranqui` respira · `atento` respira corto · `trotando` rebota · `chapada` salta con `Easing.bounce` · `culpa` se encoge y se mece · `juzgando` te mira | `components/calato-vivo.tsx` (Reanimated, corre en Expo Go) |
+| **Cortina de Calato** | Tapa los saltos de navegación con sesión (login → home, cerrar sesión) para que el guard del layout no se vea | `components/calato-cortina.tsx` · usada en `sign-in.tsx` y `perfil.tsx` |
+| Tarjetas flotantes del mapa | `FadeInDown.springify()` al entrar, `FadeOutDown` al salir el saludo | `(app)/index.tsx` |
+
+### Lo que falta, con su iteración (no se posterga a "pulido")
+
+| Momento | Animación | Entra en |
+|---|---|---|
+| Cambio de pestaña | Icono y rótulo transicionan de metadato a naranja con muelle; el icono activo "asienta" 2 px | **E0.3** (barra propia, ya la dibujamos nosotros) |
+| Lista de Vueltas | Entrada escalonada de las 3 tarjetas (~60 ms de retraso entre cada una) + `Layout` animado al refrescar | **E0.3** |
+| Radar | Anillos punteados que laten hacia afuera · la flecha interpola suave al girar el equipo (nunca salta) · la cifra de cuadras cuenta hacia abajo, no parpadea | **E3** |
+| Obturador de la cámara | Destello + contracción del marco de esquinas al disparar | **E2** |
+| **¡Chapada!** — el momento compartible | Secuencia: cortina → la figurita entra girando y **aterriza con sombra dura** → confeti SOLO en colores de marca → `+N Calle` contando → el chip de racha late una vez → Calato salta | **E2** |
+| Figurita al Álbum | La celda vacía se voltea y revela la figurita cuando volvés del ¡Chapada! | **E3** |
+| Racha y Calle | Los números **cuentan** hasta su valor, no aparecen puestos; la barra de Calle crece con muelle | **E3** |
+| Rango nuevo | Sello que cae y rebota, con la escala de 6 niveles | **C1** |
+| Racha en riesgo | Calato en `culpa` + latido lento del chip: urgencia sin pánico | **E3** |
+
+**Punto de reevaluación (Rive):** hoy Calato se anima moviendo su render (escala, salto, giro)
+— alcanza y es gratis. **Rive** entra cuando necesitemos que cambie de *pose* de verdad
+(lengua, orejas, parpadeo) o para las celebraciones de C1; está anotado en «Escalado técnico
+cuando duela» y no antes: es una dependencia nueva y hay que justificarla.
+
+**Criterio de aceptación del movimiento:** se verifica **grabando la pantalla del iPhone 15
+Pro Max**, no en el navegador. Si en el video se ve un salto, un parpadeo o un elemento que
+aparece de golpe donde debía entrar, la tajada no está terminada.
 
 ---
 
@@ -271,9 +393,37 @@ Solo si la puerta go/no-go da verde:
 **Por iteración:**
 ```bash
 cd app && npm run typecheck && npm test          # app: 13 tests
+cd app && npm run paridad                        # spec del prototipo vs StyleSheet
 cd worker && npm run typecheck && npm test       # worker: 10 tests
 node scripts/validar-rls.mjs                     # 6 aserciones RLS contra la DB real
 ```
+
+### 🔧 `npm run paridad` — el detector de disparidades (2026-07-28)
+
+**Por qué existe:** en una sola tarde aparecieron 8 disparidades con el prototipo, y **7 eran
+comparables sin correr la app** — estaban escritas en el CSS del prototipo y en el StyleSheet,
+en archivos distintos. Encontrarlas a ojo costó una tarde entera; el script tarda 200 ms.
+Cada vez que David tenga que hacer de detector de bugs de fidelidad, es que falta una herramienta.
+
+Qué hace `scripts/paridad-css.mjs`: parsea el `<style>` del prototipo (resolviendo las
+`var(--…)`), evalúa los `StyleSheet.create` del código **con los tokens de `theme.ts` ya
+resueltos**, traduce el vocabulario CSS→RN (`padding: 9px 6px` → `paddingVertical/Horizontal`,
+`border-radius: 50% 50% 0 50%` → las 4 esquinas **en su orden**, `font-weight: 800` → la
+familia `Archivo_800ExtraBold`) y **corrige el `content-box`**: en CSS el `height` no incluye
+los bordes y en RN sí — de ahí salían los 2 px que le faltaban al `<Toldo>`. Sale con código 1
+si hay diferencias, así que sirve de puerta antes de un commit.
+
+Un desvío deliberado no se borra: se documenta en `notas` del par y el script lo muestra en
+gris con su razón (p. ej. el margen inferior de la barra sale de `insets`, no del 14 fijo del
+prototipo, porque el prototipo dibuja teléfonos sin indicador de home).
+
+**Lo que NO puede** — todo lo que solo se ve corriendo. El segundo bug del día (los rótulos
+de la barra dibujándose FUERA del panel) venía del `padding: 5` interno de `BottomTabItem`
+de React Navigation: eso no está en ningún archivo nuestro. Para esa clase hace falta el
+auditor de runtime, que es el próximo paso de herramientas: **insets simulados en la build
+web** (para que `useSafeAreaInsets()` devuelva los del iPhone 15 Pro Max en vez de 0) más un
+barrido del DOM que denuncie *hijo cuya caja se sale del padre* y *absoluto sin `top` ni
+`bottom`* — las dos formas exactas que tomaron los bugs de hoy.
 Más: `npx expo export --platform web` sin errores de consola, y la prueba en dispositivo con `npx expo start --clear`.
 
 **Del hito LCA (la demo):** el video de 60 segundos del loop completo, caminando, en un teléfono real. Si ese video existe, la demo está aprobada.

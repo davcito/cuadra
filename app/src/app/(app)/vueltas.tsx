@@ -21,6 +21,7 @@ import {
   NOMBRE_CATEGORIA,
   Tarjeta,
   TituloDisplay,
+  Toldo,
 } from "@/components/ui";
 import { colores, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
@@ -119,8 +120,9 @@ export default function VueltasScreen() {
           </Text>
         </View>
 
-        {/* separador toldo a rayas */}
-        <View style={styles.toldoSep} />
+        {/* Separador: el TOLDO A RAYAS del prototipo (línea 325), no una barra
+            lisa. Sale del kit — la pantalla no dibuja marca a mano. */}
+        <Toldo style={styles.toldoSep} />
 
         {cargando ? (
           <ActivityIndicator color={colores.naranja} style={{ marginTop: 40 }} />
@@ -200,14 +202,9 @@ const styles = StyleSheet.create({
   scroll: { padding: 18, paddingBottom: 110, gap: 13 },
   encabezado: { gap: 3 },
   sub: { fontSize: 12, color: colores.textoSuave, fontFamily: fuentes.medium },
-  toldoSep: {
-    height: 10,
-    borderRadius: 4,
-    borderWidth: 2,
-    borderColor: colores.tinta,
-    backgroundColor: colores.categorias.huariques,
-    marginBottom: 2,
-  },
+  // El alto, las rayas y los bordes los pone <Toldo>; acá solo su sitio
+  // (prototipo: `padding: 11px 18px 0` + `border-radius: 4px`).
+  toldoSep: { borderRadius: 4, marginBottom: 2 },
   tarjeta: { marginTop: 0 },
   fila: { flexDirection: "row", gap: 11, padding: 11 },
   filaTextos: { flex: 1, gap: 4 },

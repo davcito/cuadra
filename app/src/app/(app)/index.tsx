@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 import { CalatoVivo } from "@/components/calato-vivo";
 import { MapaCuadra } from "@/components/mapa-cuadra";
 import { Boton, Chip, Dificultad, Etiqueta } from "@/components/ui";
-import { colores, fuentes } from "@/lib/theme";
+import { colores, fuentes, medidas } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 type VueltaHoy = {
@@ -29,9 +29,10 @@ export default function HomeScreen() {
   const [saludo, setSaludo] = useState(true);
   const [vuelta, setVuelta] = useState<VueltaHoy | null>(null);
 
-  // La barra de pestañas flota a `max(insets.bottom, 12)` y mide 62 px de
-  // alto: la tarjeta se apoya JUSTO encima, en cualquier equipo.
-  const sobreLaBarra = Math.max(insets.bottom, 12) + 62 + 14;
+  // La tarjeta se apoya JUSTO encima de la barra, en cualquier equipo. El alto
+  // de la barra sale del token: si cambia allá, esto lo sigue solo.
+  const sobreLaBarra =
+    Math.max(insets.bottom, medidas.barraMargen) + medidas.barra + medidas.barraMargen;
 
   // El saludo es un momento, no un mueble: se va solo a los 5 s.
   useEffect(() => {
@@ -84,7 +85,10 @@ export default function HomeScreen() {
           </Pressable>
         </Animated.View>
       ) : vuelta ? (
-        <Animated.View entering={FadeInDown.springify().damping(16)} style={styles.saludo}>
+        <Animated.View
+          entering={FadeInDown.springify().damping(16)}
+          style={[styles.saludo, { bottom: sobreLaBarra }]}
+        >
           <View style={styles.tarjetaVuelta}>
             <View style={styles.vueltaTop}>
               <Chip fondo={colores.naranja} color={colores.tinta}>

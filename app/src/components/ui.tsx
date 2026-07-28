@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Svg, { Circle, Rect } from "react-native-svg";
 
-import { colores, escala, fuentes, radios, sombras } from "@/lib/theme";
+import { colores, esc, escala, fuentes, medidas, radios, sombras } from "@/lib/theme";
 
 /**
  * Kit de UI de Cuadra — la traducción a código de los componentes de la
@@ -187,14 +187,19 @@ export function Etiqueta({ children, color = colores.metadato }: { children: Rea
  * secciones y corona la pantalla de entrada (prototipo, pantallas 2 y 5).
  */
 export function Toldo({ style }: { style?: StyleProp<ViewStyle> }) {
+  // Rayas de ANCHO FIJO 14 (prototipo: `repeating-linear-gradient(90deg,
+  // var(--hua) 0 14px, #FFFDF8 14px 28px)`). Antes eran 14 rayas con `flex: 1`,
+  // así que en un iPhone de 430 pt cada raya medía 31 pt — más del doble de
+  // la spec, y encima cambiaba de ancho según el equipo. Se dibujan de más y
+  // el `overflow: hidden` del contenedor las recorta.
   return (
     <View style={[styles.toldo, style]}>
-      {Array.from({ length: 14 }, (_, i) => (
+      {Array.from({ length: 40 }, (_, i) => (
         <View
           key={i}
           style={{
-            flex: 1,
-            backgroundColor: i % 2 === 0 ? colores.categorias.huariques : colores.papel,
+            width: medidas.toldoRaya,
+            backgroundColor: i % 2 === 0 ? colores.categorias.huariques : colores.papelVivo,
           }}
         />
       ))}
@@ -261,69 +266,90 @@ const styles = StyleSheet.create({
     backgroundColor: colores.tinta,
   },
   tarjeta: {
-    borderWidth: 2,
+    // El prototipo pinta `.card` de papel. Sin esto la tarjeta es transparente
+    // y sobre el mapa se ve el mapa a través — por eso la pantalla del mapa se
+    // dibujaba su propia tarjeta con fondo en vez de usar el kit.
+    backgroundColor: colores.papel,
+    borderWidth: esc(2),
     borderColor: colores.tinta,
     borderRadius: radios.tarjeta,
     overflow: "hidden",
   },
   boton: {
-    borderWidth: 2,
+    borderWidth: esc(2),
     borderColor: colores.tinta,
     borderRadius: radios.boton,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
+    // El prototipo dice `padding: 13px` parejo; teníamos 14/20.
+    paddingVertical: esc(13),
+    paddingHorizontal: esc(13),
     alignItems: "center",
     justifyContent: "center",
-    minHeight: 52,
+    // 13 + 18 (línea de 15 px) + 13 + 4 de borde = 48, el alto natural del
+    // prototipo. Sigue por encima del mínimo táctil de 44 pt de Apple.
+    minHeight: esc(48),
   },
   botonTexto: {
-    fontSize: 15,
+    fontSize: esc(15),
     fontFamily: fuentes.extrabold,
     color: colores.tinta, // nunca blanco sobre naranja (guía 06)
   },
   chip: {
     borderRadius: radios.chip,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
+    paddingHorizontal: esc(10),
+    paddingVertical: esc(4),
     alignSelf: "flex-start",
+    // `.chip` es `inline-flex; align-items:center; gap:5px` — hace falta para
+    // los chips con icono, como la llamita de la racha.
+    flexDirection: "row",
+    alignItems: "center",
+    gap: esc(5),
   },
-  chipTexto: { fontSize: 10, fontFamily: fuentes.extrabold, letterSpacing: 0.9 },
-  dificultad: { flexDirection: "row", alignItems: "center", gap: 4 },
-  punto: { width: 7, height: 7, borderRadius: 4, backgroundColor: colores.tinta },
+  chipTexto: { fontSize: esc(10), fontFamily: fuentes.extrabold, letterSpacing: esc(0.9) },
+  dificultad: { flexDirection: "row", alignItems: "center", gap: esc(4) },
+  punto: {
+    width: esc(7),
+    height: esc(7),
+    borderRadius: esc(4),
+    backgroundColor: colores.tinta,
+  },
   puntoOff: {
-    width: 7,
-    height: 7,
-    borderRadius: 4,
-    borderWidth: 2,
+    width: esc(7),
+    height: esc(7),
+    borderRadius: esc(4),
+    borderWidth: esc(2),
     borderColor: colores.tinta,
   },
   dificultadTexto: {
-    fontSize: 10,
+    fontSize: esc(10),
     fontFamily: fuentes.bold,
     color: colores.textoSuave,
-    marginLeft: 3,
+    marginLeft: esc(3),
   },
   display: {
     ...escala.h1, // Alfa Slab One 28/32 — el titular de pantalla de la guía
     color: colores.tinta,
   },
-  etiqueta: { fontSize: 10, fontFamily: fuentes.extrabold, letterSpacing: 1.2 },
+  etiqueta: { fontSize: esc(10), fontFamily: fuentes.extrabold, letterSpacing: esc(1.2) },
   toldo: {
-    height: 12,
+    // 14 = 10 de raya + 2 + 2 de borde. En CSS el `.toldo` es content-box
+    // (height:10 MÁS los bordes); en RN el borde va dentro de la caja, así que
+    // el alto total tiene que declararse sumado. Antes decía 12 = 2 px menos.
+    height: esc(14),
     flexDirection: "row",
     overflow: "hidden",
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
+    borderTopWidth: esc(2),
+    borderBottomWidth: esc(2),
     borderColor: colores.tinta,
   },
   campo: {
     backgroundColor: "#FFFFFF",
-    borderWidth: 2,
+    borderWidth: esc(2),
     borderColor: colores.tinta,
     borderRadius: radios.campo,
-    paddingHorizontal: 16,
-    paddingVertical: 15,
-    fontSize: 16,
+    // Spec del prototipo: `padding: 12px 14px; font-size: 14px`.
+    paddingHorizontal: esc(14),
+    paddingVertical: esc(12),
+    fontSize: esc(14),
     fontFamily: fuentes.regular,
     color: colores.tinta,
   },

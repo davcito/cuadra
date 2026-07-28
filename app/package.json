@@ -49,6 +49,7 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "test": "tsx --test src/lib/geo.test.ts",
+    "paridad": "node ../scripts/paridad-css.mjs",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit"
   },
   "private": true
