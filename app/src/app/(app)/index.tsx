@@ -7,7 +7,7 @@ import { useRouter } from "expo-router";
 import { CalatoVivo } from "@/components/calato-vivo";
 import { MapaCuadra } from "@/components/mapa-cuadra";
 import { Boton, Chip, Dificultad, Etiqueta } from "@/components/ui";
-import { colores } from "@/lib/theme";
+import { colores, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 type VueltaHoy = {
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     elevation: 3,
   },
-  marca: { fontSize: 20, fontWeight: "800", color: colores.tinta, letterSpacing: -0.5 },
+  marca: { fontSize: 20, fontFamily: fuentes.extrabold, color: colores.tinta, letterSpacing: -0.5 },
   chipRacha: {
     backgroundColor: colores.tinta,
     flexDirection: "row",
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
   },
-  rachaTexto: { fontSize: 13, fontWeight: "800", color: colores.papel },
+  rachaTexto: { fontSize: 13, fontFamily: fuentes.extrabold, color: colores.papel },
   saludo: {
     position: "absolute",
     left: 14,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   vueltaTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  vueltaTitulo: { fontSize: 16, fontWeight: "800", color: colores.tinta },
+  vueltaTitulo: { fontSize: 16, fontFamily: fuentes.extrabold, color: colores.tinta },
   saludoFila: {
     flexDirection: "row",
     alignItems: "center",
@@ -184,6 +184,6 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   saludoTextos: { flex: 1, gap: 2 },
-  saludoTitulo: { fontSize: 15, fontWeight: "800", color: colores.tinta },
+  saludoTitulo: { fontSize: 15, fontFamily: fuentes.extrabold, color: colores.tinta },
   saludoDetalle: { fontSize: 12, color: colores.textoSuave },
 });

@@ -22,7 +22,7 @@ import {
   Tarjeta,
   TituloDisplay,
 } from "@/components/ui";
-import { colores } from "@/lib/theme";
+import { colores, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 /** Una Vuelta con el POI resuelto (lo que devuelve la query). */
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colores.papel },
   scroll: { padding: 18, paddingBottom: 110, gap: 13 },
   encabezado: { gap: 3 },
-  sub: { fontSize: 12, color: colores.textoSuave, fontWeight: "500" },
+  sub: { fontSize: 12, color: colores.textoSuave, fontFamily: fuentes.medium },
   toldoSep: {
     height: 10,
     borderRadius: 4,
@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
   fila: { flexDirection: "row", gap: 11, padding: 11 },
   filaTextos: { flex: 1, gap: 4 },
   filaTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  titulo: { fontSize: 15, fontWeight: "800", color: colores.tinta, lineHeight: 19 },
-  meta: { fontSize: 11, color: colores.textoSuave, fontWeight: "500" },
+  titulo: { fontSize: 15, fontFamily: fuentes.extrabold, color: colores.tinta, lineHeight: 19 },
+  meta: { fontSize: 11, color: colores.textoSuave, fontFamily: fuentes.medium },
   ilustra: {
     width: 76,
     borderRadius: 10,

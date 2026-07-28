@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useCalato } from "@/components/calato-cortina";
 import { CalatoVivo } from "@/components/calato-vivo";
 import { supabase } from "@/lib/supabase";
+import { colores, fuentes, radios } from "@/lib/theme";
 
 type Modo = "entrar" | "crear";
 
@@ -139,42 +140,57 @@ export default function SignInScreen() {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: "#FBF7F0" },
+  safe: { flex: 1, backgroundColor: colores.papel },
   flex: { flex: 1 },
   contenido: { flex: 1, justifyContent: "center", paddingHorizontal: 28, gap: 36 },
   encabezado: { alignItems: "center", gap: 6 },
-  marca: { fontSize: 48, fontWeight: "800", color: "#1F1B16", letterSpacing: -1 },
-  bienvenida: { fontSize: 17, color: "#8A7E6E" },
+  // La marca en display (Alfa Slab One): es el único lugar donde grita.
+  marca: { fontSize: 52, lineHeight: 60, fontFamily: fuentes.display, color: colores.tinta },
+  bienvenida: { fontSize: 16, fontFamily: fuentes.medium, color: colores.naranja },
   form: { gap: 14 },
   input: {
     backgroundColor: "#FFFFFF",
-    borderWidth: 1,
-    borderColor: "#EFE6D8",
-    borderRadius: 14,
-    paddingHorizontal: 18,
-    paddingVertical: 16,
+    borderWidth: 2,
+    borderColor: colores.tinta,
+    borderRadius: radios.campo,
+    paddingHorizontal: 16,
+    paddingVertical: 15,
     fontSize: 16,
-    color: "#1F1B16",
+    fontFamily: fuentes.regular,
+    color: colores.tinta,
   },
   boton: {
-    backgroundColor: "#E8622C",
-    borderRadius: 14,
-    paddingVertical: 17,
+    backgroundColor: colores.naranja,
+    borderWidth: 2,
+    borderColor: colores.tinta,
+    borderRadius: radios.boton,
+    paddingVertical: 15,
     alignItems: "center",
     marginTop: 4,
+    minHeight: 52,
+    justifyContent: "center",
   },
-  botonOff: { backgroundColor: "#E8C3B0" },
-  botonTexto: { color: "#FFFFFF", fontSize: 16, fontWeight: "700" },
+  botonOff: { backgroundColor: "#E2D6BF", borderColor: "#C9BCA3" },
+  // Texto TINTA sobre naranja, nunca blanco (guía §06: el blanco falla AA).
+  botonTexto: { color: colores.tinta, fontSize: 16, fontFamily: fuentes.extrabold },
   botonGoogle: {
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1,
-    borderColor: "#EFE6D8",
-    borderRadius: 14,
-    paddingVertical: 16,
+    backgroundColor: "transparent",
+    borderWidth: 2,
+    borderColor: colores.tinta,
+    borderRadius: radios.boton,
+    paddingVertical: 15,
     alignItems: "center",
+    minHeight: 52,
+    justifyContent: "center",
   },
-  botonGoogleTexto: { color: "#1F1B16", fontSize: 15, fontWeight: "600" },
-  toggle: { textAlign: "center", color: "#E8622C", fontSize: 15, marginTop: 8 },
+  botonGoogleTexto: { color: colores.tinta, fontSize: 15, fontFamily: fuentes.bold },
+  toggle: {
+    textAlign: "center",
+    color: colores.naranja,
+    fontSize: 14,
+    fontFamily: fuentes.bold,
+    marginTop: 8,
+  },
   avisoCalato: {
     flexDirection: "row",
     alignItems: "center",
@@ -186,5 +202,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 11,
   },
-  avisoTexto: { flex: 1, fontSize: 12, lineHeight: 17, color: "#5C5347" },
+  avisoTexto: {
+    flex: 1,
+    fontSize: 12,
+    lineHeight: 17,
+    fontFamily: fuentes.regular,
+    color: colores.textoSuave,
+  },
 });

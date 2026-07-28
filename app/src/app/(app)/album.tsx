@@ -3,7 +3,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-nat
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { COLOR_CATEGORIA, Chip, Etiqueta, Tarjeta, TituloDisplay } from "@/components/ui";
-import { colores } from "@/lib/theme";
+import { colores, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 type Figurita = {
@@ -118,7 +118,7 @@ export default function AlbumScreen() {
         <Tarjeta style={{ marginTop: 6 }} fondo="#FFFFFF">
           <View style={styles.nota}>
             <Text style={styles.notaTexto}>
-              <Text style={{ fontWeight: "800" }}>Completá {barrio}</Text> y desbloqueás la
+              <Text style={{ fontFamily: fuentes.extrabold }}>Completá {barrio}</Text> y desbloqueás la
               figurita de barrio, la que no se consigue de otra forma.
             </Text>
           </View>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   arte: { flex: 1, borderRadius: 4 },
-  numero: { fontSize: 8, fontWeight: "800", letterSpacing: 0.5 },
+  numero: { fontSize: 8, fontFamily: fuentes.extrabold, letterSpacing: 0.5 },
   nota: { padding: 13 },
   notaTexto: { fontSize: 12, color: colores.textoSuave, lineHeight: 17 },
 });

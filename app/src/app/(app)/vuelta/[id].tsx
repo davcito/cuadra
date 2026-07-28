@@ -14,7 +14,7 @@ import {
   TituloDisplay,
 } from "@/components/ui";
 import { IlustracionLugar, type Vuelta } from "@/app/(app)/vueltas";
-import { colores } from "@/lib/theme";
+import { colores, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 /**
@@ -144,10 +144,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 8,
   },
-  volverTexto: { fontSize: 20, fontWeight: "800", color: colores.tinta, marginTop: -3 },
+  volverTexto: { fontSize: 20, fontFamily: fuentes.extrabold, color: colores.tinta, marginTop: -3 },
   cuerpo: { padding: 18, gap: 10 },
   filaTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  meta: { fontSize: 13, color: colores.textoSuave, fontWeight: "500" },
+  meta: { fontSize: 13, color: colores.textoSuave, fontFamily: fuentes.medium },
   descripcion: { fontSize: 14, lineHeight: 21, color: colores.textoSuave, marginTop: 2 },
   cupon: {
     borderWidth: 2,
@@ -164,6 +164,6 @@ const styles = StyleSheet.create({
   premios: { flexDirection: "row", gap: 11, marginTop: 4 },
   premio: { flex: 1 },
   premioCuerpo: { padding: 12, gap: 2 },
-  premioValor: { fontSize: 16, fontWeight: "800", color: colores.tinta },
+  premioValor: { fontSize: 16, fontFamily: fuentes.extrabold, color: colores.tinta },
   pie: { fontSize: 11, color: colores.metadato, lineHeight: 16, textAlign: "center" },
 });

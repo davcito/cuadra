@@ -1,6 +1,6 @@
 /**
- * Tokens de la identidad visual de Cuadra — V1.2 (ADR-0006).
- * Fuente de verdad de diseño: docs/identidad/CUADRA-Identidad-v1.2.dc.html
+ * Tokens de la identidad visual de Cuadra — V1.3 (ADR-0006).
+ * Fuente de verdad de diseño: docs/identidad/CUADRA-Identidad-v1.3.dc.html
  * (guía viva en Claude Design). El código NO inventa colores fuera de esta paleta.
  */
 
@@ -30,29 +30,61 @@ export const coloresOscuro = {
   huacas: "#E0A94B",
 } as const;
 
-// Display solo para titulares/celebraciones (nunca <20 px ni párrafos); Archivo para todo el cuerpo.
-// Carga de fuentes (expo-font / @expo-google-fonts) pendiente de cablear en la app.
+/**
+ * Familias tipográficas. En React Native `fontWeight` NO aplica a fuentes
+ * personalizadas: cada peso es una familia propia. Por eso los estilos usan
+ * `fontFamily: fuentes.bold` en vez de `fontWeight: "700"`.
+ * Se cargan en src/app/_layout.tsx con useFonts.
+ *
+ * Display (Alfa Slab One) solo para titulares, números grandes y celebraciones
+ * — nunca en párrafos ni bajo 20 px (guía, sección 06).
+ */
+export const fuentes = {
+  display: "AlfaSlabOne_400Regular",
+  regular: "Archivo_400Regular",
+  medium: "Archivo_500Medium",
+  semibold: "Archivo_600SemiBold",
+  bold: "Archivo_700Bold",
+  extrabold: "Archivo_800ExtraBold",
+} as const;
+
+/** Alias legado; preferir `fuentes`. */
 export const tipografia = {
-  display: "AlfaSlabOne",
-  ui: "Archivo",
+  display: fuentes.display,
+  ui: fuentes.regular,
 } as const;
 
-// Escala tipográfica móvil (fontSize/lineHeight) — guía sección 03.
+/**
+ * Escala tipográfica móvil (guía sección 03). Cada escalón trae su familia,
+ * así un estilo se aplica con un solo spread: `style={escala.titulo}`.
+ */
 export const escala = {
-  display: { fontSize: 40, lineHeight: 44 },
-  h1: { fontSize: 28, lineHeight: 32 },
-  h2: { fontSize: 22, lineHeight: 26 },
-  titulo: { fontSize: 18, lineHeight: 24 },
-  cuerpo: { fontSize: 16, lineHeight: 24 },
-  secundario: { fontSize: 14, lineHeight: 20 },
-  pie: { fontSize: 12, lineHeight: 16 },
+  display: { fontSize: 40, lineHeight: 44, fontFamily: fuentes.display },
+  h1: { fontSize: 28, lineHeight: 32, fontFamily: fuentes.display },
+  h2: { fontSize: 22, lineHeight: 26, fontFamily: fuentes.display },
+  titulo: { fontSize: 18, lineHeight: 24, fontFamily: fuentes.bold },
+  cuerpo: { fontSize: 16, lineHeight: 24, fontFamily: fuentes.regular },
+  secundario: { fontSize: 14, lineHeight: 20, fontFamily: fuentes.medium },
+  pie: { fontSize: 12, lineHeight: 16, fontFamily: fuentes.bold, letterSpacing: 0.96 },
 } as const;
 
-// Sombra dura de marca: View desplazada plana en tinta, sin blur (guía sección 05).
 export const radios = {
   tarjeta: 16,
   boton: 14,
   chip: 999,
+  campo: 12,
+  flotante: 18,
+} as const;
+
+/**
+ * Sombra dura de marca: plana, desplazada, en tinta, SIN blur (guía sección 05).
+ * En RN se dibuja con una View detrás — ver <SombraDura> en components/ui.tsx.
+ */
+export const sombras = {
+  boton: 4,
+  tarjeta: 3,
+  flotante: 3,
+  modal: 6,
 } as const;
 
 // Calato (ADR-0006): assets oficiales en docs/identidad/calato/.

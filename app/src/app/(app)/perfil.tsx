@@ -6,7 +6,7 @@ import { useCalato } from "@/components/calato-cortina";
 import { CalatoVivo } from "@/components/calato-vivo";
 import { Boton, Chip, Etiqueta, Tarjeta, TituloDisplay } from "@/components/ui";
 import { useSession } from "@/lib/auth";
-import { colores } from "@/lib/theme";
+import { colores, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 /** Rangos por Calle acumulada (documento maestro §3.2). */
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     transform: [{ rotate: "-4deg" }],
   },
-  selloTexto: { fontSize: 10, fontWeight: "800", letterSpacing: 1, color: colores.naranja },
+  selloTexto: { fontSize: 10, fontFamily: fuentes.extrabold, letterSpacing: 1, color: colores.naranja },
   progresoCaja: { gap: 5, marginTop: 4 },
   progresoTop: { flexDirection: "row", justifyContent: "space-between" },
   barra: {
@@ -164,14 +164,14 @@ const styles = StyleSheet.create({
   stats: { flexDirection: "row", gap: 9 },
   stat: { flex: 1 },
   statCuerpo: { alignItems: "center", paddingVertical: 12, gap: 2 },
-  statNumero: { fontSize: 23, fontWeight: "900", color: colores.tinta },
+  statNumero: { fontSize: 23, fontFamily: fuentes.extrabold, color: colores.tinta },
   filaAjuste: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     padding: 14,
   },
-  ajusteTitulo: { fontSize: 14, fontWeight: "800", color: colores.tinta },
+  ajusteTitulo: { fontSize: 14, fontFamily: fuentes.extrabold, color: colores.tinta },
   ajusteMeta: { fontSize: 12, color: colores.textoSuave },
   pie: {
     fontSize: 11,

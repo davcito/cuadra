@@ -9,7 +9,7 @@ import {
   type ViewStyle,
 } from "react-native";
 
-import { colores, escala, radios } from "@/lib/theme";
+import { colores, escala, fuentes, radios, sombras } from "@/lib/theme";
 
 /**
  * Kit de UI de Cuadra — la traducción a código de los componentes de la
@@ -21,7 +21,7 @@ import { colores, escala, radios } from "@/lib/theme";
 /** Sombra dura de marca: una View desplazada detrás, sin blur. */
 export function SombraDura({
   children,
-  offset = 3,
+  offset = sombras.tarjeta,
   radio = radios.tarjeta,
   style,
 }: {
@@ -108,7 +108,7 @@ export function Boton({
       {variante === "linea" || deshabilitado ? (
         cuerpo
       ) : (
-        <SombraDura offset={4} radio={radios.boton}>
+        <SombraDura offset={sombras.boton} radio={radios.boton}>
           {cuerpo}
         </SombraDura>
       )}
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   },
   botonTexto: {
     fontSize: 15,
-    fontWeight: "800",
+    fontFamily: fuentes.extrabold,
     color: colores.tinta, // nunca blanco sobre naranja (guía 06)
   },
   chip: {
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     alignSelf: "flex-start",
   },
-  chipTexto: { fontSize: 10, fontWeight: "800", letterSpacing: 0.9 },
+  chipTexto: { fontSize: 10, fontFamily: fuentes.extrabold, letterSpacing: 0.9 },
   dificultad: { flexDirection: "row", alignItems: "center", gap: 4 },
   punto: { width: 7, height: 7, borderRadius: 4, backgroundColor: colores.tinta },
   puntoOff: {
@@ -222,16 +222,13 @@ const styles = StyleSheet.create({
   },
   dificultadTexto: {
     fontSize: 10,
-    fontWeight: "700",
+    fontFamily: fuentes.bold,
     color: colores.textoSuave,
     marginLeft: 3,
   },
   display: {
-    fontSize: escala.h1.fontSize,
-    lineHeight: escala.h1.lineHeight,
-    fontWeight: "900",
+    ...escala.h1, // Alfa Slab One 28/32 — el titular de pantalla de la guía
     color: colores.tinta,
-    letterSpacing: -0.5,
   },
-  etiqueta: { fontSize: 10, fontWeight: "800", letterSpacing: 1.2 },
+  etiqueta: { fontSize: 10, fontFamily: fuentes.extrabold, letterSpacing: 1.2 },
 });

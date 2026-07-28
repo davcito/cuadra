@@ -1,7 +1,7 @@
 import { Tabs } from "expo-router";
 import { Platform, StyleSheet, Text, View } from "react-native";
 
-import { colores } from "@/lib/theme";
+import { colores, fuentes } from "@/lib/theme";
 
 /**
  * Barra de pestañas de Cuadra: panel tinta flotante con radio 18,
@@ -10,7 +10,7 @@ import { colores } from "@/lib/theme";
  */
 
 function Icono({ nombre, activo }: { nombre: string; activo: boolean }) {
-  const color = activo ? colores.naranja : "#8A7E6E";
+  const color = activo ? colores.naranja : colores.metadato;
   const base = { borderColor: color, borderWidth: 3 } as const;
 
   return (
@@ -44,7 +44,10 @@ function Rotulo({ children, activo }: { children: string; activo: boolean }) {
     <Text
       style={[
         styles.rotulo,
-        { color: activo ? colores.naranja : "#8A7E6E", fontWeight: activo ? "800" : "700" },
+        {
+          color: activo ? colores.naranja : colores.metadato,
+          fontFamily: activo ? fuentes.extrabold : fuentes.bold,
+        },
       ]}
     >
       {children}

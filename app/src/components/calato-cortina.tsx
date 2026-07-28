@@ -18,7 +18,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { CalatoVivo } from "@/components/calato-vivo";
-import { colores } from "@/lib/theme";
+import { colores, fuentes } from "@/lib/theme";
 
 /**
  * La CORTINA de Calato (ADR-0006, fase 1): en vez de spinners genéricos,
@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
   },
   barraArriba: { top: 0 },
   barraAbajo: { bottom: 0 },
-  mensaje: { fontSize: 17, fontWeight: "800", color: colores.tinta },
+  mensaje: { fontSize: 17, fontFamily: fuentes.extrabold, color: colores.tinta },
   pie: {
     fontSize: 11,
-    fontWeight: "800",
+    fontFamily: fuentes.extrabold,
     letterSpacing: 3,
     color: colores.metadato,
     marginTop: 2,
