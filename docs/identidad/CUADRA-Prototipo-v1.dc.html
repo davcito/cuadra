@@ -50,6 +50,8 @@
   .pin{width:34px;height:34px;border:3px solid var(--tinta);box-sizing:border-box;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;position:absolute}
   .pin span{transform:rotate(45deg);color:var(--papel);font-family:var(--display);font-size:13px}
   .papelito{background:repeating-linear-gradient(0deg,#FFFDF8 0 2px,#F7F1E5 2px 5px)}
+  .toldo{height:10px;background:repeating-linear-gradient(90deg,var(--hua) 0 14px,#FFFDF8 14px 28px);border-top:2px solid var(--tinta);border-bottom:2px solid var(--tinta)}
+  .sello{display:inline-block;border:2px dashed var(--tinta);border-radius:999px;padding:5px 12px;font-size:10px;font-weight:800;letter-spacing:.1em}
 </style>
 </helmet>
 
@@ -104,8 +106,12 @@
       <div class="col">
         <div class="tel">
           <div class="status"><span>9:41</span><span>▮▮▮</span></div>
-          <div class="pad" style="padding-top:44px;display:flex;flex-direction:column;gap:7px">
-            <span class="d" style="font-size:40px">CUADRA</span>
+          <div class="toldo" style="margin-top:8px"></div>
+          <div class="pad" style="padding-top:26px;display:flex;flex-direction:column;gap:7px">
+            <div style="display:flex;align-items:center;gap:11px">
+              <svg width="42" height="42" viewBox="0 0 48 48"><rect x="7" y="7" width="34" height="34" rx="10" fill="none" stroke="#1F1B16" stroke-width="6" pathLength="100" stroke-dasharray="82 18" stroke-dashoffset="-34" stroke-linecap="round"></rect><circle cx="40" cy="8" r="6" fill="#E8622C"></circle></svg>
+              <span class="d" style="font-size:38px">CUADRA</span>
+            </div>
             <span style="font-size:15px;font-weight:700;color:var(--acento)">Tu ciudad, cuadra por cuadra.</span>
           </div>
           <div class="pad" style="padding-top:34px;display:flex;flex-direction:column;gap:11px">
@@ -172,6 +178,10 @@
           <div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);grid-auto-rows:78px;gap:10px;padding:10px;box-sizing:border-box">
             <sc-for list="{{ manzanas }}" as="m" hint-placeholder-count="40"><div style="background:{{ m.c }};border-radius:9px"></div></sc-for>
           </div>
+          <span style="position:absolute;left:14px;top:302px;font-size:8px;font-weight:800;letter-spacing:.16em;color:#B9AB92">JR. DOMEYER</span>
+          <span style="position:absolute;left:243px;top:150px;font-size:8px;font-weight:800;letter-spacing:.16em;color:#B9AB92;transform:rotate(90deg);transform-origin:left top">AV. GRAU</span>
+          <svg style="position:absolute;inset:0;pointer-events:none" width="336" height="718" viewBox="0 0 336 718"><path d="M178 368 C 158 336, 128 322, 104 300 C 92 288, 84 276, 88 266" fill="none" stroke="#E8622C" stroke-width="4" stroke-dasharray="1.5 9" stroke-linecap="round"></path></svg>
+          <div style="position:absolute;left:16px;top:108px;transform:rotate(-3deg)"><span class="chip" style="background:var(--papel);border:2px solid var(--tinta);color:var(--tinta);box-shadow:2px 2px 0 var(--tinta)">BARRANCO</span></div>
           <div class="pin" style="background:var(--hua);left:70px;top:250px"><span>H</span></div>
           <div class="pin" style="background:var(--cal);left:222px;top:322px"><span>C</span></div>
           <div class="pin" style="background:var(--huc);left:120px;top:430px"><span>A</span></div>
@@ -212,48 +222,80 @@
       <div class="col">
         <div class="tel">
           <div class="status"><span>9:41</span><span>▮▮▮</span></div>
-          <div class="pad" style="padding-top:14px;display:flex;flex-direction:column;gap:3px">
+          <div class="pad" style="padding-top:12px;display:flex;flex-direction:column;gap:3px">
             <h3 class="d" style="font-size:27px;margin:0">Las vueltas de hoy</h3>
             <span class="meta">Se renuevan a medianoche · 0 de 3 chapadas</span>
           </div>
-          <div class="pad" style="padding-top:16px;display:flex;flex-direction:column;gap:13px">
+          <div style="padding:11px 18px 0"><div class="toldo" style="border-radius:4px"></div></div>
+          <div class="pad" style="padding-top:13px;display:flex;flex-direction:column;gap:12px">
 
-            <div class="card" style="padding:14px;display:flex;flex-direction:column;gap:7px">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <span class="chip" style="background:var(--hua);color:var(--papel)">HUARIQUES</span>
-                <span class="dif"><span class="p"></span><span class="p off"></span><span class="p off"></span><span style="font-size:10px;font-weight:700;color:var(--suave);margin-left:3px">Tranqui</span></span>
+            <div class="card" style="padding:11px;display:flex;gap:11px">
+              <div style="width:76px;border-radius:10px;border:2px solid var(--tinta);background:var(--hua);overflow:hidden;display:flex;align-items:flex-end;justify-content:center;flex-shrink:0">
+                <div style="display:flex;flex-direction:column;align-items:center;width:100%">
+                  <div style="width:82%;height:10px;background:repeating-linear-gradient(90deg,#FBF7F0 0 7px,#8F2117 7px 14px);border-radius:5px 5px 0 0"></div>
+                  <div style="width:66%;height:26px;background:#8F2117;display:flex;align-items:flex-end;justify-content:center;gap:4px">
+                    <div style="width:9px;height:16px;background:#FBF7F0;border-radius:2px 2px 0 0"></div>
+                    <div style="width:11px;height:11px;background:#F0A73F;border-radius:2px"></div>
+                  </div>
+                </div>
               </div>
-              <span style="font-size:16px;font-weight:800;line-height:1.25">El anticucho de doña Peta</span>
-              <span class="meta">A 7 cuadras · Barranco</span>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:3px">
-                <span class="lbl" style="color:var(--acento)">+25 CALLE</span>
-                <span class="lbl">FIGURITA N.º 034</span>
+              <div style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:0">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="chip" style="background:var(--hua);color:var(--papel)">HUARIQUES</span>
+                  <span class="dif"><span class="p"></span><span class="p off"></span><span class="p off"></span><span style="font-size:10px;font-weight:700;color:var(--suave);margin-left:3px">Tranqui</span></span>
+                </div>
+                <span style="font-size:15px;font-weight:800;line-height:1.2">El anticucho de doña Peta</span>
+                <span class="meta" style="font-size:11px">A 7 cuadras · Barranco</span>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="lbl" style="color:var(--acento)">+25 CALLE</span>
+                  <span class="lbl">N.º 034</span>
+                </div>
               </div>
             </div>
 
-            <div class="card" style="padding:14px;display:flex;flex-direction:column;gap:7px">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <span class="chip" style="background:var(--cal);color:var(--papel)">CALETAS</span>
-                <span class="dif"><span class="p"></span><span class="p"></span><span class="p off"></span><span style="font-size:10px;font-weight:700;color:var(--suave);margin-left:3px">Piernas</span></span>
+            <div class="card" style="padding:11px;display:flex;gap:11px">
+              <div style="width:76px;border-radius:10px;border:2px solid var(--tinta);background:var(--cal);overflow:hidden;display:flex;align-items:flex-end;justify-content:center;flex-shrink:0">
+                <div style="display:flex;flex-direction:column;align-items:center;width:100%">
+                  <div style="width:58%;height:34px;background:#0C5A4C;border-radius:6px 6px 0 0;display:flex;align-items:flex-end;justify-content:center;gap:3px;padding-bottom:5px;box-sizing:border-box">
+                    <div style="width:6px;height:13px;background:#F0A73F"></div>
+                    <div style="width:6px;height:17px;background:#FBF7F0"></div>
+                    <div style="width:6px;height:10px;background:#CE3E78"></div>
+                  </div>
+                </div>
               </div>
-              <span style="font-size:16px;font-weight:800;line-height:1.25">La librería escondida de Quilca</span>
-              <span class="meta">A 14 cuadras · Cercado</span>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:3px">
-                <span class="lbl" style="color:var(--acento)">+40 CALLE</span>
-                <span class="lbl">FIGURITA N.º 012</span>
+              <div style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:0">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="chip" style="background:var(--cal);color:var(--papel)">CALETAS</span>
+                  <span class="dif"><span class="p"></span><span class="p"></span><span class="p off"></span><span style="font-size:10px;font-weight:700;color:var(--suave);margin-left:3px">Piernas</span></span>
+                </div>
+                <span style="font-size:15px;font-weight:800;line-height:1.2">La librería escondida de Quilca</span>
+                <span class="meta" style="font-size:11px">A 14 cuadras · Cercado</span>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="lbl" style="color:var(--acento)">+40 CALLE</span>
+                  <span class="lbl">N.º 012</span>
+                </div>
               </div>
             </div>
 
-            <div class="card" style="padding:14px;display:flex;flex-direction:column;gap:7px">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <span class="chip" style="background:var(--huc);color:var(--papel)">HUACAS</span>
-                <span class="dif"><span class="p"></span><span class="p"></span><span class="p"></span><span style="font-size:10px;font-weight:700;color:var(--suave);margin-left:3px">Leyenda</span></span>
+            <div class="card" style="padding:11px;display:flex;gap:11px">
+              <div style="width:76px;border-radius:10px;border:2px solid var(--tinta);background:var(--huc);overflow:hidden;display:flex;align-items:flex-end;justify-content:center;flex-shrink:0">
+                <div style="display:flex;flex-direction:column;align-items:center;width:100%">
+                  <div style="width:26%;height:9px;background:#8A5A12;border-radius:3px 3px 0 0"></div>
+                  <div style="width:48%;height:10px;background:#A06915"></div>
+                  <div style="width:72%;height:12px;background:#8A5A12"></div>
+                </div>
               </div>
-              <span style="font-size:16px;font-weight:800;line-height:1.25">Huaca Pucllana al atardecer</span>
-              <span class="meta">A 22 cuadras · Miraflores · solo hasta las 6 p.m.</span>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:3px">
-                <span class="lbl" style="color:var(--acento)">+70 CALLE</span>
-                <span class="lbl" style="color:var(--huc)">★ RARA</span>
+              <div style="display:flex;flex-direction:column;gap:4px;flex:1;min-width:0">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="chip" style="background:var(--huc);color:var(--papel)">HUACAS</span>
+                  <span class="dif"><span class="p"></span><span class="p"></span><span class="p"></span><span style="font-size:10px;font-weight:700;color:var(--suave);margin-left:3px">Leyenda</span></span>
+                </div>
+                <span style="font-size:15px;font-weight:800;line-height:1.2">Huaca Pucllana al atardecer</span>
+                <span class="meta" style="font-size:11px">A 22 cuadras · Miraflores · hasta las 6 p.m.</span>
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <span class="lbl" style="color:var(--acento)">+70 CALLE</span>
+                  <span class="lbl" style="color:var(--huc)">★ RARA</span>
+                </div>
               </div>
             </div>
 
@@ -294,8 +336,8 @@
             <span class="meta">A 7 cuadras · Barranco · cierra 11 p.m.</span>
             <p style="font-size:14px;line-height:1.55;margin:4px 0 0;color:var(--suave)">Lleva 30 años en la misma esquina y la cola dice todo. Andá, pedí uno con papa y preguntale a la señora desde cuándo está ahí.</p>
 
-            <div class="card" style="padding:13px 15px;margin-top:6px;display:flex;flex-direction:column;gap:5px;background:#FFF">
-              <span class="lbl">PARA CHAPARLA</span>
+            <div style="padding:13px 15px;margin-top:8px;display:flex;flex-direction:column;gap:5px;background:#FFF;border:2px dashed var(--tinta);border-radius:14px;transform:rotate(-1.1deg)">
+              <span class="lbl" style="color:var(--hua)">PARA CHAPARLA</span>
               <span style="font-size:13px;line-height:1.45">Foto en el puesto, con la parrilla o el cartel a la vista.</span>
             </div>
 
@@ -336,7 +378,7 @@
               <svg width="86" height="86" viewBox="0 0 48 48" style="transform:rotate(22deg)"><path d="M24 3 L38 40 L24 31 L10 40 Z" fill="#E8622C" stroke="#1F1B16" stroke-width="2.5" stroke-linejoin="round"></path></svg>
               <div style="position:absolute;bottom:-3px;right:6px;width:34px;height:34px;border-radius:50%;background:var(--hua);border:3px solid var(--tinta)"></div>
             </div>
-            <span class="d" style="font-size:44px;line-height:1.1;margin-top:12px">7 cuadras</span>
+            <span class="d" style="font-size:46px;line-height:1.1;margin-top:12px"><span style="color:var(--acento)">7</span> cuadras</span>
             <span class="meta">Seguí derecho por Av. Grau · 9 min a pie</span>
           </div>
           <div class="pad" style="position:absolute;left:0;right:0;bottom:96px">
@@ -389,7 +431,7 @@
           </sc-for>
           <div style="position:relative;display:flex;flex-direction:column;align-items:center;padding-top:26px;gap:14px">
             <span class="d" style="font-size:46px;color:var(--tinta)">¡Chapada!</span>
-            <div style="width:172px;height:226px;background:#FFF;clip-path:{{ troquel }};padding:12px;box-sizing:border-box;display:flex;flex-direction:column;gap:7px;filter:drop-shadow(4px 5px 0 rgba(31,27,22,.3))">
+            <div style="width:172px;height:226px;background:#FFF;clip-path:{{ troquel }};transform:rotate(2deg);padding:12px;box-sizing:border-box;display:flex;flex-direction:column;gap:7px;filter:drop-shadow(4px 5px 0 rgba(31,27,22,.3))">
               <div style="flex:1;background:var(--hua);border-radius:5px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden">
                 <div style="display:flex;flex-direction:column;align-items:center">
                   <div style="width:82px;height:14px;background:repeating-linear-gradient(90deg,#FBF7F0 0 9px,#8F2117 9px 18px);border-radius:7px 7px 0 0"></div>
@@ -445,10 +487,11 @@
               <div style="height:9px;border:2px solid var(--tinta);border-radius:9px;background:#FFF;overflow:hidden"><div style="width:40%;height:100%;background:var(--acento)"></div></div>
             </div>
           </div>
+          <div style="position:absolute;top:196px;right:15px;transform:rotate(7deg);z-index:2"><span class="sello" style="color:var(--hua);border-color:var(--hua);background:rgba(255,253,248,.72)">PÁG. 3</span></div>
           <div class="pad" style="padding-top:14px">
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:11px">
               <sc-for list="{{ figuritas }}" as="f" hint-placeholder-count="9">
-                <div style="height:118px;background:{{ f.bg }};clip-path:{{ troquelChico }};padding:7px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;filter:drop-shadow(2px 3px 0 rgba(31,27,22,.22))">
+                <div style="height:118px;background:{{ f.bg }};clip-path:{{ troquelChico }};transform:rotate({{ f.rot }}deg);padding:7px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;filter:drop-shadow(2px 3px 0 rgba(31,27,22,.22))">
                   <div style="flex:1;background:{{ f.c }};border-radius:4px"></div>
                   <div style="font-size:8px;font-weight:800;letter-spacing:.06em;color:{{ f.txt }}">{{ f.num }}</div>
                 </div>
@@ -564,7 +607,10 @@
           <div style="display:flex;flex-direction:column;align-items:center;padding-top:14px;gap:9px">
             <div style="width:96px;height:96px;border-radius:50%;overflow:hidden;border:3px solid var(--tinta);box-shadow:4px 4px 0 var(--tinta)"><img src="./calato/retrato.jpg" style="width:100%;height:100%;object-fit:cover;object-position:center 28%"></div>
             <span class="d" style="font-size:24px">David</span>
-            <span class="chip" style="background:var(--tinta);color:var(--papel);font-size:11px;padding:6px 13px">CALLEJERO · RANGO 3</span>
+            <div style="display:flex;align-items:center;gap:9px">
+              <span class="chip" style="background:var(--tinta);color:var(--papel);font-size:11px;padding:6px 13px">CALLEJERO</span>
+              <span class="sello" style="transform:rotate(-4deg);color:var(--acento);border-color:var(--acento)">RANGO 3</span>
+            </div>
           </div>
           <div class="pad" style="padding-top:18px;display:flex;flex-direction:column;gap:6px">
             <div style="display:flex;justify-content:space-between"><span class="lbl">CALLE</span><span class="lbl" style="color:var(--acento)">1.240 / 2.000 A CASERO</span></div>
@@ -573,7 +619,7 @@
           <div class="pad" style="padding-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:9px">
             <div class="card" style="padding:12px 9px;box-shadow:none;display:flex;flex-direction:column;align-items:center;gap:2px"><span class="d" style="font-size:23px">38</span><span class="lbl">VUELTAS</span></div>
             <div class="card" style="padding:12px 9px;box-shadow:none;display:flex;flex-direction:column;align-items:center;gap:2px"><span class="d" style="font-size:23px">1.412</span><span class="lbl">CUADRAS</span></div>
-            <div class="card" style="padding:12px 9px;box-shadow:none;display:flex;flex-direction:column;align-items:center;gap:2px"><span class="d" style="font-size:23px;color:var(--acento)">7</span><span class="lbl">RACHA</span></div>
+            <div class="card" style="padding:12px 9px;box-shadow:none;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="display:flex;align-items:center;gap:4px"><svg width="15" height="15" viewBox="0 0 48 48"><path d="M24 3C27 13 36 16 36 28a12 12 0 0 1-24 0C12 18 20 14 24 3Z" fill="#E8622C"></path></svg><span class="d" style="font-size:23px;color:var(--acento)">7</span></div><span class="lbl">RACHA</span></div>
           </div>
           <div class="pad" style="padding-top:14px;display:flex;flex-direction:column;gap:10px">
             <div class="card" style="padding:13px 15px;display:flex;justify-content:space-between;align-items:center;box-shadow:none">
@@ -848,11 +894,12 @@ class Component extends DCLogic {
       }));
       // 12 chapadas de Barranco: 5 con color, el resto silueta
       const cats=['#C93B2C','#157F6D','#C4841D','#CE3E78'];
+      const rots=[-2.2,1.6,-1.2,2.2,-1.8,1.2,2.6,-1.5,1.9];
       const figuritas=Array.from({length:9},(_,i)=>{
         const tiene=[0,1,3,4,7].indexOf(i)>=0;
         return tiene
-          ? {bg:'#FFFFFF', c:cats[i%4], num:'N.º 0'+(31+i), txt:'#8A7E6E'}
-          : {bg:'#EFE7D8', c:'#DCD1BC', num:'— — —', txt:'#BCAF97'};
+          ? {bg:'#FFFFFF', c:cats[i%4], num:'N.º 0'+(31+i), txt:'#8A7E6E', rot:rots[i]}
+          : {bg:'#EFE7D8', c:'#DCD1BC', num:'— — —', txt:'#BCAF97', rot:rots[i]*0.3};
       });
       this._v={
         troquel:this.troquelPath(214,282,12,6),
