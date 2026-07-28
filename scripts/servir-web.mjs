@@ -12,7 +12,7 @@
  *     - para el inspector de GLB: `node scripts/servir-web.mjs 8091 scripts/inspector`
  */
 
-import { createReadStream, existsSync, statSync, writeFileSync } from "node:fs";
+import { createReadStream, existsSync, mkdirSync, statSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { dirname, extname, isAbsolute, join, normalize, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -56,11 +56,16 @@ createServer((req, res) => {
     req.on("end", () => {
       try {
         const b64 = Buffer.concat(trozos).toString().replace(/^data:image\/\w+;base64,/, "");
-        // ?nombre=saludo-007 permite armar secuencias de cuadros ordenadas.
+        // ?nombre=clips/saludo_007 permite armar secuencias en subcarpetas. Se
+        // permite UN nivel de subdirectorio (sin "..") para no escapar de RAIZ.
         const pedido = new URL(req.url, "http://localhost").searchParams.get("nombre");
-        const limpio = pedido ? pedido.replace(/[^\w.-]/g, "") : "";
+        const limpio = pedido
+          ? pedido.replace(/\.\.+/g, "").replace(/[^\w./-]/g, "").replace(/^\/+/, "")
+          : "";
         const nombre = limpio ? `${limpio}.png` : `captura-${process.hrtime.bigint()}.png`;
-        writeFileSync(join(RAIZ, nombre), Buffer.from(b64, "base64"));
+        const destino = join(RAIZ, nombre);
+        mkdirSync(dirname(destino), { recursive: true });
+        writeFileSync(destino, Buffer.from(b64, "base64"));
         res.writeHead(200, { "content-type": "text/plain" });
         res.end(nombre);
       } catch (e) {

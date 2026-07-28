@@ -58,6 +58,7 @@ const hud = document.getElementById("hud");
 window.__listo = false;
 window.__stats = null;
 
+window.__THREE = THREE;
 const escena = new THREE.Scene();
 escena.background = new THREE.Color(FONDO);
 
@@ -227,6 +228,56 @@ window.__movimiento = (indiceClip = 0, muestras = 24) => {
   return huesos
     .map((b, j) => ({ hueso: b.name, recorrido_cm: +(maximo[j] * 100).toFixed(1) }))
     .sort((a, b) => b.recorrido_cm - a.recorrido_cm);
+};
+
+/**
+ * Renderiza un clip a una secuencia de PNG con FONDO TRANSPARENTE y los sube al
+ * servidor (POST /captura?nombre=...). Reutilizable para los 4 clips de Calato.
+ *
+ * Encuadra por el volumen ANIMADO, no la pose base: un Box3.setFromObject sobre
+ * malla con piel devuelve la caja de reposo y el brazo/salto se sale del cuadro.
+ * Acá se recorren los vértices deformados a lo largo del clip y se unen.
+ *
+ * await __renderClip({ nombre:'saludo', lado:512, cuadros:30, t0:0.4, t1:3.4 })
+ */
+window.__renderClip = async ({ nombre, lado = 512, cuadros = 30, t0 = 0, t1 = null, indice = 0 } = {}) => {
+  const THREE = window.__THREE;
+  let malla = null;
+  escena.traverse((o) => { if (o.isSkinnedMesh) malla = o; });
+  if (!malla) return { error: "no hay malla con piel" };
+  const clip = clips[indice];
+  const fin = t1 == null ? clip.duration : t1;
+
+  escena.background = null;
+  render.setClearAlpha(0);
+  render.setSize(lado, lado, false);
+  camara.aspect = 1;
+  camara.updateProjectionMatrix();
+
+  // Caja que contiene al personaje durante TODO el tramo del clip.
+  const pos = malla.geometry.attributes.position, v = new THREE.Vector3();
+  const union = new THREE.Box3();
+  for (let k = 0; k <= 16; k++) {
+    __anim(indice, t0 + (fin - t0) * k / 16);
+    malla.skeleton.update();
+    for (let i = 0; i < pos.count; i += 6) {
+      v.fromBufferAttribute(pos, i); malla.applyBoneTransform(i, v); v.applyMatrix4(malla.matrixWorld);
+      union.expandByPoint(v);
+    }
+  }
+  const c = union.getCenter(new THREE.Vector3()), t = union.getSize(new THREE.Vector3());
+  const fov = camara.fov * Math.PI / 180;
+  const dist = Math.max(t.y / 2, t.x / 2) / Math.tan(fov / 2) * 1.14;
+  camara.position.set(c.x, c.y, c.z + dist);
+  camara.lookAt(c);
+
+  for (let i = 0; i < cuadros; i++) {
+    __anim(indice, t0 + (fin - t0) * i / (cuadros - 1));
+    render.render(escena, camara);
+    await fetch("/captura?nombre=clips/" + nombre + "_" + String(i).padStart(3, "0"),
+                { method: "POST", body: render.domElement.toDataURL("image/png") });
+  }
+  return { nombre, cuadros, lado, caja: { ancho: +t.x.toFixed(3), alto: +t.y.toFixed(3) } };
 };
 </script>
 </body>
