@@ -1,6 +1,9 @@
 # Plan de ejecución RUP — Cuadra: de la demo al producto escalado
 
 > **Estado al 2026-07-28** · Fase 2 (Elaboración) en curso.
+> **Al retomar, empezar por acá:** el flujo 01 ya está construido, pero **la app no enseña a
+> jugar** — ver la sección «PRIMER USO» y la iteración **E4**, con la investigación de
+> Pokémon GO / Geocaching / Duolingo ya hecha y lo que falta mirar con la app en la mano.
 > Hecho: **E1.1** (fuentes de marca) · **E0.1** (login idéntico al mockup + kit ampliado) ·
 > **E0.2** (Bienvenida y Permisos) · fix de safe areas.
 > Siguiente: **E0.3** — auditar y corregir las 5 pantallas restantes.
@@ -211,6 +214,78 @@ aparece de golpe donde debía entrar, la tajada no está terminada.
 
 ---
 
+## 🎓 PRIMER USO — hoy la app no enseña a jugar (pendiente abierto por David, 2026-07-28)
+
+**El problema, en sus palabras:** *"apps parecidas tienen una introducción y cosas que te
+expliquen; acá entramos de una y no sabemos ni cómo funciona."*
+
+**Diagnóstico honesto de lo que hace Cuadra hoy:** Bienvenida (una frase) → Permisos →
+**registro obligatorio** → mapa. El usuario llega al mapa sin saber qué es una Vuelta, qué es
+Chapar, qué es la Calle, qué es una figurita ni por qué debería caminar. El vocabulario de
+marca —que es una fortaleza— se vuelve un muro cuando nadie lo tradujo. Y el paginador de la
+Bienvenida dibuja **3 puntos** pero solo existen 2 pantallas: la tercera nunca se definió.
+
+### Lo que hacen las apps parecidas (investigado el 2026-07-28)
+
+| Hallazgo | Fuente | Qué implica para Cuadra |
+|---|---|---|
+| **Deferred account creation**: usar el producto ANTES de registrarse sube la activación 10-30 % y la retención del día siguiente ~20 % | Duolingo | Hoy pedimos cuenta antes de mostrar nada. El momento natural de pedirla ya está escrito en nuestro propio copy: *"Tu Álbum se guarda en tu cuenta"* → pedirla **en la primera chapada**, no en la puerta |
+| **Los muros de tutorial (4-5 pantallas deslizables) los saltea la mayoría**; los tooltips contextuales, en cambio, se leen | Best practices móviles | NO construir las "3 pantallas de onboarding" que insinúa el paginador. Enseñar **en el lugar**, la primera vez que se usa cada cosa |
+| **Divulgación progresiva / just-in-time**: el Profesor de Pokémon GO explica de a una línea, y las reglas aparecen cuando hacen falta | Pokémon GO | **Calato ya es nuestro Profesor**: tiene 6 estados y una cortina. Él enseña, no un modal de texto |
+| **La primera interacción ES el bucle principal**: te hacen atrapar tu primer Pokémon durante el onboarding | Pokémon GO | El equivalente es **chapar la primera Vuelta**, no leerla. Hace falta una "vuelta de práctica" alcanzable desde donde estés |
+| Recomiendan un **primer caché concreto** y expanden su detalle para que aprendas | Geocaching | Marcar una de las 3 Vueltas del día como **"tu primera"**, con más explicación que las otras |
+| Un permiso pedido **en frío** convierte <30 %; pedido **después de una acción con sentido** y con su porqué, 60-70 % | Best practices iOS | Nuestra pantalla de Permisos explica bien, pero llega **antes** de haber dado valor. Moverla después del primer momento útil |
+| Máximo **3-5 pasos obligatorios**; el "momento ajá" dentro de los primeros **60 segundos** | Retención | Hoy son 3 pasos y ninguno es el momento ajá. El ajá de Cuadra es **ver una Vuelta real de tu barrio**, y eso puede pasar en 15 s |
+
+Fuentes: [Chameleon · teardown de Pokémon GO](https://www.chameleon.io/blog/ux-teardown-pokemon-go-takes-over-the-world) · [Krystal Higgins · first-run UX](https://first-run-ux.kryshiggins.com/pokemon-go-ios-first-time-user-experience-the/) · [Geocaching · geocacher en entrenamiento](https://www.geocaching.com/blog/2017/10/caution-geocacher-in-training/) · [Appcues · onboarding de Duolingo](https://goodux.appcues.com/blog/duolingo-user-onboarding) · [Appcues · buenas prácticas móviles](https://www.appcues.com/blog/mobile-onboarding-best-practices) · [UXCam · ejemplos 2026](https://uxcam.com/blog/10-apps-with-great-user-onboarding/)
+
+### Iteración E4 — "Aprender jugando" (~2 sesiones / 8 h)
+
+**Riesgo que ataca:** el #1 del documento maestro, *retención*. Un usuario que no entiende el
+juego en la primera sesión no vuelve, por buena que sea la app.
+
+1. **Invertir el orden: valor antes que trámite.** Bienvenida → Permisos (con su porqué) →
+   **mapa con 3 Vueltas reales de tu barrio, sin cuenta**. El registro se pide en el momento en
+   que de verdad hace falta: al chapar, con el argumento que ya está escrito ("sin cuenta, las
+   figuritas se te pierden"). Decisión técnica a resolver: sesión anónima de Supabase que
+   después se enlaza al correo, o guardar la primera chapada en el equipo y subirla al
+   registrarse.
+2. **Calato como Profesor, con divulgación progresiva.** Nada de modales de texto: la primera
+   vez que aparece cada concepto, Calato lo dice en UNA línea, en su voz. *"Eso es una Vuelta:
+   te llevo, sacás la foto, te llevás la figurita."* Máximo un mensaje por pantalla nueva, y
+   nunca dos seguidos.
+3. **La Vuelta de práctica.** La primera de las 3 es alcanzable desde donde estés (radio
+   generoso, dificultad *Tranqui*) y está marcada como **"tu primera"** con más explicación,
+   como el primer caché de Geocaching. El momento ajá completo —caminar, chapar, ver la
+   figurita— tiene que caber en la primera sesión.
+4. **Enseñar el vocabulario en su sitio.** Vuelta, Chapar, Calle, Racha, Figurita, La Llave: la
+   primera vez que cada palabra aparece en pantalla lleva su micro-explicación (un toque sobre
+   la palabra, o una línea de Calato). NO un glosario aparte que nadie abre.
+5. **Estados vacíos que enseñan.** Ya lo hacemos bien en el Álbum (*"Completá Barranco y
+   desbloqueás la figurita de barrio"*): extender ese criterio a Vueltas y Perfil, donde hoy
+   hay números en cero sin decir cómo se suben.
+6. **Resolver el tercer punto del paginador.** O son 3 pantallas de verdad, o el paginador baja
+   a 2. Hoy miente — y eso hay que decidirlo **en el prototipo primero**, no en el código.
+
+**Criterio de aceptación:** alguien que no conoce el proyecto abre la app y, **sin que vos le
+expliques nada**, en su primera sesión: entiende qué es una Vuelta, camina hasta una, la chapa,
+y sabe decir qué ganó. Se mide con una persona real, grabando la pantalla — no con mi opinión.
+
+**Dónde entra:** después de E2 (chapar de verdad), porque la vuelta de práctica necesita que
+chapar funcione. Antes del hito LCA no es obligatorio, pero **sí antes de mostrarle la demo a
+alguien que no seas vos**: hoy la demo solo se entiende si la narra su autor.
+
+### Pendiente de investigación, para cuando lo retomemos
+
+Falta mirar de cerca, con la app en la mano y no solo artículos: **Pokémon GO** (el flujo real
+de 2026, no el de 2016), **Geocaching**, **Zombies, Run!**, **Strava** (segmentos y su
+onboarding social), **Swarm/Foursquare** (check-ins, el pariente más cercano de Chapar) y
+**Duolingo** (el estándar de enseñar jugando). De cada una: qué te dicen en los primeros 60
+segundos, cuándo te piden la cuenta, cuándo te piden permisos, y cómo te enseñan su vocabulario
+propio. Anotar lo aplicable acá antes de diseñar las pantallas.
+
+---
+
 ## Estructura RUP
 
 Cuatro fases, cada una cerrada por un **hito verificable**. Las iteraciones se ordenan por **riesgo**, no por comodidad: primero lo que puede matar el proyecto.
@@ -218,7 +293,7 @@ Cuatro fases, cada una cerrada por un **hito verificable**. Las iteraciones se o
 | Fase RUP | Hito | Qué prueba | Estado |
 |---|---|---|---|
 | **Inicio** | LCO — Objetivos del ciclo de vida | Visión, alcance congelado (§4.5), riesgos, identidad | ✅ **COMPLETA** |
-| **Elaboración** | LCA — Arquitectura ejecutable | **El loop se puede jugar de punta a punta con datos reales** = LA DEMO | 🔨 3 iteraciones |
+| **Elaboración** | LCA — Arquitectura ejecutable | **El loop se puede jugar de punta a punta con datos reales** = LA DEMO | 🔨 4 iteraciones (E0–E3) + **E4 primer uso** |
 | **Construcción** | IOC — Capacidad operativa inicial | Producto completo, listo para usuarios reales | 4 iteraciones |
 | **Transición** | PR — Release | En tiendas, con usuarios y métricas | 3 iteraciones |
 | *(Post-MVP)* | Escala | Fase 2 y 3 del documento maestro | Ver última sección |
@@ -324,7 +399,7 @@ Objetivo RUP de esta fase: **arquitectura ejecutable que mata los riesgos altos*
 
 **Trabajo:**
 1. **Radar** — `(app)/vuelta/[id]/radar.tsx`: el diseño del prototipo (anillos punteados, flecha, cifra gigante en cuadras) alimentado por `geo.ts` (por fin usado) + `expo-sensors` **~15.0.8** (verificado disponible en Expo Go) para el magnetómetro. Calato trotando adelante.
-2. **Onboarding + permisos** — las 3 pantallas del flujo 01: bienvenida con Calato, explicación de los dos permisos, y el registro después de la promesa (no antes).
+2. **Onboarding + permisos** — construidos en E0.2/E0.3 (bienvenida, permisos, registro). Que *enseñen a jugar* es otra cosa y tiene iteración propia: ver **E4 · "Aprender jugando"**, arriba.
 3. **Álbum real** — matar los hardcodes: grilla dinámica (no 9 fijas), páginas por barrio desde datos, progreso real, rarezas con su marco, `arte_url` cuando exista. Pantalla de figurita detalle.
 4. **Racha y Calle vivos** — el chip del mapa lee `streaks`, el contador "N de 3 chapadas" lee `mission_completions`, el perfil sin números inventados.
 5. **Los 3 estados de Calato** — vacío (ya está), racha en riesgo, fuera de horario/modo seguro.
