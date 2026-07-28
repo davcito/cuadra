@@ -177,11 +177,57 @@ const auto = q.get("auto") === "1";
   render.render(escena, camara);
 })();
 
-addEventListener("resize", () => {
-  camara.aspect = innerWidth / innerHeight;
+// El panel del navegador cambia de tamaño sin disparar `resize` de forma
+// confiable: ResizeObserver sobre el body sí lo agarra siempre.
+function ajustar() {
+  const w = document.documentElement.clientWidth;
+  const h = document.documentElement.clientHeight;
+  camara.aspect = w / h;
   camara.updateProjectionMatrix();
-  render.setSize(innerWidth, innerHeight);
-});
+  render.setSize(w, h, true);
+  render.render(escena, camara);
+}
+new ResizeObserver(ajustar).observe(document.documentElement);
+addEventListener("resize", ajustar);
+window.__ajustar = ajustar;
+window.__render = render;
+window.__camara = camara;
+window.__escena = escena;
+
+/**
+ * Mide CUÁNTO se mueve cada hueso durante un clip. Es la prueba objetiva de
+ * si el rig funciona: si el hueso del brazo no se desplaza, el brazo quedó
+ * soldado al cuerpo por más que la animación "corra".
+ * Devuelve, por hueso, el recorrido máximo en metros respecto de la pose 0.
+ */
+window.__movimiento = (indiceClip = 0, muestras = 24) => {
+  const skin = [];
+  escena.traverse((o) => { if (o.isSkinnedMesh) skin.push(o); });
+  if (!skin.length) return { error: "no hay malla con piel" };
+  const huesos = skin[0].skeleton.bones;
+  const clip = clips[indiceClip];
+  if (!clip) return { error: "no hay clip" };
+
+  const leer = () => huesos.map((b) => {
+    b.updateWorldMatrix(true, false);
+    const e = b.matrixWorld.elements;
+    return [e[12], e[13], e[14]];
+  });
+
+  __anim(indiceClip, 0);
+  const base = leer();
+  const maximo = huesos.map(() => 0);
+  for (let i = 1; i <= muestras; i++) {
+    __anim(indiceClip, (clip.duration * i) / muestras);
+    leer().forEach((p, j) => {
+      const d = Math.hypot(p[0] - base[j][0], p[1] - base[j][1], p[2] - base[j][2]);
+      if (d > maximo[j]) maximo[j] = d;
+    });
+  }
+  return huesos
+    .map((b, j) => ({ hueso: b.name, recorrido_cm: +(maximo[j] * 100).toFixed(1) }))
+    .sort((a, b) => b.recorrido_cm - a.recorrido_cm);
+};
 </script>
 </body>
 </html>
