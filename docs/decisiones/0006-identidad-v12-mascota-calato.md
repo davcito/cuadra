@@ -13,6 +13,18 @@ El brief de §3.4 (gráfica urbana latinoamericana, chicha moderada) se ejecutó
 3. **Reglas de uso** (detalladas en la guía, sección 07): bípedo para posar y gesticular; al correr/trotar/esperar el paseo "se le escapa el perro" y baja a cuatro (ambas canon) · dos caras: en la app amable con culpa liviana (máx. 2 pushes/día), el Calato desquiciado SOLO en @appcuadra · escenarios y confeti siempre en paleta de marca (puerta verde Caletas, confeti de categorías).
 4. **Assets oficiales:** 7 PNG 2816×1536 en `docs/identidad/calato/` (base, retrato, juzgando, chapada, culpa, trote, puerta), generados con Nano Banana Pro (Gemini) usando la técnica de **doble referencia con roles** (base = identidad, segunda imagen = pose/emoción). La inspiración (la energía de Dante) se describió por rasgos y nunca se nombró en los prompts → diseño propio, registrable en Indecopi.
 
+## Addendum 2026-07-28 — el ícono del app (identidad V1.3)
+
+Tras cinco rondas de exploración (archivadas en `docs/identidad/CUADRA-Iconos-v1.dc.html`), el **ícono del app es "Calato asomándose"**: la coronilla del perro emergiendo del borde inferior — orejas de murciélago (una parada, una doblada), mechón amarillo-fuego y ojos tranqui mirando al usuario — sobre Naranja Chicha `#E8622C`.
+
+**Por qué se descartaron las marcas abstractas:** Design propuso 7 candidatos geométricos y recomendó "El Mechón" (la llamita sola). Se descartó por dos hallazgos del dueño, ambos correctos: (1) *"si no conozco el app, no sé qué es"* — una marca abstracta no comunica nada a un extraño; (2) la llama sola **se lee como Tinder** con otro color. Las variantes de curva (V1 anguloso / V2 flancos curvos / V3 fiel) se renderizaron y compararon: V1 y V2 leían como "M" de corona. Todo queda documentado, nada se tiró.
+
+**Sistema de tres piezas:** ícono del app = cara de Calato · **la llamita del mechón = glifo de la racha DENTRO del app** (donde el contexto ya existe) · **las 3 direcciones gráficas de Design (A "La Vuelta", B, C) = pin del mapa, sellos y papelería**.
+
+**Producción:** `docs/identidad/calato/icono-asomo.png` es el master de Nano Banana Pro; el fondo venía `#DF521C` y traía la marca de agua de Gemini — ambos corregidos en post con script determinista (`iconos-final/`). Cableado en `app.json`: `icon.png` 1024 (iOS/web), `android-icon-foreground.png` + `backgroundColor: "#E8622C"` (el hex exacto lo pone el código, no la imagen), `favicon.png`. Se eliminaron los assets del template de Expo (`assets/expo.icon`, background/monochrome de Android).
+
+**Lección de herramientas:** el concepto se validó en vector (barato, iterable) y recién con el concepto validado se llamó a la IA de imagen para ejecutarlo en 3D. Generar antes de conceptualizar habría dado brújulas y llamas genéricas.
+
 ## Consecuencias
 
 - (+) Identidad completa y versionada: sistema flat + mascota 3D + copy de la escalada, todo en un artefacto.
