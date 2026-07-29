@@ -1,10 +1,11 @@
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { Image } from "expo-image";
+import Animated, { SlideInRight } from "react-native-reanimated";
 
+import { CalatoClip } from "@/components/calato-clip";
 import { Boton } from "@/components/ui";
-import { colores, fuentes } from "@/lib/theme";
+import { colores, esc, fuentes } from "@/lib/theme";
 
 /**
  * Bienvenida — pantalla 1 del prototipo (onboarding 1/3).
@@ -18,21 +19,24 @@ export default function BienvenidaScreen() {
   return (
     <View style={styles.raiz}>
       {/*
-        Hero de 300 px con Calato. El relleno superior es el inset REAL del
-        dispositivo: sin él, el notch / isla dinámica le tapa el mechón —
-        que es uno de los tres rasgos innegociables del personaje (ADR-0006).
-        El fondo va en papel (no naranja) porque el render ya trae su fondo
-        papel: así la zona del notch continúa la imagen sin costura.
+        Hero con Calato. El relleno superior es el inset REAL del dispositivo:
+        sin él, el notch / isla dinámica le tapa el mechón — uno de los tres
+        rasgos innegociables del personaje (ADR-0006).
+
+        El fondo VUELVE A SER NARANJA, como manda el prototipo. Antes era papel
+        porque el render estático traía su propio fondo y lo tapaba todo; el
+        clip tiene transparencia, así que ahora el naranja se ve de verdad.
+
+        Calato ENTRA desde fuera de cuadro y saluda: la primera pantalla la da
+        el personaje, no un formulario.
       */}
-      <View style={[styles.hero, { height: 300 + insets.top, paddingTop: insets.top }]}>
-        <Image
-          source={require("../../assets/calato/base.jpg")}
-          style={styles.heroImg}
-          contentFit="cover"
-          // Encuadre del prototipo: object-position center 42%
-          contentPosition={{ left: "50%", top: "42%" }}
-          accessibilityLabel="Calato saludando"
-        />
+      <View style={[styles.hero, { height: esc(300) + insets.top, paddingTop: insets.top }]}>
+        <Animated.View
+          entering={SlideInRight.springify().damping(15).mass(0.9).delay(160)}
+          style={styles.heroCalato}
+        >
+          <CalatoClip clip="saludo" alto={252} etiqueta="Calato te saluda" />
+        </Animated.View>
       </View>
 
       <View style={styles.cuerpo}>
@@ -63,12 +67,14 @@ export default function BienvenidaScreen() {
 const styles = StyleSheet.create({
   raiz: { flex: 1, backgroundColor: colores.papel },
   hero: {
-    backgroundColor: colores.papel, // continúa el fondo propio del render
-    borderBottomWidth: 3,
+    backgroundColor: colores.naranja, // el del prototipo, ahora que el clip es transparente
+    borderBottomWidth: esc(3),
     borderBottomColor: colores.tinta,
     overflow: "hidden",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
-  heroImg: { width: "100%", height: "100%" },
+  heroCalato: { alignItems: "center", justifyContent: "flex-end" },
   cuerpo: { paddingHorizontal: 22, paddingTop: 24, gap: 12 },
   titulo: {
     fontSize: 34,
