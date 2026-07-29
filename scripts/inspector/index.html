@@ -194,6 +194,43 @@ window.__ajustar = ajustar;
 window.__render = render;
 window.__camara = camara;
 window.__escena = escena;
+window.__clips = () => clips;
+
+/**
+ * Amortigua la rotación de un grupo de huesos hacia su primer fotograma.
+ *
+ * Para qué: el modelo auto-generado tiene pesos de piel que hacen que el hueso
+ * del brazo se lleve un pedazo del flanco — el estiramiento antinatural bajo el
+ * hombro que se ve al saludar (medido: hasta 3.28× el largo de reposo). Bajar
+ * el recorrido del brazo reduce esa deformación sin cambiar el gesto.
+ *
+ * También sirve para cadera/columna, donde el mocap humano tumba el tronco 40°
+ * en un personaje de patas cortas.
+ *
+ *   __amortiguar(0, ['RightArm','RightForeArm'], 0.35)   // 35% menos recorrido
+ */
+window.__amortiguar = (indice, huesos, factor) => {
+  const THREE = window.__THREE;
+  const clip = clips[indice];
+  if (!clip) return { error: "no hay clip" };
+  const copia = clip.clone();
+  let tocadas = 0;
+  copia.tracks.forEach((t) => {
+    const hueso = t.name.substring(0, t.name.lastIndexOf("."));
+    if (!huesos.some((n) => hueso.endsWith(n))) return;
+    if (t.name.endsWith(".quaternion")) {
+      const q0 = new THREE.Quaternion().fromArray(t.values, 0);
+      for (let i = 0; i < t.values.length; i += 4) {
+        const qi = new THREE.Quaternion().fromArray(t.values, i);
+        q0.clone().slerp(qi, 1 - factor).toArray(t.values, i);
+      }
+      tocadas++;
+    }
+  });
+  clips[indice] = copia;
+  if (mezclador) { mezclador.stopAllAction(); mezclador.clipAction(copia).play(); }
+  return { pistasAmortiguadas: tocadas, factor };
+};
 
 /**
  * Mide CUÁNTO se mueve cada hueso durante un clip. Es la prueba objetiva de

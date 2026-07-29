@@ -34,8 +34,8 @@ export type ClipCalato = keyof typeof CLIPS;
  */
 const PROPORCION: Record<ClipCalato, number> = {
   saludo: 430 / 397,
-  caminar: 299 / 470,
-  celebrar: 397 / 485,
+  caminar: 263 / 412,
+  celebrar: 346 / 427,
 };
 
 export function CalatoClip({
