@@ -1,0 +1,99 @@
+{
+  "distrito": "morales-duarez",
+  "generado_por": "Claude (sesión Claude Code, sin API)",
+  "proceso": "Lote de PRUEBA para caminar en campo, escrito alrededor de Av. Morales Duárez 1385. Cubre las 4 celdas más cercanas a esa dirección y mezcla las cuatro categorías a propósito, para que una sola caminata ejercite todos los caminos de la app. De la escalera Fernando Wiesse se toma UN solo tramo: OSM la tiene partida en dos ways con el mismo nombre a 14 m, y dos Vueltas ahí serían la misma escalera dos veces.",
+  "celdas": [
+    {
+      "h3_index": "898e62c01cfffff",
+      "vueltas": [
+        {
+          "osm_id": 1001269015165,
+          "titulo": "Sube la escalera Fernando Wiesse sin parar",
+          "descripcion": "Esta escalera es de las que uno sube mirando los pies. Hoy no: subila de corrido, sin frenar a mitad de camino, y recién arriba date la vuelta a ver de dónde veniste. Se ve distinto el barrio desde ese escalón.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": ["mañana", "tarde"],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto tomada desde arriba de la escalera Fernando Wiesse, mirando hacia abajo, con los escalones en el encuadre"
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c01c7ffff",
+      "vueltas": [
+        {
+          "osm_id": 9790858180,
+          "titulo": "Anda a Martín y pregunta qué sale más",
+          "descripcion": "Nada de mirar la carta parado en la puerta. Entra, saluda, y pregunta qué es lo que más sale. Lo que te contesten vale más que cualquier reseña: eso es lo que el barrio pide todos los días.",
+          "tipo": "social",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 24,
+          "ventana_horaria": ["tarde", "noche"],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto dentro de Martín o en su puerta, con el local reconocible"
+        },
+        {
+          "osm_id": 2023937335,
+          "titulo": "Dale una vuelta entera a la Virgen Medianera",
+          "descripcion": "Casi nadie rodea una parroquia; se entra por adelante y se sale por adelante. Camina el contorno completo, por afuera, sin apuro. Las paredes de atrás siempre cuentan algo que la fachada esconde.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 22,
+          "ventana_horaria": ["mañana", "tarde"],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de un lado de la Parroquia La Virgen Medianera que NO sea la fachada principal"
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c01cbffff",
+      "vueltas": [
+        {
+          "osm_id": 6653388789,
+          "titulo": "Cae a Don Pardo a la hora más rara",
+          "descripcion": "Este café no cierra nunca, así que la gracia no es ir: es ir cuando no va nadie. Bien temprano o bien tarde, cuando la calle está vacía y adentro hay dos personas. Un café tiene otra cara a esa hora.",
+          "tipo": "consumo",
+          "categoria": "casero",
+          "dificultad": 2,
+          "calle_xp": 26,
+          "ventana_horaria": ["mañana", "noche"],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto dentro de Don Pardo Café o en su entrada, con el local reconocible"
+        },
+        {
+          "osm_id": 1000462859070,
+          "titulo": "Busca el detalle más viejo de San Columbano",
+          "descripcion": "En la Capilla San Columbano y Santo Toribio hay algo que se nota gastado: una puerta, una reja, una esquina de piso. Encuéntralo y quédate un rato ahí. Eso es lo que aguantó más años parado que tú.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 3,
+          "calle_xp": 42,
+          "ventana_horaria": ["mañana", "tarde"],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de cerca del detalle gastado que elegiste en la Capilla San Columbano y Santo Toribio"
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c01c3ffff",
+      "vueltas": [
+        {
+          "osm_id": 1000968965458,
+          "titulo": "Mira el campanario de los Santos de los Últimos Días",
+          "descripcion": "Este templo se reconoce de lejos por la aguja blanca que le sale del techo. Párate donde la veas entera, de abajo hacia arriba, y fíjate cuántas cuadras se alcanza a ver desde ahí. Es de los pocos puntos altos que quedan por acá.",
+          "tipo": "observacion",
+          "categoria": "huaca",
+          "dificultad": 1,
+          "calle_xp": 14,
+          "ventana_horaria": ["mañana", "tarde", "noche"],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de La Iglesia de Jesucristo de los Santos de los Últimos Días con la aguja del techo completa en el encuadre"
+        }
+      ]
+    }
+  ]
+}

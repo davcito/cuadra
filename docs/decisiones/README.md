@@ -10,3 +10,4 @@ Una decisión técnica que se desvía del documento maestro = un archivo corto a
 | [0004](0004-mapa-maplibre-webview.md) | El mapa es MapLibre GL JS en WebView (no MapLibre nativo) | aceptada |
 | [0005](0005-cross-platform-no-web-pwa.md) | Cuadra es cross-platform (Expo/RN), no una app web/PWA | aceptada |
 | [0006](0006-identidad-v12-mascota-calato.md) | Identidad V1.2 en Claude Design + mascota Calato en render 3D | aceptada |
+| [0007](0007-ciclo-de-vida-de-pois.md) | POIs con cuatro orígenes; la sync solo toca los de OSM y nunca borra | propuesta |

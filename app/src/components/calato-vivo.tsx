@@ -12,7 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { Image } from "expo-image";
 
-import { calato, colores } from "@/lib/theme";
+import { calato, colores, esc } from "@/lib/theme";
 
 /**
  * Calato "títere" — fase 1 del sistema de mascota (ADR-0006).
@@ -46,7 +46,7 @@ type Props = {
   style?: StyleProp<ViewStyle>;
 };
 
-export function CalatoVivo({ estado = "tranqui", size = 96, style }: Props) {
+export function CalatoVivo({ estado = "tranqui", size = esc(96), style }: Props) {
   const entrada = useSharedValue(0.6);
   const respira = useSharedValue(1);
   const saltoY = useSharedValue(0);
@@ -149,15 +149,15 @@ export function CalatoVivo({ estado = "tranqui", size = 96, style }: Props) {
 const styles = StyleSheet.create({
   sombra: {
     position: "absolute",
-    top: 3,
-    left: 3,
+    top: esc(3),
+    left: esc(3),
     width: "100%",
     height: "100%",
     backgroundColor: colores.tinta,
   },
   circulo: {
     flex: 1,
-    borderWidth: 2.5,
+    borderWidth: esc(2.5),
     borderColor: colores.tinta,
     overflow: "hidden",
     backgroundColor: calato.panza,

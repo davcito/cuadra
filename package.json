@@ -1,0 +1,9 @@
+{
+  "name": "cuadra",
+  "private": true,
+  "scripts": {
+    "probar-chapar": "node scripts/probar-chapar.mjs",
+    "setup-storage": "node scripts/setup-storage.mjs",
+    "verificar-storage": "node scripts/setup-storage.mjs --verificar"
+  }
+}

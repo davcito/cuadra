@@ -8,21 +8,34 @@ import { esc } from "@/lib/theme";
 /**
  * Calato animado con clips PRE-RENDERIZADOS.
  *
- * Por qué así y no 3D en vivo: se midió. Un Calato 3D corriendo en el teléfono
- * da 60 fps con una WebView + three.js, pero pre-renderizar da la misma
- * animación con CERO costo de GPU, mejor calidad (el render se hace fuera del
- * teléfono, sin límite de 16 ms por cuadro) y sin dependencias nativas. Es el
- * patrón de Supercell: modelar en 3D, empaquetar secuencias.
+ * Por qué pre-renderizado y no 3D en vivo: se midió. Un Calato 3D corriendo en
+ * el teléfono da 60 fps con una WebView + three.js, pero pre-renderizar da la
+ * misma animación con CERO costo de GPU, mejor calidad (el render se hace fuera
+ * del teléfono, sin límite de 16 ms por cuadro) y sin dependencias nativas. Es
+ * el patrón de Supercell: modelar en 3D, empaquetar secuencias.
  *
- * Cada clip salió del mismo modelo riggeado, renderizado cuadro a cuadro con
- * `scripts/inspector` y exportado a WebP con transparencia.
+ * De dónde salen los cuadros: `saludo`, `atento`, `culpa` y `chapada` se generan
+ * con Seedance anclado a las imágenes de identidad y se recortan por doble fondo
+ * — receta completa en `scripts/clip-desde-video.md`. `caminar` todavía viene del
+ * modelo 3D riggeado (`scripts/inspector`), que es la única fuente de un ciclo de
+ * caminata con encuadre exacto.
+ *
+ * Los de video no tienen el estiramiento del hombro que arrastra el modelo 3D:
+ * no hay rig, así que no hay pesos mal asignados.
  */
 
-/** Los clips disponibles. Agregar acá al sumar uno nuevo a assets/calato/. */
+/**
+ * Los clips disponibles. Agregar acá al sumar uno nuevo a assets/calato/.
+ *
+ * Lo que NO está acá y es a propósito:
+ * · `saludo` y `culpa` pasaron a <CalatoSprite> — son los Calato grandes, y a ese
+ *   tamaño el tirón del WebP animado se nota.
+ * · `chapada` existe en assets/ pero todavía no tiene pantalla (entra en E2);
+ *   `require` lo metería en el paquete igual, 5,5 MB por nada.
+ */
 const CLIPS = {
-  saludo: require("../../assets/calato/saludo.webp"),
-  caminar: require("../../assets/calato/caminar.webp"),
-  celebrar: require("../../assets/calato/celebrar.webp"),
+  atento: require("../../assets/calato/atento.webp"),
+  caminar: require("../../assets/calato/caminar24.webp"),
 } as const;
 
 export type ClipCalato = keyof typeof CLIPS;
@@ -33,19 +46,22 @@ export type ClipCalato = keyof typeof CLIPS;
  * ancho que el idle porque los brazos se abren.
  */
 const PROPORCION: Record<ClipCalato, number> = {
-  saludo: 430 / 397,
-  caminar: 263 / 412,
-  celebrar: 346 / 427,
+  atento: 414 / 420,
+  caminar: 298 / 468, // recorte re-medido con 124 muestras: el anterior cortaba poses extremas
 };
 
 export function CalatoClip({
-  clip = "saludo",
+  clip = "atento",
   alto = 120,
   style,
   etiqueta,
 }: {
   clip?: ClipCalato;
-  /** Alto en puntos del prototipo; pasa por `esc()` como todo lo demás. */
+  /**
+   * Alto en unidades del PROTOTIPO. El `esc()` lo aplica este componente adentro,
+   * así que el llamador pasa el número CRUDO: `alto={252}`, nunca `alto={esc(252)}`.
+   * Envolverlo afuera escala dos veces y agranda 64 % sin que se note en el diff.
+   */
   alto?: number;
   style?: StyleProp<ViewStyle>;
   /** Para lectores de pantalla: qué está haciendo Calato. */

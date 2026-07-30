@@ -15,7 +15,7 @@ import { useRouter } from "expo-router";
 import { useCalato } from "@/components/calato-cortina";
 import { CalatoVivo } from "@/components/calato-vivo";
 import { Boton, Campo, Isotipo, Tarjeta, Toldo } from "@/components/ui";
-import { colores, fuentes } from "@/lib/theme";
+import { colores, esc, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 /**
@@ -69,7 +69,7 @@ export default function SignInScreen() {
         >
           <View style={styles.encabezado}>
             <View style={styles.marcaFila}>
-              <Isotipo size={42} />
+              <Isotipo size={esc(42)} />
               <Text style={styles.marca}>CUADRA</Text>
             </View>
             <Text style={styles.tagline}>Tu ciudad, cuadra por cuadra.</Text>
@@ -116,7 +116,7 @@ export default function SignInScreen() {
       <SafeAreaView edges={["bottom"]} style={styles.pie}>
         <Tarjeta fondo="#FFFFFF">
           <View style={styles.avisoFila}>
-            <CalatoVivo estado="atento" size={40} />
+            <CalatoVivo estado="atento" size={esc(40)} />
             <Text style={styles.avisoTexto}>
               Tu Álbum se guarda en tu cuenta. Sin correo, las figuritas se te pierden.
             </Text>
@@ -130,26 +130,26 @@ export default function SignInScreen() {
 const styles = StyleSheet.create({
   raiz: { flex: 1, backgroundColor: colores.papel },
   flex: { flex: 1 },
-  toldo: { marginTop: 8 },
+  toldo: { marginTop: esc(8) },
   // Contenido alineado ARRIBA (no centrado): así lo fija el prototipo.
-  scroll: { paddingHorizontal: 22, paddingTop: 26, paddingBottom: 20, gap: 34 },
-  encabezado: { gap: 7 },
-  marcaFila: { flexDirection: "row", alignItems: "center", gap: 11 },
-  marca: { fontSize: 38, lineHeight: 46, fontFamily: fuentes.display, color: colores.tinta },
-  tagline: { fontSize: 15, fontFamily: fuentes.bold, color: colores.naranja },
-  form: { gap: 11 },
-  botones: { gap: 11, marginTop: 16 },
+  scroll: { paddingHorizontal: esc(22), paddingTop: esc(26), paddingBottom: esc(20), gap: esc(34) },
+  encabezado: { gap: esc(7) },
+  marcaFila: { flexDirection: "row", alignItems: "center", gap: esc(11) },
+  marca: { fontSize: esc(38), lineHeight: esc(46), fontFamily: fuentes.display, color: colores.tinta },
+  tagline: { fontSize: esc(15), fontFamily: fuentes.bold, color: colores.naranja },
+  form: { gap: esc(11) },
+  botones: { gap: esc(11), marginTop: esc(16) },
   cargando: {
-    minHeight: 52,
+    minHeight: esc(52),
     alignItems: "center",
     justifyContent: "center",
   },
-  pie: { paddingHorizontal: 22, paddingBottom: 12 },
-  avisoFila: { flexDirection: "row", alignItems: "center", gap: 11, padding: 13 },
+  pie: { paddingHorizontal: esc(22), paddingBottom: esc(12) },
+  avisoFila: { flexDirection: "row", alignItems: "center", gap: esc(11), padding: esc(13) },
   avisoTexto: {
     flex: 1,
-    fontSize: 12,
-    lineHeight: 17,
+    fontSize: esc(12),
+    lineHeight: esc(17),
     fontFamily: fuentes.regular,
     color: colores.textoSuave,
   },

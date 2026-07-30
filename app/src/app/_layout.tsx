@@ -27,7 +27,7 @@ function RootNavigator() {
 
   // Alfa Slab One para titulares, Archivo (5 pesos) para la UI — guía §03.
   // En RN cada peso es una familia propia: fontWeight no aplica a fuentes propias.
-  const [fuentesListas] = useFonts({
+  const [fuentesListas, errorFuentes] = useFonts({
     AlfaSlabOne_400Regular,
     Archivo_400Regular,
     Archivo_500Medium,
@@ -36,7 +36,14 @@ function RootNavigator() {
     Archivo_800ExtraBold,
   });
 
-  const cargando = isLoading || !fuentesListas;
+  useEffect(() => {
+    if (errorFuentes) console.warn("[fuentes] no cargaron:", errorFuentes);
+  }, [errorFuentes]);
+
+  // Si las fuentes fallan, seguimos igual. Se ve con la tipografía del sistema
+  // —feo pero usable— en vez de quedar clavados en el splash para siempre, que
+  // es lo que pasaba antes al ignorar el error de useFonts.
+  const cargando = isLoading || (!fuentesListas && !errorFuentes);
 
   useEffect(() => {
     if (!cargando) SplashScreen.hideAsync();
@@ -60,9 +67,6 @@ function RootNavigator() {
         <Stack.Screen name="crear-cuenta" />
         <Stack.Screen name="revisa-correo" />
       </Stack.Protected>
-      {/* Banco de pruebas 3D: fuera de los guards para poder abrirlo con o sin
-          sesión. Es pantalla de trabajo, no de producto — se va con el ADR-0008. */}
-      <Stack.Screen name="calato-3d" />
     </Stack>
   );
 }

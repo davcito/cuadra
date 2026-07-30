@@ -7,15 +7,18 @@ import { useRouter } from "expo-router";
 import { CalatoVivo } from "@/components/calato-vivo";
 import { MapaCuadra } from "@/components/mapa-cuadra";
 import { Boton, Chip, Dificultad, Etiqueta } from "@/components/ui";
-import { colores, fuentes, medidas } from "@/lib/theme";
+import { colores, esc, fuentes, medidas, radios } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
+import { textoCuadras } from "@/lib/geo";
+import { ubicacionActual } from "@/lib/chapar";
 
 type VueltaHoy = {
   id: number;
   titulo: string;
   categoria: string;
   dificultad: number;
-  pois: { nombre: string } | null;
+  poi_nombre: string | null;
+  distancia_m: number | null;
 };
 
 /**
@@ -28,6 +31,7 @@ export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const [saludo, setSaludo] = useState(true);
   const [vuelta, setVuelta] = useState<VueltaHoy | null>(null);
+  const [sinUbicacion, setSinUbicacion] = useState(false);
 
   // La tarjeta se apoya JUSTO encima de la barra, en cualquier equipo. El alto
   // de la barra sale del token: si cambia allá, esto lo sigue solo.
@@ -40,14 +44,38 @@ export default function HomeScreen() {
     return () => clearTimeout(t);
   }, []);
 
+  /**
+   * La Vuelta de hoy = la más cercana que se pueda chapar AHORA.
+   *
+   * Antes esto era `.eq("estado","activa").limit(1)`: sin orden y sin ubicación.
+   * Con Vueltas en más de un distrito eso devolvía la de id más bajo, así que a
+   * alguien parado en Cercado le ofrecía uno de Barranco, a 15 km. Se veía como
+   * "calculando dónde estás" para siempre — y era cierto: nunca iba a alcanzar.
+   *
+   * El RPC además respeta modo seguro y ventana horaria (regla dura #4), que la
+   * consulta vieja ignoraba, y devuelve la distancia medida por PostGIS: el
+   * mismo número que va a usar `chapar()` para decidir.
+   */
   const cargar = useCallback(async () => {
-    const { data } = await supabase
-      .from("missions")
-      .select("id, titulo, categoria, dificultad, pois(nombre)")
-      .eq("estado", "activa")
-      .limit(1)
-      .maybeSingle();
-    setVuelta((data as unknown as VueltaHoy) ?? null);
+    // `pedir: true` acá y no en otro lado: ésta es la primera pantalla y el
+    // producto entero es un mapa de dónde estás. Pedir el permiso más tarde
+    // significaría abrir con el mapa centrado en una plaza que no es la tuya.
+    const donde = await ubicacionActual({ pedir: true });
+    if (!donde) {
+      // Sin permiso o sin señal todavía. No se muestra una Vuelta cualquiera:
+      // ofrecer algo que no sabemos si está cerca es exactamente el defecto que
+      // se acaba de arreglar.
+      setVuelta(null);
+      setSinUbicacion(true);
+      return;
+    }
+    setSinUbicacion(false);
+    const { data } = await supabase.rpc("vueltas_cerca", {
+      p_lat: donde.lat,
+      p_lng: donde.lng,
+      p_limite: 1,
+    });
+    setVuelta((data as VueltaHoy[] | null)?.[0] ?? null);
   }, []);
 
   useEffect(() => {
@@ -97,9 +125,15 @@ export default function HomeScreen() {
               <Dificultad nivel={vuelta.dificultad} />
             </View>
             <Text style={styles.vueltaTitulo}>{vuelta.titulo}</Text>
-            <Etiqueta>{vuelta.pois?.nombre ?? "Barranco"}</Etiqueta>
+            {/* Lugar y distancia juntos: "a 2 cuadras" sin decir de qué sirve
+                menos que el nombre de la esquina. Cuadras, nunca metros ni km
+                — es firma de marca (glosario). */}
+            <Etiqueta>
+              {vuelta.poi_nombre ?? "Acá cerca"}
+              {vuelta.distancia_m != null ? ` · ${textoCuadras(vuelta.distancia_m)}` : ""}
+            </Etiqueta>
             <Boton
-              style={{ marginTop: 6 }}
+              style={{ marginTop: esc(6) }}
               onPress={() =>
                 router.push({ pathname: "/vuelta/[id]", params: { id: String(vuelta.id) } })
               }
@@ -108,7 +142,35 @@ export default function HomeScreen() {
             </Boton>
           </View>
         </Animated.View>
-      ) : null}
+      ) : sinUbicacion ? (
+        // Sin GPS no hay Vuelta que ofrecer, pero quedarse en blanco deja al
+        // jugador mirando un mapa mudo sin saber que la pelota está de su lado.
+        <Animated.View
+          entering={FadeInDown.springify().damping(16)}
+          style={[styles.saludo, { bottom: sobreLaBarra }]}
+        >
+          <View style={styles.tarjetaVuelta}>
+            <Text style={styles.vueltaTitulo}>Calato no sabe dónde estás</Text>
+            <Etiqueta>Prende la ubicación y te busco vueltas acá cerca</Etiqueta>
+            <Boton style={{ marginTop: esc(6) }} onPress={() => void cargar()}>
+              Reintentar
+            </Boton>
+          </View>
+        </Animated.View>
+      ) : (
+        // Con ubicación y sin resultados: hay zonas sin cuadras encendidas, y a
+        // esta hora el modo seguro puede esconderlas todas. Decirlo es mejor que
+        // dejar creer que la app se colgó.
+        <Animated.View
+          entering={FadeInDown.springify().damping(16)}
+          style={[styles.saludo, { bottom: sobreLaBarra }]}
+        >
+          <View style={styles.tarjetaVuelta}>
+            <Text style={styles.vueltaTitulo}>Por acá todavía no hay vueltas</Text>
+            <Etiqueta>Calato está olfateando esta zona. Vuelve más tarde.</Etiqueta>
+          </View>
+        </Animated.View>
+      )}
     </View>
   );
 }
@@ -123,76 +185,76 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 14,
+    paddingHorizontal: esc(14),
   },
   chip: {
     backgroundColor: "rgba(251,247,240,0.92)",
-    borderRadius: 999,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginTop: 8,
+    borderRadius: radios.chip,
+    paddingHorizontal: esc(16),
+    paddingVertical: esc(8),
+    marginTop: esc(8),
     shadowColor: colores.tinta,
     shadowOpacity: 0.12,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: esc(8),
+    shadowOffset: { width: 0, height: esc(2) },
     elevation: 3,
   },
-  marca: { fontSize: 20, fontFamily: fuentes.extrabold, color: colores.tinta, letterSpacing: -0.5 },
+  marca: { fontSize: esc(20), fontFamily: fuentes.extrabold, color: colores.tinta, letterSpacing: esc(-0.5) },
   chipRacha: {
     backgroundColor: colores.tinta,
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
-    paddingHorizontal: 13,
+    gap: esc(6),
+    paddingHorizontal: esc(13),
   },
   llama: {
-    width: 11,
-    height: 13,
+    width: esc(11),
+    height: esc(13),
     backgroundColor: colores.naranja,
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
-    borderBottomLeftRadius: 6,
-    borderBottomRightRadius: 6,
+    borderTopLeftRadius: esc(6),
+    borderTopRightRadius: esc(6),
+    borderBottomLeftRadius: esc(6),
+    borderBottomRightRadius: esc(6),
   },
-  rachaTexto: { fontSize: 13, fontFamily: fuentes.extrabold, color: colores.papel },
+  rachaTexto: { fontSize: esc(13), fontFamily: fuentes.extrabold, color: colores.papel },
   saludo: {
     position: "absolute",
-    left: 14,
-    right: 14,
+    left: esc(14),
+    right: esc(14),
     // `bottom` se calcula en el componente: depende del inset del equipo.
   },
   tarjetaVuelta: {
     backgroundColor: colores.papel,
-    borderWidth: 2,
+    borderWidth: esc(2),
     borderColor: colores.tinta,
-    borderRadius: 18,
-    padding: 15,
-    gap: 6,
+    borderRadius: esc(18),
+    padding: esc(15),
+    gap: esc(6),
     shadowColor: colores.tinta,
     shadowOpacity: 1,
     shadowRadius: 0,
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: { width: esc(3), height: esc(3) },
     elevation: 5,
   },
   vueltaTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  vueltaTitulo: { fontSize: 16, fontFamily: fuentes.extrabold, color: colores.tinta },
+  vueltaTitulo: { fontSize: esc(16), fontFamily: fuentes.extrabold, color: colores.tinta },
   saludoFila: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 13,
+    gap: esc(13),
     backgroundColor: colores.papel,
-    borderWidth: 2,
+    borderWidth: esc(2),
     borderColor: colores.tinta,
-    borderRadius: 18,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    borderRadius: esc(18),
+    paddingHorizontal: esc(14),
+    paddingVertical: esc(12),
     shadowColor: colores.tinta,
     shadowOpacity: 1,
     shadowRadius: 0,
-    shadowOffset: { width: 3, height: 3 },
+    shadowOffset: { width: esc(3), height: esc(3) },
     elevation: 5,
   },
-  saludoTextos: { flex: 1, gap: 2 },
-  saludoTitulo: { fontSize: 15, fontFamily: fuentes.extrabold, color: colores.tinta },
-  saludoDetalle: { fontSize: 12, color: colores.textoSuave },
+  saludoTextos: { flex: 1, gap: esc(2) },
+  saludoTitulo: { fontSize: esc(15), fontFamily: fuentes.extrabold, color: colores.tinta },
+  saludoDetalle: { fontSize: esc(12), color: colores.textoSuave, fontFamily: fuentes.regular },
 });

@@ -426,7 +426,25 @@ Objetivo RUP de esta fase: **arquitectura ejecutable que mata los riesgos altos*
    - **Medir el costo real** en la primera corrida con `--dry-run` (cuenta tokens antes de gastar). El documento maestro estimaba ~$11/mes con Haiku; con Sonnet será ~3× — sigue dentro del presupuesto de §7.8 ($15–40/mes en etapa de validación).
 3. **Activación** — script `worker/pipeline/activar.ts`: pasa `draft` → `activa` con revisión mínima (o `--todas` para la demo).
 4. **Arreglar el seed** — corregir la categoría del POI 9002 y agregar targets de conflicto para que sea idempotente.
-5. **Quick win de 2 h que cambia todo: cablear las fuentes.** `@expo-google-fonts/alfa-slab-one` + `@expo-google-fonts/archivo`, cargarlas en `_layout.tsx` con `expo-font` (ya instalado), y hacer que `ui.tsx` use `tipografia.display`/`.ui` en vez de `fontWeight` del sistema. **Con esto la app pasa a verse como el prototipo.** Incluye splash `#FBF7F0` con Calato en vez del azul de Expo.
+5. ~~**Quick win de 2 h: cablear las fuentes.**~~ **HECHO en el commit `8bad085`** (verificado 2026-07-29).
+   `expo-font` carga las 6 familias reales con `useFonts` en `_layout.tsx`, y el splash se sostiene hasta que
+   terminan, así que la app nunca pinta un cuadro con la tipografía del sistema. **No hay una sola declaración
+   de `fontWeight` en `app/src`** — la línea anterior de este plan afirmaba lo contrario y estaba vencida.
+
+   **Lo que SÍ queda de tipografía** (medido, no supuesto):
+   - **12 estilos de texto declaran `fontSize` y se olvidaron `fontFamily`**, así que salen en la fuente del
+     sistema: `album.tsx`, `(app)/index.tsx`, `perfil.tsx` ×2, `vueltas.tsx` ×3, `vuelta/[id].tsx` ×3,
+     `mapa-cuadra.tsx` ×2. Casi todos en pantallas de `(app)/`.
+   - **`fuentes.semibold` tiene 0 usos y no es peso muerto: falta usarlo.** El prototipo pide
+     `font-weight:600` en 5 lugares — la instrucción de verificación de la vuelta (línea 499) y los cuatro
+     beneficios de La Llave (753-762). Hoy esos salen con el peso equivocado.
+   - **Escalas mezcladas:** `crear-cuenta`, `revisa-correo`, `ui.tsx` y `theme.ts` pasan los tamaños por
+     `esc()`; `album`, `index`, `perfil`, `vueltas`, `vuelta/[id]`, `bienvenida`, `permisos`, `sign-in` y
+     `mapa-cuadra` usan píxeles crudos del prototipo. En un iPhone 15 Pro Max el factor es 1,28 — esas
+     pantallas se ven **22 % más chicas de lo que manda el diseño**. Es la misma disparidad que ya se corrigió
+     en la barra de pestañas, sin terminar de propagar.
+   - El peso `900` que la guía usa 3 veces no está cargado (`paridad-css.mjs` lo mapea a `black`, que `fuentes`
+     no expone).
 
 **Criterio de aceptación (verificable):**
 - `select count(*) from pois where h3_index in (celdas de Barranco)` ≥ 100
@@ -581,3 +599,32 @@ Más: `npx expo export --platform web` sin errores de consola, y la prueba en di
 **Del hito LCA (la demo):** el video de 60 segundos del loop completo, caminando, en un teléfono real. Si ese video existe, la demo está aprobada.
 
 **Del hito PR:** la app instalada desde Play Store internal testing en un teléfono que no es el tuyo, completando una vuelta.
+
+### Clips de Calato: de dónde salen (decidido 2026-07-28)
+
+Los clips animados del personaje **se generan con video** (Seedance anclado a las imágenes
+de identidad) y se recortan con **mateo por doble fondo**. La receta completa, con las
+cuatro vías que NO funcionan, está en `scripts/clip-desde-video.md`.
+
+Por qué el cambio: el modelo 3D auto-generado arrastra un estiramiento del flanco de 2,84×
+que ninguna corrección post-hoc arregló (cuatro intentos medidos, ver §6.1 del brief). El
+video no tiene rig, así que el defecto no existe. Además la imagen de identidad es más
+linda que el modelo —que se reconstruyó *a partir* de ella y perdió detalle—, así que
+generar desde la imagen se saltea el paso que degrada.
+
+Lo que sigue viniendo del 3D: **`caminar`**, el único ciclo con encuadre exacto y peso
+liviano. El render 3D sigue siendo mejor para loops funcionales (cargando, caminata) por
+peso y control; el video gana en momentos de personaje.
+
+| Clip | Pantalla | Origen |
+|---|---|---|
+| `saludo` | Bienvenida, 252 pt | video |
+| `atento` | Perfil, 96 pt | video |
+| `culpa` | Vueltas vacías, 118 pt | video |
+| `chapada` | Celebración (E2) | video |
+| `caminar` | — | render 3D |
+
+**Pendiente medido:** los cuatro clips de video pesan 13,7 MB juntos (121 cuadros con alfa
+cada uno). Es aceptable para probar en Expo Go y demasiado para producción. Las palancas,
+por orden de rendimiento: acortar los clips a 2,5 s, o empaquetarlos como video con canal
+alfa (HEVC en iOS / VP9 en Android), que el mismo contenido pesa ~1 MB en vez de 3.

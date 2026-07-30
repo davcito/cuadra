@@ -5,7 +5,7 @@ import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
 import { Boton } from "@/components/ui";
-import { colores, esc, fuentes } from "@/lib/theme";
+import { colores, esc, fuentes, radios } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 /**
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     borderWidth: esc(2),
     borderStyle: "dashed",
     borderColor: colores.tinta,
-    borderRadius: 999,
+    borderRadius: radios.chip,
     paddingHorizontal: esc(12),
     paddingVertical: esc(5),
     fontSize: esc(10),

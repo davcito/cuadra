@@ -4,6 +4,7 @@ import { WebView, type WebViewMessageEvent } from "react-native-webview";
 import * as Location from "expo-location";
 
 import { MAPA_HTML } from "@/lib/mapa-html";
+import { colores, esc, fuentes } from "@/lib/theme";
 
 type Ubicacion = { lng: number; lat: number };
 type EstadoGps = "pidiendo" | "ok" | "denegado" | "error";
@@ -80,7 +81,7 @@ export function MapaCuadra() {
 
       {!mapaListo && (
         <View style={styles.overlay} pointerEvents="none">
-          <ActivityIndicator color="#E8622C" />
+          <ActivityIndicator color={colores.naranja} />
           <Text style={styles.overlayTexto}>Cargando tu cuadra…</Text>
         </View>
       )}
@@ -97,25 +98,25 @@ export function MapaCuadra() {
 }
 
 const styles = StyleSheet.create({
-  cont: { flex: 1, backgroundColor: "#FBF7F0" },
-  web: { flex: 1, backgroundColor: "#FBF7F0" },
+  cont: { flex: 1, backgroundColor: colores.papel },
+  web: { flex: 1, backgroundColor: colores.papel },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     alignItems: "center",
     justifyContent: "center",
-    gap: 10,
-    backgroundColor: "#FBF7F0",
+    gap: esc(10),
+    backgroundColor: colores.papel,
   },
-  overlayTexto: { color: "#8A7E6E", fontSize: 15 },
+  overlayTexto: { color: colores.metadato, fontSize: esc(15), fontFamily: fuentes.medium },
   aviso: {
     position: "absolute",
-    bottom: 24,
-    left: 16,
-    right: 16,
-    backgroundColor: "#1F1B16",
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    bottom: esc(24),
+    left: esc(16),
+    right: esc(16),
+    backgroundColor: colores.tinta,
+    borderRadius: esc(12),
+    paddingVertical: esc(12),
+    paddingHorizontal: esc(16),
   },
-  avisoTexto: { color: "#FBF7F0", fontSize: 14, textAlign: "center" },
+  avisoTexto: { color: colores.papel, fontSize: esc(14), textAlign: "center", fontFamily: fuentes.regular },
 });

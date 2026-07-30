@@ -9,6 +9,7 @@
     "@react-native-async-storage/async-storage": "2.2.0",
     "@supabase/supabase-js": "^2.108.1",
     "expo": "54",
+    "expo-camera": "~17.0.10",
     "expo-constants": "~18.0.13",
     "expo-device": "~8.0.10",
     "expo-font": "~14.0.12",
@@ -51,7 +52,9 @@
     "test": "tsx --test src/lib/geo.test.ts",
     "paridad": "node ../scripts/paridad-css.mjs",
     "web:preview": "expo export --platform web && node ../scripts/servir-web.mjs 8090",
-    "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit"
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit",
+    "assets": "node ../scripts/verificar-assets.mjs",
+    "esc": "node ../scripts/barrer-esc.mjs"
   },
   "private": true
 }

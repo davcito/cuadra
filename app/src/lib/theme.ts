@@ -21,8 +21,14 @@ import { Dimensions } from "react-native";
  */
 const ANCHO_PROTOTIPO = 336;
 
+/**
+ * El piso de 0,8 no es cosmético: el factor se calcula UNA vez al cargar el
+ * módulo, y hay contextos donde `Dimensions` todavía devuelve 0 de ancho. Sin
+ * piso, el factor sería 0 y la app entera se renderizaría a tamaño cero — un
+ * fallo total y difícil de leer, porque no hay error, solo una pantalla vacía.
+ */
 export const factorEscala = Math.min(
-  Dimensions.get("window").width / ANCHO_PROTOTIPO,
+  Math.max(Dimensions.get("window").width / ANCHO_PROTOTIPO, 0.8),
   1.4 // tope: en una tablet no queremos una app gigante
 );
 

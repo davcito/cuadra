@@ -3,7 +3,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from "react-nat
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { COLOR_CATEGORIA, Chip, Etiqueta, Tarjeta, TituloDisplay } from "@/components/ui";
-import { colores, fuentes } from "@/lib/theme";
+import { colores, esc, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 type Figurita = {
@@ -81,7 +81,7 @@ export default function AlbumScreen() {
         </View>
 
         {cargando ? (
-          <ActivityIndicator color={colores.naranja} style={{ marginTop: 40 }} />
+          <ActivityIndicator color={colores.naranja} style={{ marginTop: esc(40) }} />
         ) : (
           <View style={styles.grilla}>
             {Array.from({ length: 9 }, (_, i) => {
@@ -115,7 +115,7 @@ export default function AlbumScreen() {
           </View>
         )}
 
-        <Tarjeta style={{ marginTop: 6 }} fondo="#FFFFFF">
+        <Tarjeta style={{ marginTop: esc(6) }} fondo="#FFFFFF">
           <View style={styles.nota}>
             <Text style={styles.notaTexto}>
               <Text style={{ fontFamily: fuentes.extrabold }}>Completá {barrio}</Text> y desbloqueás la
@@ -131,34 +131,34 @@ export default function AlbumScreen() {
 const styles = StyleSheet.create({
   // textura de papel: solo acá (guía 06)
   safe: { flex: 1, backgroundColor: "#FFFDF8" },
-  scroll: { padding: 18, paddingBottom: 110, gap: 12 },
+  scroll: { padding: esc(18), paddingBottom: esc(110), gap: esc(12) },
   encabezado: { flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" },
-  barrios: { flexDirection: "row", gap: 7 },
-  chipOff: { borderWidth: 2, borderColor: "#D8CBB4" },
-  progresoCaja: { gap: 5 },
+  barrios: { flexDirection: "row", gap: esc(7) },
+  chipOff: { borderWidth: esc(2), borderColor: "#D8CBB4" },
+  progresoCaja: { gap: esc(5) },
   progresoTop: { flexDirection: "row", justifyContent: "space-between" },
   barra: {
-    height: 11,
-    borderWidth: 2,
+    height: esc(11),
+    borderWidth: esc(2),
     borderColor: colores.tinta,
-    borderRadius: 9,
+    borderRadius: esc(9),
     backgroundColor: "#FFFFFF",
     overflow: "hidden",
   },
   barraLlena: { height: "100%", backgroundColor: colores.naranja },
-  grilla: { flexDirection: "row", flexWrap: "wrap", gap: 11, marginTop: 4 },
+  grilla: { flexDirection: "row", flexWrap: "wrap", gap: esc(11), marginTop: esc(4) },
   figurita: {
     width: "30%",
-    height: 118,
-    borderRadius: 8,
-    borderWidth: 2,
+    height: esc(118),
+    borderRadius: esc(8),
+    borderWidth: esc(2),
     borderColor: colores.tinta,
-    padding: 7,
-    gap: 3,
+    padding: esc(7),
+    gap: esc(3),
     justifyContent: "flex-end",
   },
-  arte: { flex: 1, borderRadius: 4 },
-  numero: { fontSize: 8, fontFamily: fuentes.extrabold, letterSpacing: 0.5 },
-  nota: { padding: 13 },
-  notaTexto: { fontSize: 12, color: colores.textoSuave, lineHeight: 17 },
+  arte: { flex: 1, borderRadius: esc(4) },
+  numero: { fontSize: esc(8), fontFamily: fuentes.extrabold, letterSpacing: esc(0.5) },
+  nota: { padding: esc(13) },
+  notaTexto: { fontSize: esc(12), color: colores.textoSuave, lineHeight: esc(17), fontFamily: fuentes.regular },
 });

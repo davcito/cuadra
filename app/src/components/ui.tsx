@@ -26,11 +26,18 @@ export function SombraDura({
   children,
   offset = sombras.tarjeta,
   radio = radios.tarjeta,
+  color,
   style,
 }: {
   children: ReactNode;
   offset?: number;
   radio?: number;
+  /**
+   * Tinta al 100 % por defecto, que es la sombra dura de marca (guía 05).
+   * Se puede bajar la opacidad —la figurita del prototipo usa tinta al 30 %—
+   * pero NO cambiar de color: sigue siendo tinta, más suave.
+   */
+  color?: string;
   style?: StyleProp<ViewStyle>;
 }) {
   return (
@@ -39,6 +46,7 @@ export function SombraDura({
         style={[
           styles.sombra,
           { top: offset, left: offset, borderRadius: radio },
+          color ? { backgroundColor: color } : null,
         ]}
       />
       {children}
@@ -212,7 +220,13 @@ export function Toldo({ style }: { style?: StyleProp<ViewStyle> }) {
  * el trazo abierto — la vuelta que falta caminar — y el punto naranja que
  * sos vos. Va junto al wordmark y como pin del mapa.
  */
-export function Isotipo({ size = 42 }: { size?: number }) {
+  /**
+   * Tamaño en puntos YA ESCALADOS: el llamador pasa `size={esc(42)}`. Es la
+   * convención opuesta a la de `alto` en <CalatoSprite>/<CalatoClip>, donde el
+   * esc va adentro. El default también viene envuelto — default y prop son
+   * excluyentes, así que no hay doble escalado posible.
+   */
+export function Isotipo({ size = esc(42) }: { size?: number }) {
   // El prototipo usa pathLength=100 (dash 82/18, offset -34), pero
   // react-native-svg no soporta pathLength: se traduce a unidades absolutas.
   // Perímetro del rect redondeado = 2(w−2r) + 2(h−2r) + 2πr con w=h=34, r=10.

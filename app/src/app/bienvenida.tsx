@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { SlideInRight } from "react-native-reanimated";
 
-import { CalatoClip } from "@/components/calato-clip";
+import { CalatoSprite } from "@/components/calato-sprite";
 import { Boton } from "@/components/ui";
 import { colores, esc, fuentes } from "@/lib/theme";
 
@@ -35,7 +35,7 @@ export default function BienvenidaScreen() {
           entering={SlideInRight.springify().damping(15).mass(0.9).delay(160)}
           style={styles.heroCalato}
         >
-          <CalatoClip clip="saludo" alto={252} etiqueta="Calato te saluda" />
+          <CalatoSprite alto={252} etiqueta="Calato te saluda" />
         </Animated.View>
       </View>
 
@@ -75,32 +75,32 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   heroCalato: { alignItems: "center", justifyContent: "flex-end" },
-  cuerpo: { paddingHorizontal: 22, paddingTop: 24, gap: 12 },
+  cuerpo: { paddingHorizontal: esc(22), paddingTop: esc(24), gap: esc(12) },
   titulo: {
-    fontSize: 34,
-    lineHeight: 38,
+    fontSize: esc(34),
+    lineHeight: esc(38),
     fontFamily: fuentes.display,
     color: colores.tinta,
   },
   parrafo: {
-    fontSize: 15,
-    lineHeight: 23,
+    fontSize: esc(15),
+    lineHeight: esc(23),
     fontFamily: fuentes.regular,
     color: colores.textoSuave,
   },
-  puntos: { flexDirection: "row", gap: 6, marginTop: 6 },
-  punto: { width: 9, height: 5, borderRadius: 9, backgroundColor: "#D8CBB4" },
-  puntoOn: { width: 22, backgroundColor: colores.tinta },
+  puntos: { flexDirection: "row", gap: esc(6), marginTop: esc(6) },
+  punto: { width: esc(9), height: esc(5), borderRadius: esc(9), backgroundColor: "#D8CBB4" },
+  puntoOn: { width: esc(22), backgroundColor: colores.tinta },
   pie: {
     position: "absolute",
-    left: 22,
-    right: 22,
-    bottom: 26,
-    gap: 11,
+    left: esc(22),
+    right: esc(22),
+    bottom: esc(26),
+    gap: esc(11),
   },
   link: {
     textAlign: "center",
-    fontSize: 13,
+    fontSize: esc(13),
     fontFamily: fuentes.bold,
     color: colores.textoSuave,
   },

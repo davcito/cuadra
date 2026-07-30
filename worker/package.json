@@ -8,14 +8,18 @@
     "sync-pois": "tsx pipeline/1-sync-pois.ts",
     "generate-missions": "tsx pipeline/2-generate-missions.ts",
     "verify-photos": "tsx pipeline/3-verify-photos.ts",
-    "test": "tsx --test pipeline/schema.test.ts",
-    "typecheck": "tsc --noEmit"
+    "activar": "tsx pipeline/activar.ts",
+    "test": "tsx --test pipeline/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "estado": "tsx pipeline/estado.ts",
+    "encender": "tsx pipeline/encender-celda.ts",
+    "figuritas": "tsx pipeline/figuritas.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0",
+    "@anthropic-ai/sdk": "^0.115.0",
     "@supabase/supabase-js": "^2.45.0",
     "h3-js": "^4.1.0",
-    "zod": "^3.23.0"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

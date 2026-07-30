@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as Location from "expo-location";
 
 import { Boton, Tarjeta } from "@/components/ui";
-import { colores, fuentes, radios } from "@/lib/theme";
+import { colores, esc, fuentes, radios } from "@/lib/theme";
 
 /**
  * Permisos — pantalla 3 del prototipo (onboarding 3/3).
@@ -83,63 +83,63 @@ export default function PermisosScreen() {
 
 const styles = StyleSheet.create({
   raiz: { flex: 1, backgroundColor: colores.papel },
-  cuerpo: { paddingHorizontal: 22, paddingTop: 46, gap: 16 },
+  cuerpo: { paddingHorizontal: esc(22), paddingTop: esc(46), gap: esc(16) },
   titulo: {
-    fontSize: 28,
-    lineHeight: 32,
+    fontSize: esc(28),
+    lineHeight: esc(32),
     fontFamily: fuentes.display,
     color: colores.tinta,
   },
-  fila: { flexDirection: "row", gap: 13, alignItems: "flex-start", padding: 16 },
+  fila: { flexDirection: "row", gap: esc(13), alignItems: "flex-start", padding: esc(16) },
   icono: {
-    width: 38,
-    height: 38,
-    borderRadius: 11,
-    borderWidth: 2,
+    width: esc(38),
+    height: esc(38),
+    borderRadius: esc(11),
+    borderWidth: esc(2),
     borderColor: colores.tinta,
     alignItems: "center",
     justifyContent: "center",
   },
   iconoUbicacion: {
-    width: 13,
-    height: 13,
-    borderWidth: 3,
+    width: esc(13),
+    height: esc(13),
+    borderWidth: esc(3),
     borderColor: colores.tinta,
-    borderRadius: 4,
+    borderRadius: esc(4),
   },
   iconoCamara: {
-    width: 15,
-    height: 12,
-    borderWidth: 3,
+    width: esc(15),
+    height: esc(12),
+    borderWidth: esc(3),
     borderColor: colores.papel,
-    borderRadius: 3,
+    borderRadius: esc(3),
   },
-  filaTextos: { flex: 1, gap: 3 },
-  filaTitulo: { fontSize: 15, fontFamily: fuentes.extrabold, color: colores.tinta },
+  filaTextos: { flex: 1, gap: esc(3) },
+  filaTitulo: { fontSize: esc(15), fontFamily: fuentes.extrabold, color: colores.tinta },
   filaMeta: {
-    fontSize: 12,
-    lineHeight: 17,
+    fontSize: esc(12),
+    lineHeight: esc(17),
     fontFamily: fuentes.regular,
     color: colores.textoSuave,
   },
   privacidad: {
-    borderWidth: 2,
+    borderWidth: esc(2),
     borderStyle: "dashed",
     borderColor: "#C9BCA3",
     borderRadius: radios.boton,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingHorizontal: esc(14),
+    paddingVertical: esc(12),
   },
   privacidadTexto: {
-    fontSize: 11,
-    lineHeight: 16,
+    fontSize: esc(11),
+    lineHeight: esc(16),
     fontFamily: fuentes.regular,
     color: colores.textoSuave,
   },
-  pie: { position: "absolute", left: 22, right: 22, bottom: 26, gap: 11 },
+  pie: { position: "absolute", left: esc(22), right: esc(22), bottom: esc(26), gap: esc(11) },
   link: {
     textAlign: "center",
-    fontSize: 13,
+    fontSize: esc(13),
     fontFamily: fuentes.bold,
     color: colores.textoSuave,
   },

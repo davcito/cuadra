@@ -19,10 +19,10 @@ Cuadra es un proyecto **PROPIO de David** y trabajo 100% legítimo. Vocabulario 
 - **App:** React Native + Expo (TypeScript estricto), expo-router
 - **Backend:** Supabase — Postgres + PostGIS, Auth, Storage. RLS obligatorio en TODA tabla
 - **Workers:** Node.js en VPS propio (cron): pipeline de misiones, verificación, rankings
-- **Fotos:** Cloudflare R2 (URLs firmadas, subida directa desde la app)
+- **Fotos:** **Supabase Storage** (bucket privado `chapas`) — ver ADR-0009. R2 queda pospuesto, no descartado: Postgres tiene que poder VER la foto para que la capa 1 del anti-fraude sea real, y con R2 no puede
 - **Mapas:** MapLibre GL + OpenFreeMap (nunca Google Maps SDK ni Mapbox)
 - **Geo:** h3-js (resolución 9), PostGIS para queries, haversine/bearing propios en `app/src/lib/geo.ts`
-- **IA:** API de Claude (Haiku 4.5) SOLO desde el worker, nunca desde la app. Salidas en JSON estricto validado con zod
+- **IA:** API de Claude (**Sonnet 5** para generación semanal — ver ADR-0008; el documento maestro §7.4 aún dice Haiku 4.5) SOLO desde el worker, nunca desde la app. Salidas en JSON estricto validado con zod
 - **Pagos:** RevenueCat (IAP) + Culqi/Mercado Pago para Yape/Plin (riel web)
 - **Analytics:** PostHog · Errores: Sentry
 

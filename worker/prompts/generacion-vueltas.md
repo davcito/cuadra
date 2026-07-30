@@ -1,8 +1,12 @@
-# Prompt de generación de Vueltas — v1
+# Prompt de generación de Vueltas — v1.1
 
 > Regla dura #8: este archivo se versiona como código. Cambio de prompt = commit con justificación.
-> Modelo: Claude Haiku 4.5 · salida JSON estricto · validación con `pipeline/schema.ts` (zod).
+> Modelo: Claude Sonnet 5 (ver `docs/decisiones/0008-modelo-de-generacion.md`) · salida JSON
+> forzada por el servidor con structured outputs · validación con `pipeline/schema.ts` (zod).
 > Si la validación falla: descartar TODO el lote y reintentar; nunca insertar parcial.
+>
+> Este archivo es la ÚNICA fuente del prompt: `pipeline/prompt.ts` lo lee de acá y
+> `pipeline/prompt.test.ts` cruza el SCHEMA de abajo contra el zod real. Si divergen, falla `npm test`.
 
 ## SYSTEM
 
@@ -20,8 +24,9 @@ REGLAS DURAS:
 1. SOLO puedes crear misiones sobre los POIs del input (campo "pois").
    Usa el "id" exacto del POI en "poi_id". NUNCA inventes lugares, nombres,
    detalles históricos ni datos que no estén presentes en el input.
-2. Respondes ÚNICAMENTE con un array JSON válido según el SCHEMA. Sin
-   prosa, sin markdown, sin comentarios, sin texto antes ni después.
+2. Respondes ÚNICAMENTE con un objeto JSON {"vueltas": [ ... ]}, donde cada
+   elemento del array cumple el SCHEMA. Sin prosa, sin markdown, sin
+   comentarios, sin texto antes ni después.
 3. Misiones sociales ("casero"): respetuosas, sin pedir datos personales,
    sin involucrar menores, interacción siempre opcional y en espacio público.
 4. Nada que implique riesgo físico, entrar a propiedad privada, ni
@@ -62,6 +67,13 @@ tallada en fachada de casona"}
 
 ## USER (payload por celda — lo arma `2-generate-missions.ts`)
 
+> **Qué es el `id` de cada POI.** Es el `pois.id` de la base, y es el número que el modelo
+> devuelve en `poi_id`. NO es el `osm_id`: ese lo asigna OpenStreetMap y el interno lo asigna
+> Postgres al insertar. Los lotes escritos a mano (`--desde-archivo`, ver `worker/contenido/`)
+> referencian por `osm_id` justamente porque se escriben ANTES de que exista la fila en `pois`;
+> el insertador resuelve `osm_id → poi_id` contra la base. Son tres nombres para dos cosas y
+> confundirlos es un lote rechazado, así que queda dicho acá.
+
 ```json
 {
   "celda": "<h3_index>",
@@ -97,3 +109,9 @@ tallada en fachada de casona"}
 ## Historial de cambios
 
 - **v1 (2026-06-11):** versión inicial a partir del documento maestro §7.3, con voz de marca §3.3, reglas de dificultad/XP y 2 ejemplos canónicos.
+- **v1.1 (2026-07-29):** al implementar `2-generate-missions.ts` de verdad, dos correcciones:
+  - **La salida pasa de array pelado a `{"vueltas": [...]}`.** Structured outputs exige un
+    objeto en la raíz. Si la regla 2 siguiera pidiendo un array mientras el servidor fuerza un
+    objeto, el modelo recibiría dos instrucciones contradictorias.
+  - **El encabezado decía Haiku 4.5** y la generación corre con Sonnet 5 desde el plan RUP.
+    Un prompt que declara mal su propio modelo es una trampa para el que lo lea después.

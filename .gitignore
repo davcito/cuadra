@@ -24,3 +24,10 @@ supabase/.temp/
 .DS_Store
 Thumbs.db
 *.log
+
+# config MCP local (contiene project_ref y features=account) — no versionar
+.mcp.json
+
+# artefactos de debug del inspector de sprites (pesados, regenerables)
+scripts/inspector/clips/
+scripts/inspector/*.png

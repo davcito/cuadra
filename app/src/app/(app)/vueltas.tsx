@@ -11,6 +11,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
+import { CalatoSprite } from "@/components/calato-sprite";
 import { CalatoVivo } from "@/components/calato-vivo";
 import {
   Boton,
@@ -23,7 +24,7 @@ import {
   TituloDisplay,
   Toldo,
 } from "@/components/ui";
-import { colores, fuentes } from "@/lib/theme";
+import { colores, esc, fuentes } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 /** Una Vuelta con el POI resuelto (lo que devuelve la query). */
@@ -43,7 +44,7 @@ export function IlustracionLugar({ categoria, alto = 76 }: { categoria: string; 
   const fondo = COLOR_CATEGORIA[categoria] ?? colores.categorias.huariques;
 
   return (
-    <View style={[styles.ilustra, { backgroundColor: fondo, height: alto }]}>
+    <View style={[styles.ilustra, { backgroundColor: fondo, height: esc(alto) }]}>
       {categoria === "huarique" ? (
         <View style={styles.ilustraCentro}>
           <View style={styles.toldo} />
@@ -55,16 +56,16 @@ export function IlustracionLugar({ categoria, alto = 76 }: { categoria: string; 
       ) : categoria === "caleta" ? (
         <View style={styles.ilustraCentro}>
           <View style={styles.libreria}>
-            <View style={[styles.lomo, { height: 13, backgroundColor: "#F0A73F" }]} />
-            <View style={[styles.lomo, { height: 17, backgroundColor: colores.papel }]} />
-            <View style={[styles.lomo, { height: 10, backgroundColor: colores.categorias.caseros }]} />
+            <View style={[styles.lomo, { height: esc(13), backgroundColor: "#F0A73F" }]} />
+            <View style={[styles.lomo, { height: esc(17), backgroundColor: colores.papel }]} />
+            <View style={[styles.lomo, { height: esc(10), backgroundColor: colores.categorias.caseros }]} />
           </View>
         </View>
       ) : (
         <View style={styles.ilustraCentro}>
-          <View style={[styles.escalon, { width: 26, backgroundColor: "#8A5A12" }]} />
-          <View style={[styles.escalon, { width: 44, backgroundColor: "#A06915" }]} />
-          <View style={[styles.escalon, { width: 62, backgroundColor: "#8A5A12" }]} />
+          <View style={[styles.escalon, { width: esc(26), backgroundColor: "#8A5A12" }]} />
+          <View style={[styles.escalon, { width: esc(44), backgroundColor: "#A06915" }]} />
+          <View style={[styles.escalon, { width: esc(62), backgroundColor: "#8A5A12" }]} />
         </View>
       )}
     </View>
@@ -125,7 +126,7 @@ export default function VueltasScreen() {
         <Toldo style={styles.toldoSep} />
 
         {cargando ? (
-          <ActivityIndicator color={colores.naranja} style={{ marginTop: 40 }} />
+          <ActivityIndicator color={colores.naranja} style={{ marginTop: esc(40) }} />
         ) : error ? (
           <Tarjeta style={styles.tarjeta}>
             <View style={styles.aviso}>
@@ -135,7 +136,7 @@ export default function VueltasScreen() {
           </Tarjeta>
         ) : vueltas.length === 0 ? (
           <View style={styles.vacio}>
-            <CalatoVivo estado="culpa" size={118} />
+            <CalatoSprite clip="culpa" alto={118} />
             <TituloDisplay style={{ textAlign: "center" }}>
               Ya chapaste{"\n"}las de hoy
             </TituloDisplay>
@@ -199,22 +200,22 @@ export default function VueltasScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colores.papel },
-  scroll: { padding: 18, paddingBottom: 110, gap: 13 },
-  encabezado: { gap: 3 },
-  sub: { fontSize: 12, color: colores.textoSuave, fontFamily: fuentes.medium },
+  scroll: { padding: esc(18), paddingBottom: esc(110), gap: esc(13) },
+  encabezado: { gap: esc(3) },
+  sub: { fontSize: esc(12), color: colores.textoSuave, fontFamily: fuentes.medium },
   // El alto, las rayas y los bordes los pone <Toldo>; acá solo su sitio
   // (prototipo: `padding: 11px 18px 0` + `border-radius: 4px`).
-  toldoSep: { borderRadius: 4, marginBottom: 2 },
+  toldoSep: { borderRadius: esc(4), marginBottom: esc(2) },
   tarjeta: { marginTop: 0 },
-  fila: { flexDirection: "row", gap: 11, padding: 11 },
-  filaTextos: { flex: 1, gap: 4 },
+  fila: { flexDirection: "row", gap: esc(11), padding: esc(11) },
+  filaTextos: { flex: 1, gap: esc(4) },
   filaTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
-  titulo: { fontSize: 15, fontFamily: fuentes.extrabold, color: colores.tinta, lineHeight: 19 },
-  meta: { fontSize: 11, color: colores.textoSuave, fontFamily: fuentes.medium },
+  titulo: { fontSize: esc(15), fontFamily: fuentes.extrabold, color: colores.tinta, lineHeight: esc(19) },
+  meta: { fontSize: esc(11), color: colores.textoSuave, fontFamily: fuentes.medium },
   ilustra: {
-    width: 76,
-    borderRadius: 10,
-    borderWidth: 2,
+    width: esc(76),
+    borderRadius: esc(10),
+    borderWidth: esc(2),
     borderColor: colores.tinta,
     overflow: "hidden",
     justifyContent: "flex-end",
@@ -222,40 +223,40 @@ const styles = StyleSheet.create({
   ilustraCentro: { alignItems: "center", width: "100%" },
   toldo: {
     width: "82%",
-    height: 10,
+    height: esc(10),
     backgroundColor: "#8F2117",
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    borderTopLeftRadius: esc(5),
+    borderTopRightRadius: esc(5),
   },
   puestoBase: {
     width: "66%",
-    height: 26,
+    height: esc(26),
     backgroundColor: "#8F2117",
     flexDirection: "row",
     alignItems: "flex-end",
     justifyContent: "center",
-    gap: 4,
+    gap: esc(4),
   },
-  puestoBlanco: { width: 9, height: 16, backgroundColor: colores.papel, borderTopLeftRadius: 2, borderTopRightRadius: 2 },
-  puestoAmarillo: { width: 11, height: 11, backgroundColor: "#F0A73F", borderRadius: 2 },
+  puestoBlanco: { width: esc(9), height: esc(16), backgroundColor: colores.papel, borderTopLeftRadius: esc(2), borderTopRightRadius: esc(2) },
+  puestoAmarillo: { width: esc(11), height: esc(11), backgroundColor: "#F0A73F", borderRadius: esc(2) },
   libreria: {
     width: "58%",
-    height: 34,
+    height: esc(34),
     backgroundColor: "#0C5A4C",
-    borderTopLeftRadius: 6,
-    borderTopRightRadius: 6,
+    borderTopLeftRadius: esc(6),
+    borderTopRightRadius: esc(6),
     flexDirection: "row",
     alignItems: "flex-end",
     justifyContent: "center",
-    gap: 3,
-    paddingBottom: 5,
+    gap: esc(3),
+    paddingBottom: esc(5),
   },
-  lomo: { width: 6 },
-  escalon: { height: 10, borderTopLeftRadius: 3, borderTopRightRadius: 3 },
-  aviso: { padding: 14, gap: 5 },
-  avisoTexto: { fontSize: 12, color: colores.textoSuave, lineHeight: 17 },
-  vacio: { alignItems: "center", gap: 10, paddingVertical: 30 },
-  vacioTexto: { fontSize: 13, color: colores.textoSuave, textAlign: "center", lineHeight: 19 },
-  llave: { flexDirection: "row", alignItems: "center", gap: 11, padding: 12 },
-  llaveTexto: { flex: 1, fontSize: 12, color: colores.textoSuave, lineHeight: 17 },
+  lomo: { width: esc(6) },
+  escalon: { height: esc(10), borderTopLeftRadius: esc(3), borderTopRightRadius: esc(3) },
+  aviso: { padding: esc(14), gap: esc(5) },
+  avisoTexto: { fontSize: esc(12), color: colores.textoSuave, lineHeight: esc(17), fontFamily: fuentes.regular },
+  vacio: { alignItems: "center", gap: esc(10), paddingVertical: esc(30) },
+  vacioTexto: { fontSize: esc(13), color: colores.textoSuave, textAlign: "center", lineHeight: esc(19), fontFamily: fuentes.regular },
+  llave: { flexDirection: "row", alignItems: "center", gap: esc(11), padding: esc(12) },
+  llaveTexto: { flex: 1, fontSize: esc(12), color: colores.textoSuave, lineHeight: esc(17), fontFamily: fuentes.regular },
 });

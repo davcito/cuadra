@@ -18,7 +18,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { CalatoVivo } from "@/components/calato-vivo";
-import { colores, fuentes } from "@/lib/theme";
+import { colores, esc, fuentes } from "@/lib/theme";
 
 /**
  * La CORTINA de Calato (ADR-0006, fase 1): en vez de spinners genéricos,
@@ -84,7 +84,7 @@ export function CalatoProvider({ children }: { children: ReactNode }) {
       {activa ? (
         <Animated.View style={[styles.cortina, anim]} pointerEvents="auto">
           <View style={[styles.barra, styles.barraArriba]} />
-          <CalatoVivo estado="trotando" size={132} />
+          <CalatoVivo estado="trotando" size={esc(132)} />
           {mensaje ? <Text style={styles.mensaje}>{mensaje}</Text> : null}
           <Text style={styles.pie}>CUADRA</Text>
           <View style={[styles.barra, styles.barraAbajo]} />
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     backgroundColor: colores.papel,
     alignItems: "center",
     justifyContent: "center",
-    gap: 16,
+    gap: esc(16),
     zIndex: 99,
     elevation: 20,
   },
@@ -108,17 +108,17 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 0,
     right: 0,
-    height: 6,
+    height: esc(6),
     backgroundColor: colores.naranja,
   },
   barraArriba: { top: 0 },
   barraAbajo: { bottom: 0 },
-  mensaje: { fontSize: 17, fontFamily: fuentes.extrabold, color: colores.tinta },
+  mensaje: { fontSize: esc(17), fontFamily: fuentes.extrabold, color: colores.tinta },
   pie: {
-    fontSize: 11,
+    fontSize: esc(11),
     fontFamily: fuentes.extrabold,
-    letterSpacing: 3,
+    letterSpacing: esc(3),
     color: colores.metadato,
-    marginTop: 2,
+    marginTop: esc(2),
   },
 });

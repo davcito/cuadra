@@ -1,0 +1,1049 @@
+{
+  "distrito": "Barranco",
+  "generado_por": "Claude Opus 5 (Claude Code, sesión 2026-07-29) · escrito por celda, auditado, corregido y re-auditado",
+  "proceso": "generación por celda → auditoría adversarial (88 hallazgos) → corrección (26 descartadas, 18 nuevas) → re-auditoría independiente (8 residuales) → pulido de glosario y voz → barrido adversarial final (5 defectos introducidos al reescribir)",
+  "celdas": [
+    {
+      "h3_index": "898e62c5277ffff",
+      "vueltas": [
+        {
+          "osm_id": 6358025587,
+          "titulo": "Párate al medio del Puente de los Suspiros",
+          "descripcion": "El Puente de los Suspiros no se cruza de frente y ya. Párate justo al medio, un toque nomás, y mira para un lado y para el otro sin apuro. Recién ahí decides por dónde sigues.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto tomada parado sobre el Puente de los Suspiros, con el paso del puente reconocible en el encuadre"
+        },
+        {
+          "osm_id": 1000430657535,
+          "titulo": "Cuenta los escalones del Pasaje Zepita",
+          "descripcion": "El Pasaje Zepita no es calle: es escalera pura y de asfalto. Súbelo o bájalo entero contando los escalones uno por uno y sin trampa. Nadie sabe cuántos son hasta que los cuenta.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 2,
+          "calle_xp": 24,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del Pasaje Zepita tomada desde uno de sus extremos, con el tramo de escaleras entero o casi entero en el encuadre"
+        },
+        {
+          "osm_id": 6638368020,
+          "titulo": "El panadero que levantó la primera capilla",
+          "descripcion": "Caicedo era panadero de acá nomás y levantó la primera capilla en agradecimiento al Señor del Barranco, que le salvó a la esposa. Su memorial está puesto desde el 57 y tiene una frase grabada en la piedra. Búscala y léela entera.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 26,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del memorial de Caicedo donde se alcance a leer la inscripción grabada en la piedra"
+        },
+        {
+          "osm_id": 2474848392,
+          "titulo": "El mirador que apunta al oeste",
+          "descripcion": "Al Mirador Catalina Recavarren muchos lo ubican solo como el de la bajada de baños. Apunta al oeste, así que cae cuando el cielo se está poniendo de color. Ojo: para llegar hay tres escalones anchos y piso de piedra. Míralo primero sin celular.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 1,
+          "calle_xp": 14,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto tomada desde el Mirador Catalina Recavarren hacia el horizonte, con la vista abierta que se ve desde ahí"
+        },
+        {
+          "osm_id": 1000522161925,
+          "titulo": "La cruz que le da nombre al parque",
+          "descripcion": "Parque De La Cruz, que también le dicen Parque La Cruz de Barranco. El nombre promete una cruz y nadie te va a decir dónde está: camínalo entero y averigua si sigue en pie o si quedó de recuerdo nomás.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 2,
+          "calle_xp": 22,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto tomada dentro del Parque De La Cruz donde se vea el espacio del parque y su entorno"
+        },
+        {
+          "osm_id": 1000436583900,
+          "titulo": "El parque abierto desde 1898",
+          "descripcion": "El Parque Municipal, la Plaza de Barranco de toda la vida, está abierto desde octubre de 1898: más de cien años aguantando este distrito. Siéntate un rato largo a verlo funcionar y, si el momento se presta, pregúntale a alguien del barrio qué es lo mejor que tiene.",
+          "tipo": "social",
+          "categoria": "caleta",
+          "dificultad": 3,
+          "calle_xp": 45,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto tomada dentro del Parque Municipal donde se vea el espacio abierto del parque y su entorno"
+        },
+        {
+          "osm_id": 1000436605096,
+          "titulo": "El museo que administra la propia muni",
+          "descripcion": "Barranco tiene su propio Museo de la Electricidad y lo maneja la municipalidad del distrito. Abre todos los días de nueve a cinco. Si entras, plántate frente a la pieza más grande que veas adentro; si lo agarras cerrado, la fachada también cuenta.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 26,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto dentro del museo mostrando una máquina o pieza en exhibición; si no pudiste entrar, foto de la fachada del Museo de la Electricidad con su nombre visible"
+        },
+        {
+          "osm_id": 6638503685,
+          "titulo": "El busto de Gardel, firmado por Olaechea",
+          "descripcion": "Sí, Carlos Gardel tiene su busto acá en Barranco. Lo hizo P. Olaechea y está puesto desde julio del 89. Búscalo, párate a la altura de su cara y mira hacia dónde apunta la suya.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 22,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del busto de Carlos Gardel donde se le vea la cabeza completa y se reconozca el sitio donde está puesto"
+        },
+        {
+          "osm_id": 9339413257,
+          "titulo": "La vitrina de Alanya a primera hora",
+          "descripcion": "Alanya Repostería abre a las siete de la mañana de lunes a sábado, y los domingos a las ocho. Cae apenas abre y mira qué hay en la vitrina a esa hora. Elige uno con la vista y, si te provoca, llévatelo.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 1,
+          "calle_xp": 13,
+          "ventana_horaria": [
+            "mañana"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la vitrina o el mostrador de Alanya Repostería con los dulces a la vista"
+        },
+        {
+          "osm_id": 7061410687,
+          "titulo": "El pan que más sale en Fukuyama",
+          "descripcion": "La Panadería Fukuyama está en la avenida Grau, en el 349. Llega hasta ahí y, si hay chance, pregúntale al que atiende cuál es el pan que más sale. Ojo, no el que a ti te gusta: el que la gente del barrio se lleva sí o sí. Si te tienta, cae con uno.",
+          "tipo": "social",
+          "categoria": "huarique",
+          "dificultad": 3,
+          "calle_xp": 45,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la Panadería Fukuyama: su mostrador, su vitrina o su fachada con el nombre visible"
+        },
+        {
+          "osm_id": 5086204260,
+          "titulo": "Camina el boulevard de punta a punta",
+          "descripcion": "Al Boulevard Sánchez Carrión todo el mundo le dice Boulevard de Barranco. Camínalo entero, de una punta a la otra, sin meterte a ningún sitio: solo la vereda y lo que vas viendo. Quédate con la fachada que más te llame.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 2,
+          "calle_xp": 28,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de una fachada tomada desde la vereda del Boulevard Sánchez Carrión, con la calle visible en el encuadre"
+        },
+        {
+          "osm_id": 5485468388,
+          "titulo": "Garito solo existe de noche",
+          "descripcion": "Garito abre de lunes a sábado a las ocho de la noche y no cierra hasta las tres de la mañana: de día, para ti, no existe. Cae después de las ocho, párate en la vereda y mira cómo cambia esa cuadra a esa hora.",
+          "tipo": "observacion",
+          "categoria": "casero",
+          "dificultad": 1,
+          "calle_xp": 15,
+          "ventana_horaria": [
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto nocturna de la fachada de Garito con su nombre o su entrada visible desde la calle"
+        },
+        {
+          "osm_id": 4725041999,
+          "titulo": "El 202 del jirón 28 de Julio",
+          "descripcion": "Blu Gelateria está en el 202 del jirón 28 de Julio. Busca ese número en la fachada, asómate a la heladería y mira con qué sabores te encuentras hoy. Probar uno, tú decides.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 1,
+          "calle_xp": 13,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la fachada de Blu Gelateria con su nombre visible, o del mostrador de helados desde adentro"
+        },
+        {
+          "osm_id": 12633791101,
+          "titulo": "Un restaurante que se llama Singular",
+          "descripcion": "Un restaurante que se llama Singular, y con ese nombre ya te está retando. Nadie te va a adelantar qué se come ahí: llega hasta la puerta y averígualo tú, leyendo lo que tengan afuera o simplemente asomándote.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 24,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la fachada de Singular con su nombre visible desde la calle"
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c520fffff",
+      "vueltas": [
+        {
+          "osm_id": 1000499205814,
+          "titulo": "La casa que lleva dos apellidos",
+          "descripcion": "La Casa Rosell-Rios es de las históricas de Barranco y lleva dos apellidos en el nombre. Mírala desde la vereda, sin apuro: techos, ventanas, la entrada, lo que tenga. Si algo de esa fachada no se parece a las casas de al lado, ese es el detalle que viniste a ver.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del frente de la Casa Rosell-Rios tomada desde la calle, con la fachada completa en el encuadre"
+        },
+        {
+          "osm_id": 4551606356,
+          "titulo": "El palacete de Jirón Cajamarca",
+          "descripcion": "El Palacete Souza está en Jirón Cajamarca y está en algún punto de la cuadra, así que toca caminar la cuadra despacio hasta dar con él. Cuando lo ubiques, quédate un rato mirando el frente: mira si tiene placa, cartel o nada que lo anuncie.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 22,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la fachada de El Palacete Souza desde Jirón Cajamarca, con el frente completo y, si las tiene, la placa o el cartel con el nombre legibles"
+        },
+        {
+          "osm_id": 4323782173,
+          "titulo": "El anfiteatro de Alfonso Ugarte",
+          "descripcion": "En Jirón Alfonso Ugarte 242 hay un anfiteatro y se llama L'anfiteatro de Antica. Acércate a la puerta y revisa qué tienen pegado afuera: si hay cartelera, anota qué función toca. Si no hay nada, con haberlo ubicado ya cumpliste.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la puerta de L'anfiteatro de Antica en Jirón Alfonso Ugarte 242, con el nombre del local visible y la cartelera en el mismo encuadre si la hay"
+        },
+        {
+          "osm_id": 5273086147,
+          "titulo": "Dos horas al día, quince sitios",
+          "descripcion": "Las Traperas, en Jirón Colina 108, abre de lunes a viernes de una a tres de la tarde y tiene sitio para quince. Cae en esa ventana y busca la entrada, que va por la trastienda y el patio. Cuenta cuánta gente entra o sale en diez minutos.",
+          "tipo": "observacion",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 28,
+          "ventana_horaria": [
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la entrada de Las Traperas en Jirón Colina 108, con el nombre del local o el número 108 de la puerta visible"
+        },
+        {
+          "osm_id": 1000360386515,
+          "titulo": "La feria que solo abre tres días",
+          "descripcion": "En Jirón Unión 108 la feria abre de viernes a domingo, de mediodía a las siete. Métete y date una vuelta completa sin comprar nada. Si hay puestos y te animas, elige uno y pregúntale al casero desde cuándo está ahí. Si no, con recorrerla entera ya cumpliste.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 50,
+          "ventana_horaria": [
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto tomada dentro de La Feria Unión de Barranco, en Jirón Unión 108: el letrero de la entrada o lo que haya adentro"
+        },
+        {
+          "osm_id": 7201178185,
+          "titulo": "Ramen en plena avenida Grau",
+          "descripcion": "Grau 680, ramen japonés. Kinjo Ramen tiene su nombre escrito también en coreano, así que párate frente al cartel y mira si lo trae o si va solo en letras latinas. Si hay carta afuera, léela y pide algo si te antoja.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 1,
+          "calle_xp": 13,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del cartel de Kinjo Ramen en Grau 680, con el nombre del local tal como está escrito en la fachada"
+        },
+        {
+          "osm_id": 5257951722,
+          "titulo": "El café que no existe los lunes",
+          "descripcion": "Tostadora abre de miércoles a sábado recién a las cinco de la tarde y cierra a las once; el domingo un toque antes, y lunes y martes ni asoma. Cae dentro de esa ventana, mira qué manejan a esa hora y pide algo si te provoca.",
+          "tipo": "consumo",
+          "categoria": "caleta",
+          "dificultad": 2,
+          "calle_xp": 26,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de Tostadora con el nombre del local en el cartel; si se nota que está abierta —puerta, luces o gente adentro—, mejor todavía"
+        },
+        {
+          "osm_id": 5688872124,
+          "titulo": "El restaurante que se llama Resto",
+          "descripcion": "Un restaurante que se llama Resto, así nomás, sin apellido. Camina despacio la cuadra hasta ubicarlo y, si está abierto y te animas, pregúntale a quien atienda qué cocinan. Esa respuesta no la tiene nadie más que ellos.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 42,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del frente del local; si el nombre Resto está escrito en el cartel o en la puerta, que se lea en la toma"
+        },
+        {
+          "osm_id": 7061410686,
+          "titulo": "El pan que se acaba primero",
+          "descripcion": "La Panadera es panadería de barrio y con ese nombre le alcanza. Ubícala y, si te animas, pregunta cuál es el pan que se acaba antes que todos; llévate uno si quieres. La respuesta te dice más del barrio que del pan.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 45,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del frente de La Panadera con el nombre en el cartel y, si lo compraste, el pan en primer plano"
+        },
+        {
+          "osm_id": 1000436603128,
+          "titulo": "El café que se llama Coleccionista",
+          "descripcion": "En San Martín 144 hay un café que se llama Coleccionista y el nombre no explica qué colecciona. Asómate a la puerta y mira qué tienen puesto adentro: cuadros, discos, cachivaches o nada. Eso te responde el nombre.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 1,
+          "calle_xp": 14,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del frente del café Coleccionista en San Martín 144, con el nombre del local visible y lo que se alcance a ver de adentro"
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c5203ffff",
+      "vueltas": [
+        {
+          "osm_id": 1844751685,
+          "titulo": "El mostrador de las ocho en punto",
+          "descripcion": "Espiga de Oro abre a las 8 en punto, todos los días. Date una vuelta temprano y mira qué tiene el mostrador recién abierto y cuál pan te llama a ti. Con eso ya te ganaste la mañana.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del mostrador o la vitrina de Espiga de Oro, con el nombre del sitio visible en el letrero, la bolsa o el mostrador mismo."
+        },
+        {
+          "osm_id": 7092577355,
+          "titulo": "El busto que le dejaron sus alumnos",
+          "descripcion": "Hay un busto de Gustavo Pons Muzzo, historiador, educador y director fundador. Se lo ofrecieron sus propios ex alumnos y en la inscripción aparece el nombre de un colegio. Ubícalo, léela entera y quédate con ese nombre.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del busto de Gustavo Pons Muzzo. Vale el conjunto o un acercamiento a la inscripción; no hace falta que se lea completa en la misma toma."
+        },
+        {
+          "osm_id": 7092577356,
+          "titulo": "Neptuno anda suelto por Barranco",
+          "descripcion": "En esta cuadra hay una estatua del dios Neptuno. Búscala y quédate mirándola con calma: hacia dónde apunta, si carga algo, qué tiene alrededor. Un dios del mar en pleno Barranco, y nadie lo mueve de ahí.",
+          "tipo": "observacion",
+          "categoria": "huaca",
+          "dificultad": 1,
+          "calle_xp": 15,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la estatua del dios Neptuno donde se reconozca la figura completa."
+        },
+        {
+          "osm_id": 4990723092,
+          "titulo": "Escena 7: la puerta hay que buscarla",
+          "descripcion": "El Teatro Escena 7 para en la Grau, en algún punto de la cuadra. Camínala despacio hasta dar con la puerta y mira cómo anuncia lo suyo: puede ser un cartel, una pizarra o un papel pegado.",
+          "tipo": "observacion",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la fachada o la puerta del Teatro Escena 7 con el nombre legible. Si hay cartel o pizarra con la cartelera, mejor que entre en la toma."
+        },
+        {
+          "osm_id": 1000436580906,
+          "titulo": "Que en Tasha te recomienden un libro",
+          "descripcion": "La Librería Tasha está en la Grau. Si hay quién te atienda, pregúntale qué libro te recomienda a ti, no el que más vende. Escucha por qué lo eligió y vuelve con el título.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 45,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto en la Librería Tasha, adentro o en la puerta, con algo que identifique al sitio; si te recomendaron un libro, que salga en la toma"
+        },
+        {
+          "osm_id": 7952729486,
+          "titulo": "Anticucho o sanguche: que decidan ellos",
+          "descripcion": "Don Juancito se anuncia como anticuchería y sanguchería a la vez, así que ahí hay pelea. Pregúntale al caserito cuál de los dos le piden más y por qué. La respuesta te la llevas tú.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 45,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del local de Don Juancito con el letrero o el nombre visible; también vale el mostrador si el nombre entra en la toma."
+        },
+        {
+          "osm_id": 4213310396,
+          "titulo": "La cuadra que se llama La Cuadra",
+          "descripcion": "En Centenario 105 hay un sitio de parrilla y barra llamado La Cuadra de Salvador: el nombre nos queda pintado. Abre de lunes a sábado desde el mediodía. Cae por ahí, huele lo que sale de la parrilla y decide si te quedas.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 22,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la fachada o el interior de La Cuadra de Salvador con el nombre del local legible."
+        },
+        {
+          "osm_id": 12611340902,
+          "titulo": "Veggie Pizza abre recién a las 7",
+          "descripcion": "Veggie Pizza no atiende de día: recién levanta a las 7 de la noche y cierra faltando poco para las 11. Cae en esa ventana y descubre qué pizza sin carne se les ocurrió armar.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 20,
+          "ventana_horaria": [
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto nocturna de Veggie Pizza con el nombre visible, o de su carta con las pizzas listadas."
+        },
+        {
+          "osm_id": 12374950501,
+          "titulo": "Ishizaki: averigua qué se come ahí",
+          "descripcion": "Ishizaki es de esos nombres que no te adelantan si vas a comer criollo, nikkei o qué. Anda hasta la puerta y averígualo: pregunta de frente si hay quién te atienda, o mira la carta si la tienen a la vista. Vuelve con la respuesta.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 40,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de Ishizaki con el nombre del local legible; si sacas también la carta o la pizarra de platos, mejor."
+        },
+        {
+          "osm_id": 4725852295,
+          "titulo": "Pierola 222, donde para Café Tostado",
+          "descripcion": "En Pierola 222 para Café Tostado y el nombre te hace pensar en una cafetería de barrio. Llégate hasta el 222 y comprueba qué es en realidad: qué se come, qué se toma y con cuál de las dos se quedan ellos.",
+          "tipo": "observacion",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 22,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de Café Tostado donde se lea el nombre en la fachada o el letrero; si entra la numeración 222, mejor todavía."
+        },
+        {
+          "osm_id": 13849881302,
+          "titulo": "Florencia, la vegana del Jirón Cora",
+          "descripcion": "En el Jirón Cora está Florencia y todo lo que sale de esa cocina es vegano, sin excepción. Pide la carta y busca el plato que menos esperabas encontrar ahí; averigua con qué lo arman. Ese dato te lo llevas tú.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 22,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la carta de Florencia o de su fachada, con el nombre del sitio visible en la toma."
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c523bffff",
+      "vueltas": [
+        {
+          "osm_id": 1001100965221,
+          "titulo": "La caserita de Las Torres",
+          "descripcion": "El Mercado Las Torres queda en la avenida Juan Pazos. Métete y camina los pasillos sin apuro; si te animas, pregúntale a una caserita qué es lo que más sale ese día. Comprar no hace falta: acá se viene a mirar y conversar.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 45,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto tomada dentro del mercado: un pasillo con puestos y mercadería a la vista, o el puesto de la caserita con quien conversaste."
+        },
+        {
+          "osm_id": 10078691484,
+          "titulo": "La Virgen de concreto",
+          "descripcion": "Por esta cuadra hay una escultura de concreto de la Virgen del Carmen. Búscala caminando, sin GPS si te la crees, y cuando la ubiques fíjate qué tiene alrededor: si alguien le dejó flores, velas, o si está sola.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto completa de la escultura de la Virgen del Carmen, donde se vea la figura entera; de noche vale si sale reconocible."
+        },
+        {
+          "osm_id": 1000436753167,
+          "titulo": "El que se llama salón, no iglesia",
+          "descripcion": "Acá hay un local de culto que no se llama iglesia: se llama Salón del Reino. Esta se juega entera desde la vereda, nada de tocar timbre ni meterse. Mírale el frontis con calma y busca en qué parte dejaron escrito ese nombre.",
+          "tipo": "observacion",
+          "categoria": "huaca",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del frontis del local; si el nombre no sale legible, la fachada del edificio alcanza."
+        },
+        {
+          "osm_id": 7205333385,
+          "titulo": "La hamburguesa con opción verde",
+          "descripcion": "Barranco Burger hace hamburguesa, pizza y sándwich, y encima tiene opción vegana. Pásate y comprueba si la carta lo confirma: mira las tres y decide cuál pedirías. Si pides o no, tema aparte.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 22,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la carta, pizarra o vitrina donde se lean las opciones; si no hay nada expuesto, vale la fachada con el nombre del local."
+        },
+        {
+          "osm_id": 1000436781865,
+          "titulo": "La barra de Wahio's",
+          "descripcion": "De noche: cae por Wahio's Bar y siéntate un rato. Si te provoca, pregúntale al que atiende cuál es el trago que más le piden en la semana. Y si no tomas nada ni hablas con nadie, igual cuenta: el ambiente ya te dice bastante.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 50,
+          "ventana_horaria": [
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto nocturna de la fachada de Wahio's Bar con el nombre a la vista, o del interior desde la barra sin enfocar la cara de otros clientes."
+        },
+        {
+          "osm_id": 5009695061,
+          "titulo": "Librería y bazar, todo junto",
+          "descripcion": "En el jirón Felipe Santiago Salaverry hay una que se llama Libreria Bazar, así nomás, sin adornos. Métete y busca el libro más viejo o más raro que tengan a la venta. Comprarlo, ya es cosa tuya.",
+          "tipo": "consumo",
+          "categoria": "casero",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto dentro o desde la puerta de Libreria Bazar donde se vean los libros o la mercadería, o el libro que elegiste en la mano."
+        },
+        {
+          "osm_id": 1000254594403,
+          "titulo": "Sentarse a no hacer nada",
+          "descripcion": "El Parque Antonio Raimondi está ahí nomás, en pleno barrio. Esta es la más fácil y la más difícil: siéntate diez minutos, guarda el celular y cuenta cuántos perros pasan. La foto recién al final: el número es lo de menos.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 3,
+          "calle_xp": 40,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del parque donde se vean áreas verdes, bancas o las veredas internas; de noche vale con el alumbrado del parque de fondo."
+        },
+        {
+          "osm_id": 5010193143,
+          "titulo": "El templo del parque Raimondi",
+          "descripcion": "El Templo de Jesus da al Parque Antonio Raimondi. Ojo: esta se juega por fuera, nada de meterse. Ubícate donde te entre la fachada entera y fíjate qué le pusieron arriba de todo: cruz, campana, ventana o nada.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la fachada del templo tomada desde afuera, donde se vea la parte alta del frontis."
+        },
+        {
+          "osm_id": 5009809653,
+          "titulo": "El letrero tiene la última palabra",
+          "descripcion": "En el 220 del jirón Felipe Santiago Salaverry hay un restaurante que arrastra un nombre raro: Las Brisas en La Playueia. Camina hasta ese número y mira cómo lo escribieron en el letrero de verdad.",
+          "tipo": "observacion",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del frontis del local con el nombre del negocio legible; si no tiene letrero, vale la fachada completa del local."
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c5353ffff",
+      "vueltas": [
+        {
+          "osm_id": 1000682275311,
+          "titulo": "El conteo del Parque del Aire",
+          "descripcion": "Este parque tiene aviones puestos ahí de monumento, todos de acero. Dale la vuelta completa y cuéntalos uno por uno, sin fiarte del primer número que te salga. Abre de martes a domingo de 10 a 6, así que cae con tiempo.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 3,
+          "calle_xp": 50,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto abierta dentro del Parque del Aire donde entren dos o más aviones en el mismo encuadre"
+        },
+        {
+          "osm_id": 8326597285,
+          "titulo": "Al Twin Huey mírale la cabeza",
+          "descripcion": "El Bell 212 Twin Huey está ahí parado, quieto para siempre. Está entre los otros aparatos: cuando lo ubiques, párate abajo y mírale bien la parte de arriba, qué hay y qué no hay. Suena fácil hasta que tienes el sol en la cara.",
+          "tipo": "observacion",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del Bell 212 Twin Huey desde abajo o de costado, donde se vea la parte de arriba del aparato"
+        },
+        {
+          "osm_id": 7535223860,
+          "titulo": "F 52 o MK 52, ¿cuál dice?",
+          "descripcion": "Este avión anda con dos nombres: Hawker Hunter F 52 y Hawker Hunter MK 52. Ubícalo, revisa si tiene cartel o placa cerca y anota cuál de los dos le tocó quedar escrito ahí. Dos nombres para un solo fierro.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del cartel o placa del Hawker Hunter donde se lea el nombre; si no tiene ninguno cerca, foto del avión entero"
+        },
+        {
+          "osm_id": 7535223867,
+          "titulo": "¿Cuál te llevarías a tu casa?",
+          "descripcion": "Entre todos los aparatos hay uno que se llama Aermacchi MB-339AP. Párate a su lado y, si te provoca y ves a alguien dando vueltas por el parque, pregúntale cuál se llevaría a su casa y por qué; cuéntale el tuyo. Si nadie conversa, igual la chapas.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 45,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del Aermacchi MB-339AP entero, tomada dentro del parque"
+        },
+        {
+          "osm_id": 1000448061323,
+          "titulo": "Dos botellas y pasas",
+          "descripcion": "Acá no pagas con plata: la entrada del Parque Ecológico Voces por el Clima son dos botellas para reciclar. Cáele con ellas y, ya adentro, si te provoca y ves a alguien del parque, pregúntale qué hacen después con todo lo que la gente deja.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 45,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto en la entrada del Parque Ecológico Voces por el Clima con tus botellas en la mano, o adentro con el nombre del parque visible"
+        },
+        {
+          "osm_id": 7535510670,
+          "titulo": "El domo que nadie sabe explicar",
+          "descripcion": "Ahí nomás hay una estructura que se llama Domo Suizenergía y con ese nombre te quedas igual de perdido. Ubícala, camínala por todos sus costados y fíjate con qué está armada: de cerca se entiende bastante más que de lejos.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la estructura llamada Domo Suizenergía tomada desde afuera, donde se reconozca el domo"
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c5217ffff",
+      "vueltas": [
+        {
+          "osm_id": 1000436758754,
+          "titulo": "El teatro del 170 de Balta",
+          "descripcion": "En plena avenida Balta, en el 170, hay un teatro: el Teatro Racional. Párate en la vereda de enfrente y fíjate si tiene cartelera y qué están anunciando. Si hay función esta semana, ya sabes qué hacer el finde.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la fachada del Teatro Racional en Avenida Balta 170, donde se lea el nombre del teatro o su cartelera"
+        },
+        {
+          "osm_id": 1000436758752,
+          "titulo": "Leche fresca a tres soles",
+          "descripcion": "En Balta 166 venden leche fresca a tres soles el litro, de lunes a sábado. Date una vuelta y fíjate cómo la despachan y en qué te la entregan. Si te provoca llévate un litro; si no, nadie cobra por quedarse mirando el mostrador.",
+          "tipo": "consumo",
+          "categoria": "casero",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del frente de la Proveeduría Leche fresca en Avenida Balta 166, con su letrero o su mostrador visible"
+        },
+        {
+          "osm_id": 1000436737006,
+          "titulo": "Chifa hasta las once de la noche",
+          "descripcion": "Chifa Men Hong abre todos los días de mediodía a once de la noche, así que excusa no tienes. Cae, pide la carta y busca el plato más caro de toda la lista. Sentarte a comer es aparte: acá te vas con la carta leída y listo.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de Chifa Men Hong con el nombre del local visible; si hay carta expuesta —en la pared o pegada en el vidrio—, que entre en la toma"
+        },
+        {
+          "osm_id": 1000436616834,
+          "titulo": "El chiste está en el nombre",
+          "descripcion": "En esta cuadra hay un restaurante llamado La Pezquina Marina. Sí, con zeta. No te va a saltar de una: camina la cuadra despacio hasta dar con el letrero, léelo hasta que te caiga la moneda y fíjate qué más le pusieron al cartel.",
+          "tipo": "observacion",
+          "categoria": "huarique",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del letrero de La Pezquina Marina donde se lea el nombre completo del local"
+        },
+        {
+          "osm_id": 12063970696,
+          "titulo": "El corte que todos piden",
+          "descripcion": "Imagen Salón es la peluquería de la cuadra y atiende a hombres y mujeres. Asómate y, si hay ánimo de ambos lados, pregunta cuál es el corte que más les piden. Si están a tope o no te nace conversar, basta con verlos trabajar desde la puerta.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 40,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de Imagen Salón donde se lea el nombre del salón en el letrero o el vidrio, o se vea el interior del local desde la puerta"
+        },
+        {
+          "osm_id": 1000436610334,
+          "titulo": "Busca el 201 de Panamá",
+          "descripcion": "En República de Panamá 201 hay un restaurante: Viejo Fundo. Ubica el 201 y fíjate cómo pusieron el número: pintado, en placa o encima del toldo. Es de esos detalles que solo se ven parándose enfrente.",
+          "tipo": "observacion",
+          "categoria": "huarique",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la fachada de Viejo Fundo donde se vea el nombre del local o la numeración 201 en Avenida República de Panamá"
+        },
+        {
+          "osm_id": 1000415607420,
+          "titulo": "El pollo de Roky's, para llevar",
+          "descripcion": "Roky's es pollería y despacha para llevar, así que acá se decide algo serio: comes ahí o te lo llevas. Pásate y averigua si tienen cuarto de pollo y a cuánto lo están dando. Preguntar el precio no cuesta ni te compromete a nada.",
+          "tipo": "consumo",
+          "categoria": "huarique",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de Roky's donde se lea el nombre en el letrero o la fachada; si tienen carta, pizarra o cartel de promos a la vista, mejor que entre en la toma"
+        },
+        {
+          "osm_id": 1000436737007,
+          "titulo": "Hazte casero en el Isidro",
+          "descripcion": "¿Hasta qué hora atiende el Minimarket Isidro? Es de esos datos que solo se consiguen preguntando. Entra, saluda y, si hay chance de conversar, averígualo. Nadie te obliga a comprar nada: con el horario ya vuelves con algo del barrio.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 40,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del Minimarket Isidro donde se lea el nombre en el letrero, o se vean sus estantes y su mostrador desde la puerta"
+        }
+      ]
+    },
+    {
+      "h3_index": "898e62c520bffff",
+      "vueltas": [
+        {
+          "osm_id": 11209329987,
+          "titulo": "La Mafalda que mide 80 centímetros",
+          "descripcion": "En la Sáenz Peña hay una Mafalda de 80 cm, obra del argentino Pablo Irrgang. Es chiquita, así que si vas mirando el celular te la pasas de largo. Encuéntrala, agáchate a su altura y mira la calle desde donde ella la mira.",
+          "tipo": "observacion",
+          "categoria": "huaca",
+          "dificultad": 1,
+          "calle_xp": 12,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la escultura de Mafalda con la figura completa en cuadro, tomada a su altura y no desde arriba"
+        },
+        {
+          "osm_id": 1000173771121,
+          "titulo": "¿De verdad son doce escalones?",
+          "descripcion": "Dicen que las escaleras de la Sáenz Peña tienen doce escalones. Cuéntalos bajando en voz alta, como cuando eras chibolo, y fíjate qué hay al final: el que pasa apurado nunca se entera.",
+          "tipo": "observacion",
+          "categoria": "caleta",
+          "dificultad": 1,
+          "calle_xp": 10,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la escalinata tomada desde arriba o desde abajo, donde se vean los escalones de corrido de una punta a la otra"
+        },
+        {
+          "osm_id": 1000436582142,
+          "titulo": "La galería que vive en una batalla",
+          "descripcion": "Lima Benavides Galería queda en el Jirón Batalla de Junín, en el 252. Sí, el jirón se llama como la batalla. Camina hasta el número y, si puedes, cruza a la vereda de enfrente: de cerca uno nunca ve el edificio entero.",
+          "tipo": "observacion",
+          "categoria": "huaca",
+          "dificultad": 1,
+          "calle_xp": 15,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto del frente de Lima Benavides Galería donde se vea la fachada del edificio y no solo un recorte de la puerta"
+        },
+        {
+          "osm_id": 1193557853,
+          "titulo": "El obelisco que llegó de mudanza",
+          "descripcion": "El obelisco de San Martín no nació acá: lo pararon en 1906 en el Paseo Colón y recién en 1924 se lo trajeron a Barranco. Es de mármol y tiene grabado el nombre del que lo donó. Búscalo, lee la inscripción completa y sigue tu camino.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto cercana de la inscripción del monumento donde se alcance a leer el texto, con parte del obelisco visible"
+        },
+        {
+          "osm_id": 12294613052,
+          "titulo": "¿Y quién es Whashington?",
+          "descripcion": "Desde octubre de 2024 hay acá una escultura de metro y medio de Oliver Venegas, por los 75 años de Condorito. A Condorito lo ubicas de una, pero la obra se llama Condorito y Whashington. Ahí está la tarea: averigua quién es Whashington.",
+          "tipo": "patrimonio",
+          "categoria": "huaca",
+          "dificultad": 2,
+          "calle_xp": 25,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto de la escultura completa, con toda la obra en cuadro y no un recorte de la cabeza de Condorito"
+        },
+        {
+          "osm_id": 11244799734,
+          "titulo": "Maridá, el que hay que buscar caminando",
+          "descripcion": "Maridá Coffee & Wine junta las dos cosas en el nombre: café y vino. Lo primero es dar con él, así que camina la cuadra despacio hasta encontrar la puerta. Si te provoca quedarte a probar cuál de los dos le sale mejor, tú sabrás.",
+          "tipo": "observacion",
+          "categoria": "casero",
+          "dificultad": 2,
+          "calle_xp": 28,
+          "ventana_horaria": [
+            "mañana",
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto donde se lea el nombre Maridá, en la fachada o dentro del local"
+        },
+        {
+          "osm_id": 1844751684,
+          "titulo": "Lo que se está cociendo en Dedalo",
+          "descripcion": "Dedalo es un centro de arte en la Sáenz Peña 295. Métete sin apuro, date una vuelta completa y quédate con una sola cosa: la que más te llame. Si te animas, pregúntale a quien atiende quién la hizo. Preguntar no cuesta.",
+          "tipo": "social",
+          "categoria": "casero",
+          "dificultad": 3,
+          "calle_xp": 40,
+          "ventana_horaria": [
+            "mañana",
+            "tarde"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto dentro o en la entrada de Dedalo, donde se vea la pieza que elegiste o el nombre del local"
+        },
+        {
+          "osm_id": 7546559119,
+          "titulo": "Lo que más sale de la cocina de Cala",
+          "descripcion": "Cala está abajo, en el Circuito de Playas, y cocina cosas de mar de lunes a domingo desde el mediodía. Baja, siéntate o quédate nomás en la puerta y, si te provoca, pregunta qué es lo que más sale de la cocina. Comer es opcional; el dato es lo que te llevas.",
+          "tipo": "social",
+          "categoria": "huarique",
+          "dificultad": 3,
+          "calle_xp": 55,
+          "ventana_horaria": [
+            "tarde",
+            "noche"
+          ],
+          "requiere_foto": true,
+          "instruccion_verificacion": "Foto en Cala donde se lea el nombre del local, en la entrada o dentro"
+        }
+      ]
+    }
+  ]
+}

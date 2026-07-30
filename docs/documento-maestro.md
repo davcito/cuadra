@@ -312,7 +312,7 @@ El B2B se cobra 100% por riel web (factura + Yape/transferencia).
 | Mapas (tiles) | **MapLibre GL + OpenFreeMap** | $0 sin límite de MAU. Mapbox cobra >25k MAU; Google Maps es el rubro que mata apps de geo |
 | Indexación espacial | **H3** (h3-js, Uber) | Celdas hexagonales para generar misiones por zona y modelar niveles de seguridad |
 | Datos de lugares | **OpenStreetMap vía Overpass API** | POIs reales gratis; base del pipeline de misiones |
-| Generación de misiones | **API de Claude — Haiku 4.5** | Calidad suficiente para redacción de misiones; costo marginal ≈ cero (ver 7.4) |
+| Generación de misiones | **API de Claude — ~~Haiku 4.5~~ → Sonnet 5** (ADR-0008) | La voz de marca §3.3 es la mitad del producto y ahí los modelos se separan; ~3× el costo de 7.4 |
 | Pagos | **RevenueCat** (IAP) + **Culqi o Mercado Pago** (web/Yape/Plin) | RevenueCat unifica Google/Apple; riel web obligatorio para Perú |
 | Analytics / errores | PostHog (free tier) + Sentry (free tier) | Retención por cohortes y embudos sin costo inicial |
 
@@ -389,6 +389,11 @@ SCHEMA de salida (por elemento):
 ```
 
 ## 7.4 Costos de IA (Haiku 4.5: $1 input / $5 output por millón de tokens)
+
+> **Desactualizado — ver ADR-0008.** La generación corre con **Sonnet 5** ($3/$15), así que los
+> números de esta sección van ×3: la estimación de ~$11/mes pasa a ~$33/mes, dentro del
+> presupuesto de §7.8 ($15–40/mes en validación). El costo REAL lo mide e imprime
+> `2-generate-missions.ts` en cada corrida — esta sección quedó como estimación histórica.
 
 | Concepto | Cálculo | Costo |
 |---|---|---|

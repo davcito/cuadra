@@ -4,10 +4,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 
 import { useCalato } from "@/components/calato-cortina";
-import { CalatoVivo } from "@/components/calato-vivo";
+import { CalatoClip } from "@/components/calato-clip";
 import { Boton, Chip, Etiqueta, Tarjeta, TituloDisplay } from "@/components/ui";
 import { useSession } from "@/lib/auth";
-import { colores, fuentes } from "@/lib/theme";
+import { colores, esc, fuentes, radios } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
 /** Rangos por Calle acumulada (documento maestro §3.2). */
@@ -67,7 +67,7 @@ export default function PerfilScreen() {
     <SafeAreaView style={styles.safe} edges={["top"]}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <View style={styles.cabecera}>
-          <CalatoVivo estado="atento" size={96} />
+          <CalatoClip clip="atento" alto={96} etiqueta="Calato, atento" />
           <TituloDisplay>{perfil?.display_name ?? perfil?.username ?? "Vecino"}</TituloDisplay>
           <View style={styles.rangoFila}>
             <Chip>{actual.nombre.toUpperCase()}</Chip>
@@ -130,13 +130,6 @@ export default function PerfilScreen() {
           Cerrar sesión
         </Boton>
 
-        {/* Solo en desarrollo: acceso al banco de pruebas 3D. Nunca se compila
-            en una build de producción. */}
-        {__DEV__ ? (
-          <Boton variante="linea" onPress={() => router.push("/calato-3d")}>
-            🧪 Banco de pruebas 3D
-          </Boton>
-        ) : null}
         <Text style={styles.pie}>
           Cuadra no publica dónde estás. Las visitas se verifican y se borran del mapa público.
         </Text>
@@ -147,47 +140,48 @@ export default function PerfilScreen() {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: colores.papel },
-  scroll: { padding: 18, paddingBottom: 110, gap: 12 },
-  cabecera: { alignItems: "center", gap: 9 },
-  rangoFila: { flexDirection: "row", alignItems: "center", gap: 9 },
+  scroll: { padding: esc(18), paddingBottom: esc(110), gap: esc(12) },
+  cabecera: { alignItems: "center", gap: esc(9) },
+  rangoFila: { flexDirection: "row", alignItems: "center", gap: esc(9) },
   sello: {
-    borderWidth: 2,
+    borderWidth: esc(2),
     borderStyle: "dashed",
     borderColor: colores.naranja,
-    borderRadius: 999,
-    paddingHorizontal: 12,
-    paddingVertical: 5,
+    borderRadius: radios.chip,
+    paddingHorizontal: esc(12),
+    paddingVertical: esc(5),
     transform: [{ rotate: "-4deg" }],
   },
-  selloTexto: { fontSize: 10, fontFamily: fuentes.extrabold, letterSpacing: 1, color: colores.naranja },
-  progresoCaja: { gap: 5, marginTop: 4 },
+  selloTexto: { fontSize: esc(10), fontFamily: fuentes.extrabold, letterSpacing: esc(1), color: colores.naranja },
+  progresoCaja: { gap: esc(5), marginTop: esc(4) },
   progresoTop: { flexDirection: "row", justifyContent: "space-between" },
   barra: {
-    height: 11,
-    borderWidth: 2,
+    height: esc(11),
+    borderWidth: esc(2),
     borderColor: colores.tinta,
-    borderRadius: 9,
+    borderRadius: esc(9),
     backgroundColor: "#FFFFFF",
     overflow: "hidden",
   },
   barraLlena: { height: "100%", backgroundColor: colores.naranja },
-  stats: { flexDirection: "row", gap: 9 },
+  stats: { flexDirection: "row", gap: esc(9) },
   stat: { flex: 1 },
-  statCuerpo: { alignItems: "center", paddingVertical: 12, gap: 2 },
-  statNumero: { fontSize: 23, fontFamily: fuentes.extrabold, color: colores.tinta },
+  statCuerpo: { alignItems: "center", paddingVertical: esc(12), gap: esc(2) },
+  statNumero: { fontSize: esc(23), fontFamily: fuentes.extrabold, color: colores.tinta },
   filaAjuste: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 14,
+    padding: esc(14),
   },
-  ajusteTitulo: { fontSize: 14, fontFamily: fuentes.extrabold, color: colores.tinta },
-  ajusteMeta: { fontSize: 12, color: colores.textoSuave },
+  ajusteTitulo: { fontSize: esc(14), fontFamily: fuentes.extrabold, color: colores.tinta },
+  ajusteMeta: { fontSize: esc(12), color: colores.textoSuave, fontFamily: fuentes.medium },
   pie: {
-    fontSize: 11,
+    fontSize: esc(11),
+    fontFamily: fuentes.regular,
     color: colores.metadato,
     textAlign: "center",
-    lineHeight: 16,
-    marginTop: 4,
+    lineHeight: esc(16),
+    marginTop: esc(4),
   },
 });

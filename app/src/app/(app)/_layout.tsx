@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Svg, { Rect } from "react-native-svg";
 
-import { colores, esc, fuentes, medidas } from "@/lib/theme";
+import { colores, esc, fuentes, medidas, radios } from "@/lib/theme";
 
 /**
  * Barra de pestañas de Cuadra: panel tinta flotante con radio 18,
@@ -39,7 +39,7 @@ function Icono({ nombre, activo }: { nombre: string; activo: boolean }) {
           style={[
             styles.ico,
             base,
-            { borderRadius: 99, borderRightColor: "transparent" },
+            { borderRadius: radios.chip, borderRightColor: "transparent" },
           ]}
         />
       ) : nombre === "album" ? (
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     paddingVertical: medidas.barraPaddingV,
     paddingHorizontal: medidas.barraPaddingH,
     backgroundColor: colores.tinta,
-    borderRadius: 18,
+    borderRadius: radios.flotante,
     elevation: 8,
   },
   item: {
