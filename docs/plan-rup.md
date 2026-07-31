@@ -415,15 +415,75 @@ Objetivo RUP de esta fase: **arquitectura ejecutable que mata los riesgos altos*
 
 ---
 
-### Iteración E1 — Barranco con vida (~3 sesiones / 12 h)
+### Iteración E1 — Barranco con vida (~3 sesiones / 12 h) ✅ **CERRADA** (2026-07-29)
 
 **Riesgo que ataca:** #3 *cold start* del documento maestro, y la tesis central del producto — *"la IA genera contenido creíble sobre lugares reales"*. Si esto no funciona, no hay producto.
+
+> ## ✅ Cerrada — medido contra la base, no estimado
+>
+> | Criterio | Pedía | Verificado |
+> |---|---|---|
+> | POIs en celdas de Barranco | ≥ 100 | **391** (388 de OSM + 3 curados) |
+> | Vueltas activas | ≥ 30 | **63** (60 nuevas + 3 del seed) |
+> | typecheck + tests | verdes | **53 tests**, typecheck limpio |
+>
+> Quedan **6 Vueltas en draft**: son del parque de aviones, cuya celda **nació apagada** en el sync
+> (ADR-0007 §5) y espera revisión a pie. `activar --todas` se niega a encenderlas, y eso es correcto.
+>
+> ### La tesis se probó, y el resultado incómodo es que la IA sola NO alcanza
+>
+> El contenido se escribió con Opus 5 en sesión (sin API — ver ADR-0008) y **la primera versión no era
+> publicable**: 74 Vueltas, **88 hallazgos** de auditoría adversarial. El modo de falla no fue inventar
+> lugares —la regla dura #1 y el validador lo impiden— sino **inventar DETALLES sobre lugares reales**:
+> "la baranda de madera", "la cola del mediodía", el apodo "la BBC". Todo suena convincente y nada está
+> en los tags de OSM. Dos casos eran daño real: *"Alanya abre a las siete"* cuando los domingos abre a
+> las ocho, y *"Ayahuasca abre recién de noche"* contradiciendo su propio `opening_hours`.
+>
+> Hicieron falta **cuatro rondas** (generar → auditar → corregir → re-auditar → pulir → barrido final),
+> y **cada ronda de corrección introdujo defectos nuevos** al reescribir: el barrido final encontró 5
+> que no existían antes. La conclusión operativa para el pipeline semanal: **una sola pasada de
+> verificación no alcanza**, y el que corrige no puede ser el que aprueba.
+>
+> ### Cuatro validadores nuevos, todos nacidos de fallar contra datos reales
+>
+> Ninguno salió de leer el prompt; los cuatro salieron de correr el código contra Barranco de verdad:
+>
+> | Chequeo | Qué atrapa | Cómo apareció |
+> |---|---|---|
+> | **Regla 7** — `calle_xp` coherente con dificultad | d1 repartiendo 55 de Calle | prueba de humo del camino `--desde-archivo` |
+> | **Regla 5** — distancias en cuadras | "a 200 metros del parque" | y su propio falso positivo: ver abajo |
+> | **Glosario + fuga de pipeline** | "misión" (el glosario es LEY), "el mapa no dice nada" | 20 casos en el lote ya corregido |
+> | **Proximidad** (`proximidad.ts`) | dos Vueltas a <75 m se chapan sin caminar | 25 pares; los auditores habían visto 3 |
+>
+> **La regla 5 enseñó dónde va la línea de severidad.** Nació rechazando y rechazó *"una escultura de
+> metro y medio"* y *"una Mafalda de 80 centímetros"* — que son TAMAÑOS, no distancias. Dos bugs en uno:
+> `\b` en JavaScript es ASCII, así que entre "í" y "metros" ve un límite de palabra y `centímetros`
+> matcheaba; y el test que creía cubrirlo usaba "geométrico", que pasa por otro motivo. **El test no
+> probaba lo que decía probar.** De ahí la regla que ahora rige el validador: *rechaza lo que rompe el
+> juego o miente (reglas 1 y 7); avisa lo que lo debilita (5, 9, glosario, proximidad)* — porque un
+> falso positivo obliga a regenerar un lote entero y una frase off-brand es recuperable.
+>
+> **El chequeo de proximidad es el más caro de haber descubierto tarde**: el defecto no vive en ninguna
+> Vuelta sino en la RELACIÓN entre dos, así que ningún schema podía verlo. Hay pares legítimos —una
+> cuadra comercial tiene POIs a 40 m— pero descubrió también un **parque duplicado en OSM** (67 m, mismo
+> nombre) y el Centro Colich cargado dos veces (8 m). Eso es deuda de ingesta, no de generación.
 
 **Trabajo:**
 1. **`worker/pipeline/1-sync-pois.ts` de verdad** — Overpass API por bounding box de Barranco, tags `amenity`/`shop`/`tourism`/`historic`, mapeo a nuestras 4 categorías, `h3-js` para asignar `h3_index` (res. 9), upsert en `pois` por `osm_id` con `service_role`. Meta: **100+ POIs reales**.
 2. **`worker/pipeline/2-generate-missions.ts` de verdad** — leer POIs de una celda, armar el payload del prompt que ya existe (`worker/prompts/generacion-vueltas.md`, hoy huérfano), llamar al modelo, validar con `validarLoteVueltas()` (ya testeado), insertar en `missions` como `draft`. Reintento máx. 2, nunca inserción parcial.
-   - **Modelo: Claude Sonnet 5** para la generación semanal (calidad de copy en español peruano + JSON estricto). **Opus 5 una sola vez** para producir un "set dorado" de 10 vueltas ejemplares que se inyectan como few-shot en el prompt de Sonnet — sube la calidad sin subir el costo recurrente.
-   - **Medir el costo real** en la primera corrida con `--dry-run` (cuenta tokens antes de gastar). El documento maestro estimaba ~$11/mes con Haiku; con Sonnet será ~3× — sigue dentro del presupuesto de §7.8 ($15–40/mes en etapa de validación).
+   - ~~**Modelo: Claude Sonnet 5** para la generación semanal.~~ **Superado por ADR-0008 (2026-07-29):**
+     lo único decidido es que **NO es Haiku**; qué modelo usa el pipeline recurrente queda **diferido** a
+     propósito, hasta que haya copy real de dos modelos sobre las mismas celdas y volumen que valorizar.
+     E1 no lo necesitaba: el contenido se escribió **en sesión de Claude Code**, sin API, y entra por
+     `--desde-archivo` por el MISMO camino que usaría el modelo (mismo validador, misma inyección de
+     `h3_index`, mismo insert). Así E1 ejercitó la maquinaria entera **sin gastar un centavo**.
+   - **Los números, medidos y no escalados.** El SYSTEM son ~850 tokens y el sync da 9,5 POIs por celda:
+     Barranco entero cuesta **$2,47 con Sonnet 5 / $4,11 con Opus 5**. A esta escala el costo es
+     irrelevante ($1,65 de diferencia); manda recién a escala Lima (150 celdas semanales: $39 vs $65/mes
+     contra un presupuesto de $15–40 en §7.8). **El ~$33/mes que decía este plan era el $11 de Haiku
+     multiplicado por 3, no un cálculo** — el real es ~$39, o sea el techo del rango, no el medio.
+   - **`--dry-run` cuenta los tokens sin llamar al modelo** e imprime el costo del lote y la proyección a
+     las celdas con POIs activos — contadas, no supuestas. Toda corrida real imprime el costo MEDIDO.
 3. **Activación** — script `worker/pipeline/activar.ts`: pasa `draft` → `activa` con revisión mínima (o `--todas` para la demo).
 4. **Arreglar el seed** — corregir la categoría del POI 9002 y agregar targets de conflicto para que sea idempotente.
 5. ~~**Quick win de 2 h: cablear las fuentes.**~~ **HECHO en el commit `8bad085`** (verificado 2026-07-29).
@@ -447,11 +507,27 @@ Objetivo RUP de esta fase: **arquitectura ejecutable que mata los riesgos altos*
      no expone).
 
 **Criterio de aceptación (verificable):**
-- `select count(*) from pois where h3_index in (celdas de Barranco)` ≥ 100
-- `select count(*) from missions where estado='activa'` ≥ 30
-- Las vueltas nombran lugares que existen de verdad en Barranco (chequeo manual de 10 al azar contra Google Maps)
-- La pantalla Vueltas muestra 3 vueltas distintas y creíbles; typecheck + tests verdes
-- La app se ve con Alfa Slab One en los títulos
+- ✅ `pois` en celdas de Barranco ≥ 100 → **391**
+- ✅ `missions where estado='activa'` ≥ 30 → **63**
+- ✅ Las vueltas nombran lugares que existen de verdad — verificado **por auditoría contra los tags de
+  OSM**, no por muestreo manual: cada `osm_id` cruzado contra el volcado, y cada número, hora y fecha
+  citados comprobados contra su tag. Es más fuerte que el chequeo de 10 al azar que pedía este plan.
+- ✅ typecheck + tests verdes → **53 tests**
+- ✅ Alfa Slab One en los títulos — cerrado en `8bad085`. Verificado además que **63 de 64 estilos con
+  `fontSize` declaran `fontFamily`**; el que falta es un falso positivo (el estilo base parte el
+  `fontFamily` con la línea que lo aplica condicional según la pestaña activa).
+- ⚠️ **Sin verificar en la app**: falta abrir Expo Go y ver las Vueltas en la pantalla. La base tiene el
+  contenido; que la pantalla lo muestre bien es otra afirmación y no la probé.
+
+**Deuda que E1 deja abierta, con nombre:**
+- `handle_new_user()` es `SECURITY DEFINER` y **invocable por `anon`** vía `/rest/v1/rpc/`. Lo encontró
+  el linter de Supabase al correrlo tras el DDL. Fix: `revoke execute … from anon, authenticated`.
+- **14 celdas nuevas apagadas** esperando revisión a pie. Es la cola humana que el ADR-0007 anticipó.
+- **POIs duplicados en OSM** (Parque del Aire a 67 m, Centro Colich a 8 m) — deuda de ingesta del sync.
+- `morir()` sale con **127 en vez de 1** cuando corta con el cliente de Supabase abierto (aserción de
+  libuv al cerrar con sockets vivos). El cron igual lo lee como fallo; el código es engañoso. Sin
+  verificar si es solo Windows.
+- **El set dorado de 10 Vueltas con Opus 5 no existe**: el prompt sigue con 2 ejemplos escritos a mano.
 
 **Archivos:** `worker/pipeline/1-sync-pois.ts`, `2-generate-missions.ts`, `activar.ts` (nuevo), `worker/prompts/generacion-vueltas.md`, `supabase/seed/seed.sql`, `app/src/app/_layout.tsx`, `app/src/components/ui.tsx`, `app/app.json`, `app/package.json`.
 
