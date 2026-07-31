@@ -8,6 +8,7 @@ import assert from "node:assert/strict";
 import {
   haversineMetros,
   bearingGrados,
+  esDistanciaCaminable,
   metrosACuadras,
   textoCuadras,
   velocidadMs,
@@ -78,6 +79,14 @@ test("copy en cuadras, jamás en km (firma de marca §3.1)", () => {
   assert.equal(textoCuadras(100), "a 1 cuadra");
   assert.equal(textoCuadras(2300), "a 23 cuadras");
   assert.ok(!textoCuadras(15000).includes("km"));
+});
+
+test("una sugerencia nunca manda al jugador a otro distrito", () => {
+  assert.equal(esDistanciaCaminable(999), true);
+  assert.equal(esDistanciaCaminable(1000), true);
+  assert.equal(esDistanciaCaminable(1001), false);
+  assert.equal(esDistanciaCaminable(12_499), false);
+  assert.equal(esDistanciaCaminable(null), false);
 });
 
 test("velocidad imposible: 1 km en 10 s = 100 m/s (capa 4 anti-fraude)", () => {

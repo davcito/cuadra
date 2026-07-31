@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Linking, Platform, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLocalSearchParams, useRouter } from "expo-router";
 
@@ -16,6 +16,7 @@ import {
 import { IlustracionLugar, type Vuelta } from "@/app/(app)/vueltas";
 import { GEOFENCE_M, ubicacionActual, type Ubicacion } from "@/lib/chapar";
 import { haversineMetros, textoCuadras } from "@/lib/geo";
+import { urlParaLlegar } from "@/lib/navegacion";
 import { colores, esc, fuentes, radios } from "@/lib/theme";
 import { supabase } from "@/lib/supabase";
 
@@ -25,19 +26,22 @@ import { supabase } from "@/lib/supabase";
  * (semanas 5–6): entra por la RPC `chapar()` server-side (ADR-0001).
  */
 export default function DetalleVueltaScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, prueba } = useLocalSearchParams<{ id: string; prueba?: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const [v, setV] = useState<Vuelta | null>(null);
   const [cargando, setCargando] = useState(true);
   const [donde, setDonde] = useState<Ubicacion | null>(null);
   const [sinPermiso, setSinPermiso] = useState(false);
+  const [errorUbicacion, setErrorUbicacion] = useState<string | null>(null);
+  const [errorMapa, setErrorMapa] = useState<string | null>(null);
+  const esPrueba = prueba === "1";
 
   const cargar = useCallback(async () => {
     const { data } = await supabase
       .from("missions")
       .select(
-        "id, titulo, descripcion, categoria, dificultad, calle_xp, instruccion_verificacion, pois(nombre, categoria, ubicacion)"
+        "id, titulo, descripcion, categoria, dificultad, calle_xp, instruccion_verificacion, pois(nombre, categoria, lat, lng)"
       )
       .eq("id", Number(id))
       .single();
@@ -56,18 +60,30 @@ export default function DetalleVueltaScreen() {
   // sabemos que va a rebotar.
   useEffect(() => {
     let vivo = true;
+    let consultando = false;
     // El primer intento PIDE el permiso; los siguientes solo leen. Sin esta
     // distinción, o el diálogo del sistema aparece cada 5 s, o —como pasaba
     // antes— no aparece nunca y la pantalla se queda "calculando" sin decir
     // que le falta un permiso.
     const leer = async (pedir: boolean) => {
+      if (consultando) return;
+      consultando = true;
       try {
         const u = await ubicacionActual({ pedir });
         if (!vivo) return;
         setDonde(u);
         setSinPermiso(u === null);
-      } catch {
-        if (vivo) setDonde(null);
+        setErrorUbicacion(null);
+      } catch (e) {
+        if (vivo) {
+          setDonde(null);
+          setSinPermiso(false);
+          setErrorUbicacion(
+            e instanceof Error ? e.message : "No pudimos leer tu ubicación."
+          );
+        }
+      } finally {
+        consultando = false;
       }
     };
     void leer(true);
@@ -113,6 +129,18 @@ export default function DetalleVueltaScreen() {
   // cuadras" cumple la regla de marca y no le sirve a nadie.
   const otraZona = distancia !== null && distancia > 4000;
 
+  const llevarme = async () => {
+    if (!lugar) return;
+    setErrorMapa(null);
+    try {
+      await Linking.openURL(
+        urlParaLlegar(lugar, v.pois?.nombre ?? v.titulo, Platform.OS)
+      );
+    } catch {
+      setErrorMapa("No pudimos abrir el navegador de mapas de tu iPhone.");
+    }
+  };
+
   return (
     <View style={styles.safe}>
       <ScrollView contentContainerStyle={styles.scroll}>
@@ -137,6 +165,14 @@ export default function DetalleVueltaScreen() {
 
           <TituloDisplay>{v.titulo}</TituloDisplay>
           <Text style={styles.meta}>{v.pois?.nombre ?? "Barranco"}</Text>
+          {esPrueba ? (
+            <View style={styles.avisoPrueba}>
+              <Etiqueta color={colores.naranja}>MODO DESARROLLO</Etiqueta>
+              <Text style={styles.avisoPruebaTexto}>
+                Podés probar cámara y Chapada. La foto y la completación no se guardan en Supabase.
+              </Text>
+            </View>
+          ) : null}
           <Text style={styles.descripcion}>{v.descripcion}</Text>
 
           {v.instruccion_verificacion ? (
@@ -167,28 +203,44 @@ export default function DetalleVueltaScreen() {
               Que diga POR QUÉ está apagado importa: un botón gris sin motivo se
               lee como app rota, no como "todavía no llegaste". */}
           <Boton
-            onPress={() => router.push(`/(app)/vuelta/${v.id}/camara`)}
-            deshabilitado={!enRango}
+            onPress={() =>
+              router.push({
+                pathname: "/(app)/vuelta/[id]/camara",
+                params: { id: String(v.id), ...(esPrueba ? { prueba: "1" } : {}) },
+              })
+            }
+            deshabilitado={!enRango && !esPrueba}
           >
-            {enRango
-              ? "Chapala"
-              : sinPermiso
-                ? "Activá la ubicación"
-                : distancia === null
-                  ? "Buscando dónde estás…"
-                  : "Acercate para chapar"}
+            {esPrueba
+              ? "Probar cámara y Chapada"
+              : enRango
+                ? "Chapala"
+                : sinPermiso
+                  ? "Activá la ubicación"
+                  : errorUbicacion
+                    ? "Ubicación no disponible"
+                    : distancia === null
+                      ? "Buscando dónde estás…"
+                      : "Acercate para chapar"}
           </Boton>
-          <Boton variante="linea">Llévame</Boton>
+          <Boton variante="linea" deshabilitado={!lugar} onPress={() => void llevarme()}>
+            Llévame
+          </Boton>
+          {errorMapa ? <Text style={styles.error}>{errorMapa}</Text> : null}
           <Text style={styles.pie}>
-            {sinPermiso
-              ? "Necesitamos tu ubicación para saber cuándo llegaste. Nunca se publica: se usa para las Vueltas y nada más."
-              : distancia === null
-                ? "El check-in se abre cuando llegues: la foto se toma en el lugar, con la cámara de la app."
-                : enRango
-                  ? "Ya estás. La foto se toma acá, con la cámara de la app."
-                  : otraZona
-                    ? "Esta Vuelta te queda lejos. El check-in se abre cuando estés en la cuadra."
-                    : `Estás a ${textoCuadras(distancia)}. El check-in se abre cuando llegues.`}
+            {esPrueba
+              ? "Simulación local: no sube fotos, no suma Calle y no altera tu Racha."
+              : sinPermiso
+                ? "Necesitamos tu ubicación para saber cuándo llegaste. Nunca se publica: se usa para las Vueltas y nada más."
+                : errorUbicacion
+                  ? `${errorUbicacion} La app vuelve a intentarlo automáticamente.`
+                  : distancia === null
+                    ? "El check-in se abre cuando llegues: la foto se toma en el lugar, con la cámara de la app."
+                    : enRango
+                      ? "Ya estás. La foto se toma acá, con la cámara de la app."
+                      : otraZona
+                        ? "Esta Vuelta te queda lejos. El check-in se abre cuando estés en la cuadra."
+                        : `Estás a ${textoCuadras(distancia)}. El check-in se abre cuando llegues.`}
           </Text>
         </View>
       </ScrollView>
@@ -235,4 +287,7 @@ const styles = StyleSheet.create({
   premioCuerpo: { padding: esc(12), gap: esc(2) },
   premioValor: { fontSize: esc(16), fontFamily: fuentes.extrabold, color: colores.tinta },
   pie: { fontSize: esc(11), color: colores.metadato, lineHeight: esc(16), textAlign: "center", fontFamily: fuentes.regular },
+  error: { fontSize: esc(11), color: colores.error, lineHeight: esc(16), textAlign: "center", fontFamily: fuentes.medium },
+  avisoPrueba: { borderWidth: esc(2), borderColor: colores.naranja, borderRadius: esc(12), padding: esc(11), gap: esc(4), backgroundColor: "#FFF7EE" },
+  avisoPruebaTexto: { fontSize: esc(11), lineHeight: esc(16), color: colores.textoSuave, fontFamily: fuentes.regular },
 });

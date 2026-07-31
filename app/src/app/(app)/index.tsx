@@ -1,25 +1,29 @@
-import { useCallback, useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 import { useRouter } from "expo-router";
 
 import { CalatoVivo } from "@/components/calato-vivo";
 import { MapaCuadra } from "@/components/mapa-cuadra";
+import { SelectorAlcance } from "@/components/selector-alcance";
 import { Boton, Chip, Dificultad, Etiqueta } from "@/components/ui";
+import {
+  filtrarVueltasPorAlcance,
+  siguienteAlcance,
+} from "@/lib/alcance-vueltas";
 import { colores, esc, fuentes, medidas, radios } from "@/lib/theme";
-import { supabase } from "@/lib/supabase";
 import { textoCuadras } from "@/lib/geo";
 import { ubicacionActual } from "@/lib/chapar";
+import { esModoSeguroNocturno } from "@/lib/disponibilidad";
+import {
+  MODO_PRUEBA_VUELTAS,
+  NOMBRE_ZONA_PRUEBA,
+} from "@/lib/modo-prueba";
+import { useAlcanceVueltas } from "@/lib/use-alcance-vueltas";
+import { buscarVueltasDisponibles, type VueltaCerca } from "@/lib/vueltas-cerca";
 
-type VueltaHoy = {
-  id: number;
-  titulo: string;
-  categoria: string;
-  dificultad: number;
-  poi_nombre: string | null;
-  distancia_m: number | null;
-};
+type VueltaHoy = VueltaCerca;
 
 /**
  * Home: el mapa de tu ciudad a pantalla completa (ADR-0004) con un header
@@ -29,9 +33,23 @@ type VueltaHoy = {
 export default function HomeScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { alcance, cambiarAlcance } = useAlcanceVueltas();
   const [saludo, setSaludo] = useState(true);
-  const [vuelta, setVuelta] = useState<VueltaHoy | null>(null);
+  const [catalogo, setCatalogo] = useState<VueltaHoy[]>([]);
+  const [ubicacion, setUbicacion] = useState<Awaited<ReturnType<typeof ubicacionActual>>>(null);
+  const [seleccionadaId, setSeleccionadaId] = useState<number | null>(null);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [sinUbicacion, setSinUbicacion] = useState(false);
+
+  const vueltasVisibles = useMemo(
+    () => filtrarVueltasPorAlcance(catalogo, alcance),
+    [alcance, catalogo]
+  );
+  const vuelta =
+    vueltasVisibles.find((item) => item.id === seleccionadaId) ??
+    vueltasVisibles[0] ??
+    null;
 
   // La tarjeta se apoya JUSTO encima de la barra, en cualquier equipo. El alto
   // de la barra sale del token: si cambia allá, esto lo sigue solo.
@@ -57,34 +75,56 @@ export default function HomeScreen() {
    * mismo número que va a usar `chapar()` para decidir.
    */
   const cargar = useCallback(async () => {
+    setCargando(true);
+    setError(null);
     // `pedir: true` acá y no en otro lado: ésta es la primera pantalla y el
     // producto entero es un mapa de dónde estás. Pedir el permiso más tarde
     // significaría abrir con el mapa centrado en una plaza que no es la tuya.
-    const donde = await ubicacionActual({ pedir: true });
-    if (!donde) {
-      // Sin permiso o sin señal todavía. No se muestra una Vuelta cualquiera:
-      // ofrecer algo que no sabemos si está cerca es exactamente el defecto que
-      // se acaba de arreglar.
-      setVuelta(null);
-      setSinUbicacion(true);
-      return;
+    try {
+      const donde = await ubicacionActual({ pedir: true });
+      setUbicacion(donde);
+      if (!donde) {
+        setCatalogo([]);
+        setSeleccionadaId(null);
+        setSinUbicacion(true);
+        return;
+      }
+      setSinUbicacion(false);
+
+      // Hoy hay 69 Vueltas activas. Pedimos el catálogo jugable ordenado por
+      // distancia una sola vez y los alcances lo recortan sin repetir GPS ni
+      // red. Cuando Lima supere este lote, el ADR-0010 manda pasar a bbox.
+      const disponibles = await buscarVueltasDisponibles(donde, 200);
+      setCatalogo(disponibles);
+      setSeleccionadaId(disponibles[0]?.id ?? null);
+    } catch (e) {
+      setCatalogo([]);
+      setSeleccionadaId(null);
+      setError(e instanceof Error ? e.message : "No pudimos buscar Vueltas.");
+    } finally {
+      setCargando(false);
     }
-    setSinUbicacion(false);
-    const { data } = await supabase.rpc("vueltas_cerca", {
-      p_lat: donde.lat,
-      p_lng: donde.lng,
-      p_limite: 1,
-    });
-    setVuelta((data as VueltaHoy[] | null)?.[0] ?? null);
   }, []);
 
   useEffect(() => {
     void cargar();
   }, [cargar]);
 
+  const nocheSegura = !MODO_PRUEBA_VUELTAS && esModoSeguroNocturno();
+  const alcanceSiguiente = siguienteAlcance(alcance);
+
   return (
     <View style={styles.cont}>
-      <MapaCuadra />
+      <MapaCuadra
+        ubicacion={ubicacion}
+        vueltas={vueltasVisibles}
+        alcance={alcance}
+        seleccionadaId={vuelta?.id ?? null}
+        onSeleccionar={(id) => {
+          setSaludo(false);
+          setSeleccionadaId(id);
+        }}
+      />
 
       <SafeAreaView style={styles.header} edges={["top"]} pointerEvents="box-none">
         <View style={styles.chip}>
@@ -95,6 +135,18 @@ export default function HomeScreen() {
           <Text style={styles.rachaTexto}>0</Text>
         </View>
       </SafeAreaView>
+
+      <View style={[styles.alcance, { top: insets.top + esc(58) }]}>
+        <SelectorAlcance
+          valor={alcance}
+          sobreMapa
+          onChange={(nuevo) => {
+            setSaludo(false);
+            setSeleccionadaId(null);
+            cambiarAlcance(nuevo);
+          }}
+        />
+      </View>
 
       {saludo ? (
         <Animated.View
@@ -112,6 +164,19 @@ export default function HomeScreen() {
             </View>
           </Pressable>
         </Animated.View>
+      ) : cargando ? (
+        <Animated.View
+          entering={FadeInDown.springify().damping(16)}
+          style={[styles.saludo, { bottom: sobreLaBarra }]}
+        >
+          <View style={[styles.tarjetaVuelta, styles.cargandoFila]}>
+            <ActivityIndicator color={colores.naranja} />
+            <View style={styles.cargandoTextos}>
+              <Text style={styles.vueltaTitulo}>Calato está buscando</Text>
+              <Etiqueta>Ordenando las Vueltas por distancia</Etiqueta>
+            </View>
+          </View>
+        </Animated.View>
       ) : vuelta ? (
         <Animated.View
           entering={FadeInDown.springify().damping(16)}
@@ -120,7 +185,9 @@ export default function HomeScreen() {
           <View style={styles.tarjetaVuelta}>
             <View style={styles.vueltaTop}>
               <Chip fondo={colores.naranja} color={colores.tinta}>
-                VUELTA DE HOY
+                {MODO_PRUEBA_VUELTAS
+                  ? `DESARROLLO · ${NOMBRE_ZONA_PRUEBA.toUpperCase()}`
+                  : "VUELTA DE HOY"}
               </Chip>
               <Dificultad nivel={vuelta.dificultad} />
             </View>
@@ -135,7 +202,13 @@ export default function HomeScreen() {
             <Boton
               style={{ marginTop: esc(6) }}
               onPress={() =>
-                router.push({ pathname: "/vuelta/[id]", params: { id: String(vuelta.id) } })
+                router.push({
+                  pathname: "/vuelta/[id]",
+                  params: {
+                    id: String(vuelta.id),
+                    ...(MODO_PRUEBA_VUELTAS ? { prueba: "1" } : {}),
+                  },
+                })
               }
             >
               Llévame
@@ -157,6 +230,19 @@ export default function HomeScreen() {
             </Boton>
           </View>
         </Animated.View>
+      ) : error ? (
+        <Animated.View
+          entering={FadeInDown.springify().damping(16)}
+          style={[styles.saludo, { bottom: sobreLaBarra }]}
+        >
+          <View style={styles.tarjetaVuelta}>
+            <Text style={styles.vueltaTitulo}>La búsqueda se trabó</Text>
+            <Etiqueta>{error}</Etiqueta>
+            <Boton style={{ marginTop: esc(6) }} onPress={() => void cargar()}>
+              Reintentar
+            </Boton>
+          </View>
+        </Animated.View>
       ) : (
         // Con ubicación y sin resultados: hay zonas sin cuadras encendidas, y a
         // esta hora el modo seguro puede esconderlas todas. Decirlo es mejor que
@@ -166,8 +252,28 @@ export default function HomeScreen() {
           style={[styles.saludo, { bottom: sobreLaBarra }]}
         >
           <View style={styles.tarjetaVuelta}>
-            <Text style={styles.vueltaTitulo}>Por acá todavía no hay vueltas</Text>
-            <Etiqueta>Calato está olfateando esta zona. Vuelve más tarde.</Etiqueta>
+            <Text style={styles.vueltaTitulo}>
+              {nocheSegura
+                ? "La cuadra está descansando"
+                : alcanceSiguiente
+                  ? "Por acá no salió ninguna"
+                  : "Todavía no hay Vueltas publicadas"}
+            </Text>
+            <Etiqueta>
+              {nocheSegura
+                ? "Modo seguro nocturno · las Vueltas vuelven desde las 6 a.m."
+                : alcanceSiguiente
+                  ? "Podés abrir el mapa sin perder los lugares cercanos."
+                  : "Calato está olfateando nuevas zonas de Lima."}
+            </Etiqueta>
+            {alcanceSiguiente ? (
+              <Boton
+                style={{ marginTop: esc(6) }}
+                onPress={() => cambiarAlcance(alcanceSiguiente)}
+              >
+                Abrir un poco el mapa
+              </Boton>
+            ) : null}
           </View>
         </Animated.View>
       )}
@@ -186,6 +292,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: esc(14),
+  },
+  alcance: {
+    position: "absolute",
+    left: esc(14),
+    right: esc(14),
+    zIndex: 20,
+    elevation: 20,
   },
   chip: {
     backgroundColor: "rgba(251,247,240,0.92)",
@@ -238,6 +351,8 @@ const styles = StyleSheet.create({
   },
   vueltaTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
   vueltaTitulo: { fontSize: esc(16), fontFamily: fuentes.extrabold, color: colores.tinta },
+  cargandoFila: { flexDirection: "row", alignItems: "center", gap: esc(12) },
+  cargandoTextos: { flex: 1, gap: esc(4) },
   saludoFila: {
     flexDirection: "row",
     alignItems: "center",

@@ -16,12 +16,14 @@ import { colores, esc, fuentes, radios, sombras } from "@/lib/theme";
  */
 export default function ChapadaScreen() {
   const router = useRouter();
-  const { calle, racha, figurita, revision } = useLocalSearchParams<{
+  const { calle, racha, figurita, revision, prueba } = useLocalSearchParams<{
     calle?: string;
     racha?: string;
     figurita?: string;
     revision?: string;
+    prueba?: string;
   }>();
+  const esPrueba = prueba === "1";
 
   const [carta, setCarta] = useState<{ nombre: string; barrio: string; categoria: string; id: number } | null>(null);
 
@@ -113,7 +115,9 @@ export default function ChapadaScreen() {
           <View style={s.avisoCuerpo}>
             <View style={s.calato} />
             <Text style={s.avisoTexto}>
-              {revision
+              {esPrueba
+                ? "Simulación completa: no guardamos la foto, la Chapada, la Calle ni la Racha."
+                : revision
                 ? "Se registró, pero la vamos a revisar: te moviste muy rápido entre dos Vueltas."
                 : "Calato ya le ladró la noticia a todo el barrio."}
             </Text>

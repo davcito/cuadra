@@ -12,6 +12,7 @@
 
 import * as Location from "expo-location";
 
+import { MODO_PRUEBA_VUELTAS } from "@/lib/modo-prueba";
 import { supabase } from "@/lib/supabase";
 
 /** Radio del geofence, en metros. Igual que el del servidor (regla dura #5). */
@@ -55,6 +56,25 @@ export type Ubicacion = {
   simulada: boolean;
 };
 
+const TIMEOUT_UBICACION_MS = 12_000;
+
+async function conTimeout<T>(promesa: Promise<T>, ms: number): Promise<T> {
+  let temporizador: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promesa,
+      new Promise<never>((_, rechazar) => {
+        temporizador = setTimeout(
+          () => rechazar(new Error("La ubicación tardó demasiado.")),
+          ms
+        );
+      }),
+    ]);
+  } finally {
+    if (temporizador) clearTimeout(temporizador);
+  }
+}
+
 /**
  * Posición actual, con lo que hace falta para el anti-fraude.
  *
@@ -75,9 +95,28 @@ export async function ubicacionActual({ pedir = false } = {}): Promise<Ubicacion
   }
   if (!permiso.granted) return null;
 
-  const p = await Location.getCurrentPositionAsync({
-    accuracy: Location.Accuracy.BestForNavigation,
-  });
+  // iOS puede tardar indefinidamente buscando una lectura nueva con precisión
+  // de navegación (sobre todo bajo techo). Una UI no puede quedar congelada
+  // por eso: damos 12 s y, si existe, usamos una lectura reciente y razonable.
+  const ultima = await Location.getLastKnownPositionAsync({
+    maxAge: 60_000,
+    requiredAccuracy: 200,
+  }).catch(() => null);
+
+  let p: Location.LocationObject;
+  try {
+    p = await conTimeout(
+      Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.BestForNavigation,
+      }),
+      TIMEOUT_UBICACION_MS
+    );
+  } catch {
+    if (!ultima) {
+      throw new Error("No pudimos fijar tu ubicación. Revisá el GPS e intentá de nuevo.");
+    }
+    p = ultima;
+  }
 
   return {
     lat: p.coords.latitude,
@@ -128,7 +167,27 @@ async function subirFoto(uri: string, misionId: number, uid: string): Promise<st
  * que mostrar `mensaje`, y los motivos existen para que pueda decidir qué hacer
  * después (reintentar, volver, o mandar al Álbum).
  */
-export async function chapar(misionId: number, fotoUri: string | null): Promise<Veredicto> {
+export async function chapar(
+  misionId: number,
+  fotoUri: string | null,
+  opciones: { simular?: boolean; calleXp?: number } = {}
+): Promise<Veredicto> {
+  // Desarrollo: prueba todo el flujo visual sin subir la foto, llamar la RPC
+  // ni escribir completaciones. Solo se habilita con la bandera local ignorada
+  // por Git; una build normal nunca entra acá.
+  if (opciones.simular && MODO_PRUEBA_VUELTAS) {
+    const calle = opciones.calleXp ?? 25;
+    return {
+      ok: true,
+      distancia_m: 0,
+      calle_xp: calle,
+      calle_total: calle,
+      racha: 1,
+      figurita_id: null,
+      en_revision: false,
+    };
+  }
+
   const { data: sesion } = await supabase.auth.getSession();
   const uid = sesion.session?.user.id;
   if (!uid) return falla("sin_sesion", "Tenés que iniciar sesión para chapar.");

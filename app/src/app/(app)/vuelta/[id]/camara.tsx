@@ -23,13 +23,15 @@ import { colores, esc, fuentes, radios } from "@/lib/theme";
  * que va a rebotar.
  */
 export default function CamaraScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, prueba } = useLocalSearchParams<{ id: string; prueba?: string }>();
   const router = useRouter();
   const camara = useRef<CameraView>(null);
+  const esPrueba = prueba === "1";
 
   const [permiso, pedirPermiso] = useCameraPermissions();
   const [lente, setLente] = useState<CameraType>("back");
   const [instruccion, setInstruccion] = useState<string | null>(null);
+  const [calleXp, setCalleXp] = useState(25);
   const [poi, setPoi] = useState<{ lat: number; lng: number } | null>(null);
   const [donde, setDonde] = useState<Ubicacion | null>(null);
   const [enviando, setEnviando] = useState(false);
@@ -41,11 +43,12 @@ export default function CamaraScreen() {
     void (async () => {
       const { data } = await supabase
         .from("missions")
-        .select("instruccion_verificacion, pois(lat, lng)")
+        .select("instruccion_verificacion, calle_xp, pois(lat, lng)")
         .eq("id", Number(id))
         .single();
       if (!vivo || !data) return;
       setInstruccion(data.instruccion_verificacion ?? null);
+      setCalleXp(data.calle_xp ?? 25);
       // Columnas generadas, NO `ubicacion`: PostgREST devuelve `geography` como
       // WKB hexadecimal, y pedirle `.coordinates` a un string da undefined sin
       // avisar. Ver la migración 20260729170000.
@@ -79,7 +82,8 @@ export default function CamaraScreen() {
   }, []);
 
   const distancia = donde && poi ? haversineMetros(donde, poi) : null;
-  const enRango = distancia !== null && distancia <= GEOFENCE_M;
+  const enRangoReal = distancia !== null && distancia <= GEOFENCE_M;
+  const enRango = esPrueba || enRangoReal;
 
   const disparar = useCallback(async () => {
     if (!camara.current || enviando) return;
@@ -91,7 +95,10 @@ export default function CamaraScreen() {
         setError("No pudimos tomar la foto. Probá de nuevo.");
         return;
       }
-      const v = await chapar(Number(id), foto.uri);
+      const v = await chapar(Number(id), foto.uri, {
+        simular: esPrueba,
+        calleXp,
+      });
       if (v.ok) {
         router.replace({
           pathname: "/(app)/chapada",
@@ -100,6 +107,7 @@ export default function CamaraScreen() {
             racha: String(v.racha),
             figurita: v.figurita_id ? String(v.figurita_id) : "",
             revision: v.en_revision ? "1" : "",
+            prueba: esPrueba ? "1" : "",
           },
         });
         return;
@@ -110,7 +118,7 @@ export default function CamaraScreen() {
     } finally {
       setEnviando(false);
     }
-  }, [enviando, id, router]);
+  }, [calleXp, enviando, esPrueba, id, router]);
 
   // ── Permiso ──────────────────────────────────────────────────────────
   if (!permiso) {
@@ -165,9 +173,11 @@ export default function CamaraScreen() {
       <View pointerEvents="none" style={s.filaChip}>
         <View style={[s.chip, enRango ? s.chipOk : distancia === null ? s.chipBuscando : s.chipLejos]}>
           <Text style={s.chipTexto}>
-            {distancia === null
+            {esPrueba
+              ? "● MODO DESARROLLO · CHAPADA SIMULADA"
+              : distancia === null
               ? "● BUSCANDO TU UBICACIÓN"
-              : enRango
+              : enRangoReal
                 ? `● ESTÁS A ${Math.round(distancia)} M · DENTRO DE RANGO`
                 : `● ESTÁS A ${Math.round(distancia)} M · ACERCATE`}
           </Text>
@@ -212,7 +222,9 @@ export default function CamaraScreen() {
 
       <SafeAreaView edges={["bottom"]} style={s.pie}>
         <Text style={s.pieTexto}>
-          La cámara se abre acá. No se pueden subir fotos de la galería — así las visitas valen.
+          {esPrueba
+            ? "La foto queda en el teléfono y no se sube. Esta prueba no crea una visita real."
+            : "La cámara se abre acá. No se pueden subir fotos de la galería — así las visitas valen."}
         </Text>
       </SafeAreaView>
     </View>

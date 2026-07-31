@@ -2,7 +2,7 @@
 
 **Tu ciudad, cuadra por cuadra.** App móvil de exploración urbana gamificada: vueltas diarias generadas por IA sobre lugares reales (OSM), álbum de figuritas de tu ciudad, modo seguro nativo. Mercado inicial: Lima.
 
-📕 **Fuente de verdad:** [docs/documento-maestro.md](docs/documento-maestro.md) · Contexto para Claude Code: [CLAUDE.md](CLAUDE.md) · Decisiones: [docs/decisiones/](docs/decisiones/)
+📕 **Fuente de verdad:** [docs/documento-maestro.md](docs/documento-maestro.md) · Orden inmediato: [docs/roadmap-operativo.md](docs/roadmap-operativo.md) · Contexto para Claude Code: [CLAUDE.md](CLAUDE.md) · Decisiones: [docs/decisiones/](docs/decisiones/)
 
 ## Mapa del repo
 

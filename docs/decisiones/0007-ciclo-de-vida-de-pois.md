@@ -1,6 +1,6 @@
 # 0007 — Ciclo de vida de los POIs: cuatro orígenes, una tabla, la sync no destruye
 
-**Fecha:** 2026-07-29 · **Estado:** propuesta
+**Fecha:** 2026-07-29 · **Estado:** aceptada y aplicada
 
 ## Contexto
 

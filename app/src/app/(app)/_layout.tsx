@@ -140,7 +140,8 @@ export default function AppLayout() {
       <Tabs.Screen name="album" options={{ title: "Álbum" }} />
       <Tabs.Screen name="perfil" options={{ title: "Perfil" }} />
       {/* Detalle de vuelta: navegable, fuera de la barra */}
-      <Tabs.Screen name="vuelta/[id]" options={{ href: null }} />
+      <Tabs.Screen name="vuelta/[id]/index" options={{ href: null }} />
+      <Tabs.Screen name="vuelta/[id]/camara" options={{ href: null }} />
     </Tabs>
   );
 }

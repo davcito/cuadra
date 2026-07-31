@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -10,9 +10,11 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 import { CalatoSprite } from "@/components/calato-sprite";
 import { CalatoVivo } from "@/components/calato-vivo";
+import { SelectorAlcance } from "@/components/selector-alcance";
 import {
   Boton,
   Chip,
@@ -24,19 +26,24 @@ import {
   TituloDisplay,
   Toldo,
 } from "@/components/ui";
+import {
+  filtrarVueltasPorAlcance,
+  siguienteAlcance,
+} from "@/lib/alcance-vueltas";
 import { colores, esc, fuentes } from "@/lib/theme";
-import { supabase } from "@/lib/supabase";
+import { ubicacionActual } from "@/lib/chapar";
+import { esModoSeguroNocturno } from "@/lib/disponibilidad";
+import { textoCuadras } from "@/lib/geo";
+import {
+  MODO_PRUEBA_VUELTAS,
+  NOMBRE_ZONA_PRUEBA,
+} from "@/lib/modo-prueba";
+import { useAlcanceVueltas } from "@/lib/use-alcance-vueltas";
+import { buscarVueltasDisponibles, type VueltaCerca } from "@/lib/vueltas-cerca";
 
 /** Una Vuelta con el POI resuelto (lo que devuelve la query). */
-export type Vuelta = {
-  id: number;
-  titulo: string;
-  descripcion: string;
-  categoria: string;
-  dificultad: number;
-  calle_xp: number;
-  instruccion_verificacion: string | null;
-  pois: { nombre: string; categoria: string } | null;
+export type Vuelta = VueltaCerca & {
+  pois?: { nombre: string; categoria: string; lat?: number; lng?: number } | null;
 };
 
 /** Ilustración mínima del lugar: 3–4 formas planas sobre el color de su categoría. */
@@ -74,30 +81,46 @@ export function IlustracionLugar({ categoria, alto = 76 }: { categoria: string; 
 
 export default function VueltasScreen() {
   const router = useRouter();
-  const [vueltas, setVueltas] = useState<Vuelta[]>([]);
+  const { alcance, cambiarAlcance } = useAlcanceVueltas();
+  const [catalogo, setCatalogo] = useState<Vuelta[]>([]);
   const [cargando, setCargando] = useState(true);
   const [refrescando, setRefrescando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const cargar = useCallback(async () => {
     setError(null);
-    const { data, error } = await supabase
-      .from("missions")
-      .select(
-        "id, titulo, descripcion, categoria, dificultad, calle_xp, instruccion_verificacion, pois(nombre, categoria)"
-      )
-      .eq("estado", "activa")
-      .limit(3);
+    try {
+      const donde = await ubicacionActual({ pedir: true });
+      if (!donde) {
+        setCatalogo([]);
+        setError("Activá la ubicación para buscar Vueltas cerca tuyo.");
+        return;
+      }
 
-    if (error) setError(error.message);
-    else setVueltas((data ?? []) as unknown as Vuelta[]);
-    setCargando(false);
-    setRefrescando(false);
+      // Una sola fuente de verdad para mapa y lista: esta RPC ordena por
+      // distancia y aplica horario, temporada y modo seguro igual que chapar().
+      setCatalogo((await buscarVueltasDisponibles(donde, 200)) as Vuelta[]);
+    } catch (e) {
+      setCatalogo([]);
+      setError(e instanceof Error ? e.message : "No pudimos buscar Vueltas cerca tuyo.");
+    } finally {
+      setCargando(false);
+      setRefrescando(false);
+    }
   }, []);
 
   useEffect(() => {
     void cargar();
   }, [cargar]);
+
+  const nocheSegura = !MODO_PRUEBA_VUELTAS && esModoSeguroNocturno();
+  const todasEnAlcance = useMemo(
+    () => filtrarVueltasPorAlcance(catalogo, alcance) as Vuelta[],
+    [alcance, catalogo]
+  );
+  // El mapa puede mostrar todos los puntos agrupados; una lista larga no ayuda.
+  const vueltas = todasEnAlcance.slice(0, 10);
+  const alcanceSiguiente = siguienteAlcance(alcance);
 
   return (
     <SafeAreaView style={styles.safe} edges={["top"]}>
@@ -117,13 +140,17 @@ export default function VueltasScreen() {
         <View style={styles.encabezado}>
           <TituloDisplay>Las vueltas de hoy</TituloDisplay>
           <Text style={styles.sub}>
-            Se renuevan a medianoche · 0 de {vueltas.length || 3} chapadas
+            {MODO_PRUEBA_VUELTAS
+              ? `MODO DESARROLLO · mostrando ${NOMBRE_ZONA_PRUEBA} · Chapada simulada`
+              : `0 chapadas · ${todasEnAlcance.length} disponibles en este alcance`}
           </Text>
         </View>
 
         {/* Separador: el TOLDO A RAYAS del prototipo (línea 325), no una barra
             lisa. Sale del kit — la pantalla no dibuja marca a mano. */}
         <Toldo style={styles.toldoSep} />
+
+        <SelectorAlcance valor={alcance} onChange={cambiarAlcance} />
 
         {cargando ? (
           <ActivityIndicator color={colores.naranja} style={{ marginTop: esc(40) }} />
@@ -138,47 +165,70 @@ export default function VueltasScreen() {
           <View style={styles.vacio}>
             <CalatoSprite clip="culpa" alto={118} />
             <TituloDisplay style={{ textAlign: "center" }}>
-              Ya chapaste{"\n"}las de hoy
+              {nocheSegura ? "La cuadra está\ndescansando" : "Por acá todavía\nno hay Vueltas"}
             </TituloDisplay>
             <Text style={styles.vacioTexto}>
-              Calato dice que está bien. Lo dice con esa cara.
+              {nocheSegura
+                ? "El modo seguro pausa las Vueltas de esta zona entre las 6 p.m. y las 6 a.m. Vuelven cuando sea de día."
+                : alcanceSiguiente
+                  ? "No salió ninguna en este alcance. Abrí el mapa y conservamos también las que estaban cerca."
+                  : "Calato está olfateando nuevas zonas de Lima."}
             </Text>
+            {alcanceSiguiente ? (
+              <Boton onPress={() => cambiarAlcance(alcanceSiguiente)}>
+                Abrir un poco el mapa
+              </Boton>
+            ) : null}
           </View>
         ) : (
-          vueltas.map((v) => (
-            <Pressable
+          vueltas.map((v, indice) => (
+            <Animated.View
               key={v.id}
-              onPress={() =>
-                router.push({ pathname: "/vuelta/[id]", params: { id: String(v.id) } })
-              }
+              entering={FadeInDown.delay(Math.min(indice, 8) * 38).duration(260)}
             >
-              <Tarjeta style={styles.tarjeta}>
-                <View style={styles.fila}>
-                  <IlustracionLugar categoria={v.categoria} />
-                  <View style={styles.filaTextos}>
-                    <View style={styles.filaTop}>
-                      <Chip
-                        fondo={COLOR_CATEGORIA[v.categoria] ?? colores.categorias.huariques}
-                        color={colores.papel}
-                      >
-                        {NOMBRE_CATEGORIA[v.categoria] ?? v.categoria.toUpperCase()}
-                      </Chip>
-                      <Dificultad nivel={v.dificultad} />
-                    </View>
-                    <Text style={styles.titulo} numberOfLines={2}>
-                      {v.titulo}
-                    </Text>
-                    <Text style={styles.meta} numberOfLines={1}>
-                      {v.pois?.nombre ?? "Barranco"}
-                    </Text>
-                    <View style={styles.filaTop}>
-                      <Etiqueta color={colores.naranja}>+{v.calle_xp} CALLE</Etiqueta>
-                      <Etiqueta>N.º {String(v.id).padStart(3, "0")}</Etiqueta>
+              <Pressable
+                onPress={() =>
+                  router.push({
+                    pathname: "/vuelta/[id]",
+                    params: {
+                      id: String(v.id),
+                      ...(MODO_PRUEBA_VUELTAS ? { prueba: "1" } : {}),
+                    },
+                  })
+                }
+                style={({ pressed }) => pressed && styles.tarjetaPresionada}
+                accessibilityRole="button"
+                accessibilityLabel={`${v.titulo}, ${v.poi_nombre ?? "Lima"}`}
+              >
+                <Tarjeta style={styles.tarjeta}>
+                  <View style={styles.fila}>
+                    <IlustracionLugar categoria={v.categoria} />
+                    <View style={styles.filaTextos}>
+                      <View style={styles.filaTop}>
+                        <Chip
+                          fondo={COLOR_CATEGORIA[v.categoria] ?? colores.categorias.huariques}
+                          color={colores.papel}
+                        >
+                          {NOMBRE_CATEGORIA[v.categoria] ?? v.categoria.toUpperCase()}
+                        </Chip>
+                        <Dificultad nivel={v.dificultad} />
+                      </View>
+                      <Text style={styles.titulo} numberOfLines={2}>
+                        {v.titulo}
+                      </Text>
+                      <Text style={styles.meta} numberOfLines={1}>
+                        {v.poi_nombre ?? v.pois?.nombre ?? "Lima"}
+                        {typeof v.distancia_m === "number" ? ` · ${textoCuadras(v.distancia_m)}` : ""}
+                      </Text>
+                      <View style={styles.filaTop}>
+                        <Etiqueta color={colores.naranja}>+{v.calle_xp} CALLE</Etiqueta>
+                        <Etiqueta>N.º {String(v.id).padStart(3, "0")}</Etiqueta>
+                      </View>
                     </View>
                   </View>
-                </View>
-              </Tarjeta>
-            </Pressable>
+                </Tarjeta>
+              </Pressable>
+            </Animated.View>
           ))
         )}
 
@@ -207,6 +257,7 @@ const styles = StyleSheet.create({
   // (prototipo: `padding: 11px 18px 0` + `border-radius: 4px`).
   toldoSep: { borderRadius: esc(4), marginBottom: esc(2) },
   tarjeta: { marginTop: 0 },
+  tarjetaPresionada: { opacity: 0.82, transform: [{ scale: 0.985 }] },
   fila: { flexDirection: "row", gap: esc(11), padding: esc(11) },
   filaTextos: { flex: 1, gap: esc(4) },
   filaTop: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },

@@ -1,6 +1,7 @@
 # Plan de ejecución RUP — Cuadra: de la demo al producto escalado
 
-> **Estado al 2026-07-28** · Fase 2 (Elaboración) en curso.
+> **Estado al 2026-07-31** · Fase 2 (Elaboración) en curso. El orden inmediato y
+> la definición de terminado viven en [`roadmap-operativo.md`](roadmap-operativo.md).
 > **Al retomar, empezar por acá:** el flujo 01 ya está construido, pero **la app no enseña a
 > jugar** — ver la sección «PRIMER USO» y la iteración **E4**, con la investigación de
 > Pokémon GO / Geocaching / Duolingo ya hecha y lo que falta mirar con la app en la mano.

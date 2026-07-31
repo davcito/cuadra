@@ -13,6 +13,17 @@ const RADIO_TIERRA_M = 6_371_000;
 /** Largo de una cuadra limeña en metros — la unidad de distancia de TODA la UI (§3.1). */
 export const CUADRA_METROS = 100;
 
+/**
+ * Una Vuelta sugerida tiene que ser caminable: el documento maestro promete
+ * contenido a menos de 10 cuadras. Sin este techo, "la más cercana" puede ser
+ * una Vuelta a otro distrito cuando el modo seguro apaga la zona del usuario.
+ */
+export const RADIO_VUELTA_CAMINABLE_M = 10 * CUADRA_METROS;
+
+export function esDistanciaCaminable(metros: number | null | undefined): metros is number {
+  return typeof metros === "number" && Number.isFinite(metros) && metros >= 0 && metros <= RADIO_VUELTA_CAMINABLE_M;
+}
+
 const aRadianes = (grados: number) => (grados * Math.PI) / 180;
 
 /** Distancia en metros entre dos coordenadas (fórmula de haversine). */

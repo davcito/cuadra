@@ -49,7 +49,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "test": "tsx --test src/lib/geo.test.ts",
+    "test": "tsx --test src/lib/*.test.ts",
     "paridad": "node ../scripts/paridad-css.mjs",
     "web:preview": "expo export --platform web && node ../scripts/servir-web.mjs 8090",
     "typecheck": "tsc --noEmit && tsc -p tsconfig.test.json --noEmit",
