@@ -415,7 +415,7 @@ Objetivo RUP de esta fase: **arquitectura ejecutable que mata los riesgos altos*
 
 ---
 
-### Iteración E1 — Barranco con vida (~3 sesiones / 12 h) ✅ **CERRADA** (2026-07-29)
+### Iteración E1 — Barranco con vida (~3 sesiones / 12 h) ✅ **CERRADA** (2026-07-30)
 
 **Riesgo que ataca:** #3 *cold start* del documento maestro, y la tesis central del producto — *"la IA genera contenido creíble sobre lugares reales"*. Si esto no funciona, no hay producto.
 
@@ -471,7 +471,7 @@ Objetivo RUP de esta fase: **arquitectura ejecutable que mata los riesgos altos*
 **Trabajo:**
 1. **`worker/pipeline/1-sync-pois.ts` de verdad** — Overpass API por bounding box de Barranco, tags `amenity`/`shop`/`tourism`/`historic`, mapeo a nuestras 4 categorías, `h3-js` para asignar `h3_index` (res. 9), upsert en `pois` por `osm_id` con `service_role`. Meta: **100+ POIs reales**.
 2. **`worker/pipeline/2-generate-missions.ts` de verdad** — leer POIs de una celda, armar el payload del prompt que ya existe (`worker/prompts/generacion-vueltas.md`, hoy huérfano), llamar al modelo, validar con `validarLoteVueltas()` (ya testeado), insertar en `missions` como `draft`. Reintento máx. 2, nunca inserción parcial.
-   - ~~**Modelo: Claude Sonnet 5** para la generación semanal.~~ **Superado por ADR-0008 (2026-07-29):**
+   - ~~**Modelo: Claude Sonnet 5** para la generación semanal.~~ **Superado por ADR-0008 (2026-07-29, aplicado el 30):**
      lo único decidido es que **NO es Haiku**; qué modelo usa el pipeline recurrente queda **diferido** a
      propósito, hasta que haya copy real de dos modelos sobre las mismas celdas y volumen que valorizar.
      E1 no lo necesitaba: el contenido se escribió **en sesión de Claude Code**, sin API, y entra por
